@@ -1,8 +1,8 @@
-# Non-Obsolescence: Empowering Repair and Building
+# Non-Obsolescence: Empowering Repair and DIY Building
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This project aims to create a user-friendly, expandable platform for sharing and accessing repair and building guides for a wide range of products.  Our mission is to empower individuals to give new life to their belongings and build their dreams with their own hands.
+This project aims to create a user-friendly, expandable platform for sharing and accessing repair and building guides for a wide range of products.  My mission is to empower individuals to give new life to their belongings and build their dreams with their own hands.
 
 ## Table of Contents
 
