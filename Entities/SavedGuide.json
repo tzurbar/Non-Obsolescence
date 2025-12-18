@@ -1,0 +1,18 @@
+{
+  "name": "SavedGuide",
+  "type": "object",
+  "properties": {
+    "guide_id": {
+      "type": "string",
+      "description": "Reference to the saved guide"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "User who saved the guide"
+    }
+  },
+  "required": [
+    "guide_id",
+    "user_email"
+  ]
+}

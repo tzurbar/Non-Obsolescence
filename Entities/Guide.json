@@ -1,0 +1,106 @@
+{
+  "name": "Guide",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Guide title"
+    },
+    "title_he": {
+      "type": "string"
+    },
+    "title_ar": {
+      "type": "string"
+    },
+    "title_es": {
+      "type": "string"
+    },
+    "title_pt": {
+      "type": "string"
+    },
+    "category_id": {
+      "type": "string",
+      "description": "Reference to category"
+    },
+    "product_name": {
+      "type": "string",
+      "description": "Product being repaired/built"
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": [
+        "beginner",
+        "intermediate",
+        "advanced"
+      ],
+      "default": "beginner"
+    },
+    "tools": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of required tools"
+    },
+    "estimated_time": {
+      "type": "string",
+      "description": "Estimated time to complete"
+    },
+    "cover_image": {
+      "type": "string",
+      "description": "Main guide image URL"
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "image_url": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected"
+      ],
+      "default": "pending"
+    },
+    "author_name": {
+      "type": "string"
+    },
+    "author_email": {
+      "type": "string"
+    },
+    "view_count": {
+      "type": "number",
+      "default": 0
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "rejection_reason": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "category_id",
+    "product_name",
+    "difficulty"
+  ]
+}
