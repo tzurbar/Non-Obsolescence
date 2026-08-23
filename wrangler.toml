@@ -1,3 +1,15 @@
 name = "non-obsolescence"
-pages_build_output_dir = "dist"
+main = "worker/index.js"
 compatibility_date = "2026-08-23"
+
+# Used by `wrangler deploy` (the Workers-based deployment Cloudflare's
+# dashboard now creates) to serve the static site; worker/index.js handles
+# the one dynamic route and falls back to this binding for everything else.
+#
+# `npm run dev:functions` (`wrangler pages dev dist`) ignores this block
+# entirely and uses the older Pages Functions convention (functions/)
+# instead - the build output directory is passed to it directly as a CLI
+# argument, not read from here.
+[assets]
+directory = "./dist"
+binding = "ASSETS"
