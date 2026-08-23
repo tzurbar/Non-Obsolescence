@@ -1,0 +1,32 @@
+---
+interface Props {
+  links: { label: string; url: string }[];
+  kind: 'part' | 'video';
+  class?: string;
+}
+
+const { links, kind, class: className = '' } = Astro.props;
+const icon = kind === 'video' ? '▶' : '🔗';
+const heading = kind === 'video' ? 'Videos' : 'Where to get parts';
+---
+
+{links.length > 0 && (
+  <div class={className}>
+    <p class="text-xs font-semibold uppercase tracking-wide text-stone-500 mb-1">{heading}</p>
+    <ul class="space-y-1">
+      {links.map((l) => (
+        <li>
+          <a
+            href={l.url}
+            target="_blank"
+            rel="noopener"
+            class="text-sm text-emerald-700 hover:text-emerald-900 hover:underline inline-flex items-center gap-1.5"
+          >
+            <span aria-hidden="true">{icon}</span>
+            {l.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+)}

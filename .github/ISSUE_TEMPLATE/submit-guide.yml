@@ -1,0 +1,71 @@
+name: Submit a Guide
+description: Share a repair or building guide for review
+title: "[Guide] "
+labels: ["guide-submission", "pending-review"]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Guide title
+      placeholder: "How to Replace a Laptop Battery"
+    validations:
+      required: true
+  - type: input
+    id: productName
+    attributes:
+      label: Product / product type
+    validations:
+      required: true
+  - type: input
+    id: category
+    attributes:
+      label: Category
+      placeholder: "Home & Electrical, Furniture, Electronics..."
+    validations:
+      required: true
+  - type: dropdown
+    id: difficulty
+    attributes:
+      label: Difficulty
+      options:
+        - beginner
+        - intermediate
+        - advanced
+    validations:
+      required: true
+  - type: input
+    id: estimatedTime
+    attributes:
+      label: Estimated time
+      placeholder: "20 minutes"
+    validations:
+      required: true
+  - type: textarea
+    id: tools
+    attributes:
+      label: Tools needed
+      description: One per line
+    validations:
+      required: false
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps
+      description: >
+        One step per line. If a step has a photo, attach it to this issue
+        (drag & drop) and note which step it belongs to - a reviewer will
+        wire up the image path when converting this into a guide file.
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Safety notes / disposal notes / anything else
+    validations:
+      required: false
+  - type: input
+    id: authorName
+    attributes:
+      label: Your name (for credit)
+    validations:
+      required: false

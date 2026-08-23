@@ -1,0 +1,32 @@
+---
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+const locale = Astro.currentLocale ?? 'en';
+const rtlLocales = ['he', 'ar'];
+const dir = rtlLocales.includes(locale) ? 'rtl' : 'ltr';
+---
+
+<html lang={locale} dir={dir}>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} · Non-Obsolescence</title>
+  </head>
+  <body class="min-h-screen bg-stone-50 text-stone-900 flex flex-col">
+    <Nav />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <footer class="border-t border-stone-200 mt-16 py-8 text-center text-sm text-stone-500">
+      <p>&copy; {new Date().getFullYear()} Non-Obsolescence &mdash; fix it, don't toss it.</p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+# Copy this file to .dev.vars (git-ignored) and fill in real values for local testing.
+# .dev.vars is loaded automatically by `wrangler pages dev` - never commit the real one.
+
+# Fine-grained GitHub PAT, scoped to only this repo, with:
+#   Contents: Read and write
+#   Issues: Read and write
+GITHUB_TOKEN=
+
+# Optional, defaults to tzurbar/Non-Obsolescence if unset
+GITHUB_REPO=tzurbar/Non-Obsolescence

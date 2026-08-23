@@ -1,0 +1,13 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import DataContent from '../../components/DataContent.astro';
+import { getCollection } from 'astro:content';
+import { byLocale, defaultLocale } from '../../lib/content';
+
+const fixability = byLocale(await getCollection('fixability'), defaultLocale);
+const materials = byLocale(await getCollection('materials'), defaultLocale);
+---
+
+<Layout title="Data">
+  <DataContent fixability={fixability} materials={materials} />
+</Layout>

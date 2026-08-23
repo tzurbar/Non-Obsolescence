@@ -1,0 +1,25 @@
+---
+import { slugOf, localePath } from '../lib/content';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  guide: CollectionEntry<'guides'>;
+  locale: string;
+}
+
+const { guide, locale } = Astro.props;
+const href = localePath(locale, `guides/${slugOf(guide.id)}`);
+---
+
+<a
+  href={href}
+  class="block border border-stone-200 rounded-lg p-5 hover:border-emerald-600 hover:shadow-sm transition"
+>
+  <p class="text-xs uppercase tracking-wide text-emerald-700 font-semibold">
+    {guide.data.category}
+  </p>
+  <h3 class="mt-1 font-semibold text-stone-900">{guide.data.title}</h3>
+  <p class="mt-2 text-sm text-stone-500">
+    {guide.data.difficulty} &middot; {guide.data.estimatedTime}
+  </p>
+</a>

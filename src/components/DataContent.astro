@@ -1,0 +1,45 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  fixability: CollectionEntry<'fixability'>[];
+  materials: CollectionEntry<'materials'>[];
+}
+
+const { fixability, materials } = Astro.props;
+---
+
+<section class="max-w-5xl mx-auto px-4 py-12">
+  <h1 class="text-3xl font-bold mb-2">Repairability & Materials Data</h1>
+  <p class="text-stone-600 mb-10 max-w-2xl">
+    Which products are actually worth fixing, and which materials are worth
+    building with. Placeholder data for now &mdash; the scoring rubric and
+    sourcing methodology still need to be written.
+  </p>
+
+  <h2 class="text-xl font-bold mb-4">Fixability by Brand</h2>
+  <div class="space-y-4 mb-12">
+    {fixability.map((entry) => (
+      <div class="border border-stone-200 rounded-lg p-5">
+        <div class="flex items-center justify-between">
+          <h3 class="font-semibold">{entry.data.brand} &mdash; {entry.data.productCategory}</h3>
+          <span class="text-emerald-700 font-bold">{entry.data.score.toFixed(1)}/10</span>
+        </div>
+        <p class="mt-2 text-sm text-stone-600">{entry.data.summary}</p>
+      </div>
+    ))}
+  </div>
+
+  <h2 class="text-xl font-bold mb-4">Materials Reference</h2>
+  <div class="grid gap-4 sm:grid-cols-2">
+    {materials.map((entry) => (
+      <div class="border border-stone-200 rounded-lg p-5">
+        <h3 class="font-semibold">{entry.data.name}</h3>
+        <p class="mt-1 text-xs text-stone-500 uppercase tracking-wide">
+          Durability: {entry.data.durability} &middot; Recyclability: {entry.data.recyclability}
+        </p>
+        <p class="mt-2 text-sm text-stone-600">{entry.data.summary}</p>
+      </div>
+    ))}
+  </div>
+</section>

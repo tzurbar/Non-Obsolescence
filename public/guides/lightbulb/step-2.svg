@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+  <rect width="800" height="450" fill="#dbeafe"/>
+  <circle cx="400" cy="190" r="70" fill="none" stroke="#1d4ed8" stroke-width="8"/>
+  <path d="M 365 260 L 365 290 L 435 290 L 435 260" fill="none" stroke="#1d4ed8" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 300 130 A 100 100 0 0 1 340 90" fill="none" stroke="#1d4ed8" stroke-width="6" stroke-linecap="round" marker-end="url(#arrow)"/>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1d4ed8"/>
+    </marker>
+  </defs>
+  <text x="400" y="400" font-family="system-ui, sans-serif" font-size="28" fill="#1e3a8a" text-anchor="middle">Step 2 — remove the old bulb</text>
+</svg>

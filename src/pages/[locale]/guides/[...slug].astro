@@ -1,0 +1,24 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import GuideDetail from '../../../components/GuideDetail.astro';
+import { getCollection } from 'astro:content';
+import { byLocale, slugOf, locales, defaultLocale } from '../../../lib/content';
+
+export async function getStaticPaths() {
+  const guides = await getCollection('guides');
+  return locales
+    .filter((locale) => locale !== defaultLocale)
+    .flatMap((locale) =>
+      byLocale(guides, locale).map((guide) => ({
+        params: { locale, slug: slugOf(guide.id) },
+        props: { guide }
+      }))
+    );
+}
+
+const { guide } = Astro.props;
+---
+
+<Layout title={guide.data.title}>
+  <GuideDetail guide={guide} />
+</Layout>

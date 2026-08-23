@@ -1,0 +1,19 @@
+---
+interface Props {
+  status: 'original' | 'machine' | 'reviewed';
+  editHref: string;
+}
+
+const { status, editHref } = Astro.props;
+---
+
+{status === 'machine' && (
+  <div class="border border-amber-300 bg-amber-50 text-amber-900 rounded-lg px-4 py-3 text-sm mb-6 flex flex-wrap items-center justify-between gap-2">
+    <span>
+      🌐 This page is a <strong>machine-translated draft</strong> and hasn't been checked by a human yet.
+    </span>
+    <a href={editHref} target="_blank" rel="noopener" class="underline font-medium whitespace-nowrap">
+      Help review this translation
+    </a>
+  </div>
+)}

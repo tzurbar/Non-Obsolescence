@@ -1,0 +1,230 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { githubRepoUrl } from '../../lib/content';
+
+const issueFormHref = `${githubRepoUrl}/issues/new?template=submit-guide.yml`;
+---
+
+<Layout title="Submit a Guide">
+  <section class="max-w-2xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold mb-2">Submit a Guide</h1>
+    <p class="text-stone-600 mb-8">
+      No account needed. This goes straight into our review queue — someone
+      checks it, and if it's approved it becomes a real guide page. If it
+      isn't, we'll tell you why.
+    </p>
+
+    <form id="guide-form" class="space-y-6" novalidate>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <label class="block sm:col-span-2">
+          <span class="text-sm font-semibold text-stone-700">Guide title *</span>
+          <input name="title" required class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2" placeholder="How to Replace a Laptop Battery" />
+        </label>
+        <label class="block">
+          <span class="text-sm font-semibold text-stone-700">Product / product type *</span>
+          <input name="productName" required class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2" />
+        </label>
+        <label class="block">
+          <span class="text-sm font-semibold text-stone-700">Category *</span>
+          <input name="category" required class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2" placeholder="Home & Electrical" />
+        </label>
+        <label class="block">
+          <span class="text-sm font-semibold text-stone-700">Difficulty *</span>
+          <select name="difficulty" required class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2 bg-white">
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+          </select>
+        </label>
+        <label class="block">
+          <span class="text-sm font-semibold text-stone-700">Estimated time *</span>
+          <input name="estimatedTime" required class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2" placeholder="20 minutes" />
+        </label>
+      </div>
+
+      <label class="block">
+        <span class="text-sm font-semibold text-stone-700">Tools needed</span>
+        <textarea name="tools" rows="2" class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2" placeholder="One per line"></textarea>
+      </label>
+
+      <label class="block">
+        <span class="text-sm font-semibold text-stone-700">Cover photo</span>
+        <input type="file" name="coverImage" accept="image/jpeg,image/png,image/webp,image/gif" class="mt-1 w-full text-sm" />
+        <span class="text-xs text-stone-500">JPG, PNG, WebP or GIF, up to 5MB.</span>
+      </label>
+
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-sm font-semibold text-stone-700">Steps *</span>
+          <button type="button" id="add-step" class="text-sm text-emerald-700 hover:underline">+ Add step</button>
+        </div>
+        <div id="steps-list" class="space-y-4"></div>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        <label class="block">
+          <span class="text-sm font-semibold text-stone-700">Part links</span>
+          <textarea name="partLinks" rows="2" class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2" placeholder="One per line: Label | https://..."></textarea>
+        </label>
+        <label class="block">
+          <span class="text-sm font-semibold text-stone-700">Video links</span>
+          <textarea name="videoLinks" rows="2" class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2" placeholder="One per line: Label | https://..."></textarea>
+        </label>
+      </div>
+
+      <label class="block">
+        <span class="text-sm font-semibold text-stone-700">Safety notes, disposal notes, anything else</span>
+        <textarea name="notes" rows="3" class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2"></textarea>
+      </label>
+
+      <label class="block">
+        <span class="text-sm font-semibold text-stone-700">Your name (for credit)</span>
+        <input name="authorName" class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2" />
+      </label>
+
+      <label class="hidden" aria-hidden="true">
+        Leave this empty
+        <input name="website" tabindex="-1" autocomplete="off" />
+      </label>
+
+      <div>
+        <button type="submit" id="submit-btn" class="bg-emerald-700 text-white font-semibold px-6 py-3 rounded-lg hover:bg-emerald-800 transition disabled:opacity-50">
+          Submit for review
+        </button>
+        <p id="form-status" class="mt-3 text-sm" role="status"></p>
+      </div>
+    </form>
+
+    <p class="mt-10 text-sm text-stone-500">
+      Have a GitHub account and prefer to use it directly?
+      <a href={issueFormHref} target="_blank" rel="noopener" class="text-emerald-700 hover:underline">Open the submission there instead</a>.
+    </p>
+  </section>
+
+  <template id="step-template">
+    <div class="step-row border border-stone-200 rounded-lg p-4 space-y-2">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-semibold text-stone-500 step-number"></span>
+        <button type="button" class="remove-step text-xs text-red-600 hover:underline">Remove</button>
+      </div>
+      <textarea class="step-text w-full border border-stone-300 rounded-md px-3 py-2 text-sm" rows="2" placeholder="What do you do in this step?"></textarea>
+      <div class="grid gap-2 sm:grid-cols-3">
+        <input type="file" class="step-image text-sm" accept="image/jpeg,image/png,image/webp,image/gif" title="Photo for this step (optional, up to 5MB)" />
+        <input class="step-part border border-stone-300 rounded-md px-2 py-1.5 text-sm" placeholder="Part link: Label | URL (optional)" />
+        <input class="step-video border border-stone-300 rounded-md px-2 py-1.5 text-sm" placeholder="Video link: Label | URL (optional)" />
+      </div>
+    </div>
+  </template>
+
+  <script>
+    const stepsList = document.getElementById('steps-list') as HTMLDivElement;
+    const stepTemplate = document.getElementById('step-template') as HTMLTemplateElement;
+    const form = document.getElementById('guide-form') as HTMLFormElement;
+    const status = document.getElementById('form-status') as HTMLParagraphElement;
+    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+
+    function renumberSteps() {
+      stepsList.querySelectorAll('.step-row').forEach((row, i) => {
+        const label = row.querySelector('.step-number');
+        if (label) label.textContent = `Step ${i + 1}`;
+      });
+    }
+
+    function addStep() {
+      const node = stepTemplate.content.cloneNode(true) as DocumentFragment;
+      const removeBtn = node.querySelector('.remove-step');
+      removeBtn?.addEventListener('click', (e) => {
+        (e.target as HTMLElement).closest('.step-row')?.remove();
+        renumberSteps();
+      });
+      stepsList.appendChild(node);
+      renumberSteps();
+    }
+
+    document.getElementById('add-step')?.addEventListener('click', addStep);
+    addStep();
+    addStep();
+
+    function parseLinkLines(text: string) {
+      return text
+        .split('\n')
+        .map((line) => line.trim())
+        .filter(Boolean)
+        .map((line) => {
+          const [label, url] = line.split('|').map((s) => s.trim());
+          return { label: label || url, url: url || label };
+        });
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      status.textContent = 'Submitting…';
+      status.className = 'mt-3 text-sm text-stone-500';
+
+      const sourceFormData = new FormData(form);
+      const stepRows = Array.from(stepsList.querySelectorAll('.step-row'));
+      const steps = stepRows.map((row) => ({
+        text: (row.querySelector('.step-text') as HTMLTextAreaElement).value.trim(),
+        partLink: (row.querySelector('.step-part') as HTMLInputElement).value.trim(),
+        videoLink: (row.querySelector('.step-video') as HTMLInputElement).value.trim()
+      }));
+
+      const upload = new FormData();
+      for (const key of ['title', 'productName', 'category', 'difficulty', 'estimatedTime', 'tools', 'notes', 'authorName', 'website']) {
+        upload.set(key, String(sourceFormData.get(key) || ''));
+      }
+      upload.set(
+        'partLinks',
+        parseLinkLines(String(sourceFormData.get('partLinks') || ''))
+          .map((l) => `${l.label} | ${l.url}`)
+          .join('\n')
+      );
+      upload.set(
+        'videoLinks',
+        parseLinkLines(String(sourceFormData.get('videoLinks') || ''))
+          .map((l) => `${l.label} | ${l.url}`)
+          .join('\n')
+      );
+      upload.set('stepsJson', JSON.stringify(steps));
+
+      const coverInput = form.querySelector('input[name="coverImage"]') as HTMLInputElement;
+      if (coverInput.files?.[0]) upload.set('coverImage', coverInput.files[0]);
+      stepRows.forEach((row, i) => {
+        const file = (row.querySelector('.step-image') as HTMLInputElement).files?.[0];
+        if (file) upload.set(`stepImage_${i}`, file);
+      });
+
+      try {
+        const res = await fetch('/api/submit-guide', {
+          method: 'POST',
+          body: upload
+        });
+        const result = await res.json();
+        if (result.ok) {
+          status.textContent = 'Submitted! Thank you — you can follow its review here.';
+          status.className = 'mt-3 text-sm text-emerald-700';
+          const link = document.createElement('a');
+          link.href = result.issueUrl;
+          link.target = '_blank';
+          link.rel = 'noopener';
+          link.textContent = ' View submission';
+          link.className = 'underline';
+          status.appendChild(link);
+          form.reset();
+          stepsList.innerHTML = '';
+          addStep();
+          addStep();
+        } else {
+          status.textContent = result.error || 'Something went wrong. Please try again.';
+          status.className = 'mt-3 text-sm text-red-600';
+        }
+      } catch {
+        status.textContent = 'Network error — please try again.';
+        status.className = 'mt-3 text-sm text-red-600';
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+</Layout>

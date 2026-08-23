@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+  <rect width="800" height="450" fill="#dcfce7"/>
+  <circle cx="400" cy="190" r="70" fill="#16a34a" opacity="0.15" stroke="#15803d" stroke-width="8"/>
+  <path d="M 365 260 L 365 290 L 435 290 L 435 260" fill="none" stroke="#15803d" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 320 190 L 380 250 L 480 130" fill="none" stroke="#15803d" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="400" y="400" font-family="system-ui, sans-serif" font-size="28" fill="#14532d" text-anchor="middle">Step 4 — insert the new bulb</text>
+</svg>

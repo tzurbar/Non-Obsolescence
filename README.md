@@ -1,61 +1,79 @@
-# Non-Obsolescence: Empowering Repair and DIY Building
+# Non-Obsolescence
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+Fix it. Don't toss it.
 
-This project aims to create a user-friendly, expandable platform for sharing and accessing repair and building guides for a wide range of products.  My mission is to empower individuals to give new life to their belongings and build their dreams with their own hands.
+A free, community-built platform for repair and building guides — plus data
+on which products are actually worth fixing, and which materials are worth
+building with. Started by someone who's been opening up electronics and
+building things from scrap timber since he was a kid, and wants that
+knowledge to be easy for anyone to find and add to.
 
-## Table of Contents
+**Status: early build.** The site isn't deployed yet — this is active,
+local development.
 
--   [Features](#features)
--   [Technology Stack](#technology-stack)
--   [Getting Started](#getting-started)
--   [Contributing](#contributing)
--   [Roadmap](#roadmap)
--   [License](#license)
--   [Contact](#contact)
+## The three pillars
 
-## Features
+- **Guides** — step-by-step repair and building guides, each step optionally
+  with its own photo, part links, and video links.
+- **Fixability data** — repairability info by brand/product category, so
+  people can tell which products are actually worth fixing before they buy
+  or before they give up on something.
+- **Materials reference** — what to build with for durability and
+  repairability, for people building or buying furniture and fixtures, not
+  just fixing what they already own.
 
-*   **Comprehensive Guides:**  A growing library of easy-to-follow repair and building guides for various products.
-*   **User-Generated Content:**  Users can contribute their own guides, expanding the knowledge base and fostering a community of makers.
-*   **Interactive Submission:**  An intuitive interface for submitting new categories and product guides, including a parsing system for easy formatting.
-*   **Moderation & Approval:**  All submitted guides undergo a review process before being published to ensure quality and accuracy.
-*   **Multi-Lingual Support:**  Initial support for English, Hebrew, Arabic, Spanish, and Portuguese, with a design that facilitates adding more languages in the future.
-*   **Mobile-First Design:**  Fully responsive and compatible with mobile browsers on Android and iOS devices.
-*   **Secure Platform:**  Robust security measures, especially for the interactive guide submission page, to protect user data and prevent abuse.
-*   **User Account Management:**  User accounts for saving favorite guides, tracking contributions, and potentially other features like notifications.
-*   **Expandable Structure:**  The platform's architecture is designed for easy expansion of categories and product guides.
+## Why this stack
 
-## Technology Stack
+Fully self-owned and portable, deliberately avoiding lock-in to any single
+platform:
 
-*   **Frontend:** HTML, CSS, JavaScript.
-*   **Backend:**  A server-side language - TBD.
-*   **Database:**  A relational or NoSQL database - TBD.
-*   **Hosting:**  A web hosting provider that supports the chosen backend technology - TBD.
+- **[Astro](https://astro.build)** static site, styled with **Tailwind
+  CSS v4**. Content lives as Markdown files with a typed schema
+  ([`src/content.config.ts`](src/content.config.ts)), not in a database.
+- **Multi-language**: English, Hebrew, Arabic, Spanish, Portuguese, with
+  RTL handled automatically for Hebrew/Arabic. New languages are drafted by
+  machine translation and marked `machine` until a human reviews and edits
+  them — see [`scripts/translate.mjs`](scripts/translate.mjs).
+- **Deploys to Cloudflare Pages** (static hosting + a couple of small
+  serverless Functions), not a rented server. Static-first: no database,
+  no backend to run, to keep it maintainable by one person.
+- **Submissions have no backend of their own** — the on-site `/submit` form
+  posts to a Cloudflare Function
+  ([`functions/api/submit-guide.js`](functions/api/submit-guide.js)) that
+  files a GitHub issue (tagged `pending-review`) and stages any uploaded
+  photos into the repo. GitHub doubles as the review queue for free.
+- **Reviewing submissions** happens with a local-only tool (not part of the
+  public site) — `npm run review:web` for a browser UI pre-filled from the
+  submission, or `npm run review` for a terminal version. See
+  [`scripts/review-server.mjs`](scripts/review-server.mjs).
 
-## Getting Started
+## Local development
 
-1.  **Clone the Repository:** `git clone https://github.com/tzurbar/non-obsolescence.git` (Replace with your repository URL)
-2.  **Run the "index.html" file on your browser:** make sure all the files in the same folder (index.html, CSS, JS..)
+```sh
+npm install
+npm run dev              # fast dev server at localhost:4321, content/design work
+npm run dev:full          # site + the submission Function together, for testing /submit
+npm run build              # production build to ./dist
+npm run translate          # generate/update machine-translated draft content
+npm run review              # review pending guide submissions (terminal)
+npm run review:web          # review pending guide submissions (browser, local-only)
+```
 
-## Contributing
+`npm run dev:full` and `npm run review`/`review:web` need a GitHub token —
+copy [`.dev.vars.example`](.dev.vars.example) to `.dev.vars` (git-ignored)
+and fill it in. See that file for the exact permissions needed.
 
-Contributions are welcome!
+## `Old/`
 
-## Roadmap
-
-*   **Phase 1:** Project Definition & Planning - done
-*   **Phase 2:** Design & Prototyping - in proccess
-*   **Phase 3:** Development
-*   **Phase 4:** Testing & Deployment
-*   **Phase 5:** Launch & Maintenance, Community Building, Feature Enhancements
+Two earlier attempts at this project, kept for reference rather than
+deleted: a first static HTML/CSS/JS prototype, and a later React app
+scaffolded through a no-code AI builder. Neither is part of the active
+site — the current build started fresh from `src/`.
 
 ## License
 
-No license is required :)
+MIT
 
 ## Contact
 
-*   **Project Maintainer:** tzur bar-cochva
-*   **Email:** tzurbar@gmail.com
-*   **GitHub:** tzurbar
+Tzur bar-cochva — tzurbar@gmail.com

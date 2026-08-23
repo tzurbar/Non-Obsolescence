@@ -1,0 +1,79 @@
+---
+import DraftBanner from './DraftBanner.astro';
+import LinkList from './LinkList.astro';
+import { render } from 'astro:content';
+import { githubEditBase } from '../lib/content';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  guide: CollectionEntry<'guides'>;
+}
+
+const { guide } = Astro.props;
+const { Content } = await render(guide);
+const editHref = `${githubEditBase}/src/content/guides/${guide.id}.md`;
+---
+
+<article class="max-w-3xl mx-auto px-4 py-12">
+  <DraftBanner status={guide.data.translationStatus} editHref={editHref} />
+
+  <p class="text-xs uppercase tracking-wide text-emerald-700 font-semibold">
+    {guide.data.category}
+  </p>
+  <h1 class="text-3xl font-bold mt-1">{guide.data.title}</h1>
+  <p class="mt-2 text-sm text-stone-500">
+    {guide.data.difficulty} &middot; {guide.data.estimatedTime}
+    {guide.data.authorName && <> &middot; by {guide.data.authorName}</>}
+  </p>
+
+  {guide.data.tools.length > 0 && (
+    <div class="mt-6 p-4 bg-stone-100 rounded-lg">
+      <h2 class="font-semibold text-sm mb-2">Tools needed</h2>
+      <ul class="list-disc list-inside text-sm text-stone-700">
+        {guide.data.tools.map((tool) => <li>{tool}</li>)}
+      </ul>
+    </div>
+  )}
+
+  {(guide.data.partLinks.length > 0 || guide.data.videoLinks.length > 0) && (
+    <div class="mt-4 grid gap-4 sm:grid-cols-2">
+      <LinkList links={guide.data.partLinks} kind="part" />
+      <LinkList links={guide.data.videoLinks} kind="video" />
+    </div>
+  )}
+
+  <div class="prose prose-stone mt-8 max-w-none">
+    <Content />
+  </div>
+
+  {guide.data.steps.length > 0 && (
+    <ol class="mt-8 space-y-6">
+      {guide.data.steps.map((step, i) => (
+        <li class="border border-stone-200 rounded-lg p-5">
+          <div class="flex gap-4 items-start">
+            <span class="flex-none w-8 h-8 rounded-full bg-emerald-700 text-white text-sm font-bold flex items-center justify-center">
+              {i + 1}
+            </span>
+            <div class="flex-1">
+              <p class="text-stone-800">{step.text}</p>
+              {step.image && (
+                <img
+                  src={step.image}
+                  alt={`Step ${i + 1}`}
+                  class="mt-3 rounded-lg border border-stone-200 max-w-full"
+                  loading="lazy"
+                />
+              )}
+              {(step.partLinks.length > 0 || step.videoLinks.length > 0) && (
+                <div class="mt-3 grid gap-3 sm:grid-cols-2">
+                  <LinkList links={step.partLinks} kind="part" />
+                  <LinkList links={step.videoLinks} kind="video" />
+                </div>
+              )}
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  )}
+</article>

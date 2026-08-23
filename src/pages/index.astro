@@ -1,0 +1,12 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HomeContent from '../components/HomeContent.astro';
+import { getCollection } from 'astro:content';
+import { byLocale, defaultLocale } from '../lib/content';
+
+const guides = byLocale(await getCollection('guides'), defaultLocale);
+---
+
+<Layout title="Home">
+  <HomeContent locale={defaultLocale} guides={guides} />
+</Layout>
