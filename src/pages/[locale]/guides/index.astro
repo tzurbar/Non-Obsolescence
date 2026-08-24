@@ -3,6 +3,7 @@ import Layout from '../../../layouts/Layout.astro';
 import GuidesList from '../../../components/GuidesList.astro';
 import { getCollection } from 'astro:content';
 import { byLocale, locales, defaultLocale } from '../../../lib/content';
+import { t as uiT } from '../../../lib/i18n';
 
 export async function getStaticPaths() {
   return locales
@@ -14,6 +15,6 @@ const { locale } = Astro.params;
 const guides = byLocale(await getCollection('guides'), locale);
 ---
 
-<Layout title="Guides">
+<Layout title={uiT(locale).guides.title}>
   <GuidesList locale={locale} guides={guides} />
 </Layout>

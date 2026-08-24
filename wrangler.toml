@@ -2,14 +2,11 @@ name = "non-obsolescence"
 main = "worker/index.js"
 compatibility_date = "2026-08-23"
 
-# Used by `wrangler deploy` (the Workers-based deployment Cloudflare's
-# dashboard now creates) to serve the static site; worker/index.js handles
-# the one dynamic route and falls back to this binding for everything else.
-#
-# `npm run dev:functions` (`wrangler pages dev dist`) ignores this block
-# entirely and uses the older Pages Functions convention (functions/)
-# instead - the build output directory is passed to it directly as a CLI
-# argument, not read from here.
+# Serves the static site; worker/index.js handles the one dynamic route
+# (/api/submit-guide) and falls back to this binding for everything else.
+# Used both by `wrangler deploy` (production, via Cloudflare's dashboard)
+# and `npm run dev:functions` (`wrangler dev`, local testing) - same code
+# path in both places, so what works locally works in production.
 [assets]
 directory = "./dist"
 binding = "ASSETS"

@@ -4,6 +4,7 @@
 
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import { spawn } from 'node:child_process';
 import path from 'node:path';
 
 export const ROOT = process.cwd();
@@ -193,6 +194,31 @@ export function buildGuideMarkdown({ data, steps, localImagePaths, publishDate }
   return lines.join('\n') + '\n';
 }
 
+// Runs the same script `npm run translate` uses, right after a guide is
+// approved - so machine-translated drafts exist immediately instead of
+// depending on someone remembering to run it later. Failures here don't
+// block the approval itself (the guide is already published in English);
+// they're just logged for whoever's watching the review tool's output.
+function runTranslate() {
+  return new Promise((resolve) => {
+    const child = spawn(process.execPath, [path.join(ROOT, 'scripts', 'translate.mjs')], {
+      cwd: ROOT,
+      stdio: 'pipe'
+    });
+    let output = '';
+    child.stdout.on('data', (d) => (output += d));
+    child.stderr.on('data', (d) => (output += d));
+    child.on('close', (code) => {
+      if (code !== 0) console.warn(`[translate] exited with code ${code}:\n${output}`);
+      resolve();
+    });
+    child.on('error', (err) => {
+      console.warn(`[translate] failed to start: ${err.message}`);
+      resolve();
+    });
+  });
+}
+
 export async function getDefaultBranch(repo, token) {
   const res = await ghFetch(repo, token, '');
   if (!res.ok) throw new Error(`Failed to load repo info (${res.status})`);
@@ -253,6 +279,8 @@ export async function approveSubmission({ repo, token, issue, submission }) {
     method: 'PATCH',
     body: JSON.stringify({ state: 'closed', state_reason: 'completed' })
   });
+
+  await runTranslate();
 
   return { slug };
 }

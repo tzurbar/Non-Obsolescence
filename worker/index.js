@@ -1,9 +1,11 @@
 // Entry point for Cloudflare's Workers-with-static-assets deployment model
 // (what their dashboard now creates by default, folding in what used to be
-// a separate "Pages" product). Reuses the exact same submission handler
-// from functions/api/submit-guide.js - that file also still works locally
-// via `wrangler pages dev`, which uses the older Pages Functions convention
-// independently of this file.
+// a separate "Pages" product). Used both for production (`wrangler deploy`)
+// and local testing (`wrangler dev`, via npm run dev:functions), so the
+// same code path is exercised in both places. Reuses the submission
+// handler from functions/api/submit-guide.js as a plain function - that
+// file's Pages-Functions-style export name is no longer load-bearing, it's
+// just imported and called directly here.
 
 import { onRequestPost as submitGuide } from '../functions/api/submit-guide.js';
 

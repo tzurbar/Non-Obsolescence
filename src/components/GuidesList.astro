@@ -1,5 +1,6 @@
 ---
 import GuideCard from './GuideCard.astro';
+import { t as uiT } from '../lib/i18n';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -8,11 +9,12 @@ interface Props {
 }
 
 const { locale, guides } = Astro.props;
+const s = uiT(locale).guides;
 ---
 
 <section class="max-w-5xl mx-auto px-4 py-12">
-  <h1 class="text-3xl font-bold mb-8">All Guides</h1>
-  {guides.length === 0 && <p class="text-stone-500">No guides yet in this language.</p>}
+  <h1 class="text-3xl font-bold mb-8">{s.title}</h1>
+  {guides.length === 0 && <p class="text-stone-500">{s.empty}</p>}
   <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
     {guides.map((guide) => <GuideCard guide={guide} locale={locale} />)}
   </div>

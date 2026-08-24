@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
+import { t as uiT } from '../lib/i18n';
 
 interface Props {
   title: string;
@@ -10,6 +11,7 @@ const { title } = Astro.props;
 const locale = Astro.currentLocale ?? 'en';
 const rtlLocales = ['he', 'ar'];
 const dir = rtlLocales.includes(locale) ? 'rtl' : 'ltr';
+const footerTagline = uiT(locale).footer.tagline;
 ---
 
 <html lang={locale} dir={dir}>
@@ -26,7 +28,7 @@ const dir = rtlLocales.includes(locale) ? 'rtl' : 'ltr';
       <slot />
     </main>
     <footer class="border-t border-stone-200 mt-16 py-8 text-center text-sm text-stone-500">
-      <p>&copy; {new Date().getFullYear()} Non-Obsolescence &mdash; fix it, don't toss it.</p>
+      <p>&copy; {new Date().getFullYear()} {footerTagline}</p>
     </footer>
   </body>
 </html>

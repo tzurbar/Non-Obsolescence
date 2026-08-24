@@ -1,13 +1,17 @@
 ---
+import { t as uiT } from '../lib/i18n';
+
 interface Props {
   links: { label: string; url: string }[];
   kind: 'part' | 'video';
+  locale: string;
   class?: string;
 }
 
-const { links, kind, class: className = '' } = Astro.props;
+const { links, kind, locale, class: className = '' } = Astro.props;
 const icon = kind === 'video' ? '▶' : '🔗';
-const heading = kind === 'video' ? 'Videos' : 'Where to get parts';
+const s = uiT(locale).linkList;
+const heading = kind === 'video' ? s.videos : s.parts;
 ---
 
 {links.length > 0 && (

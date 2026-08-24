@@ -3,6 +3,7 @@ import Layout from '../../../layouts/Layout.astro';
 import DataContent from '../../../components/DataContent.astro';
 import { getCollection } from 'astro:content';
 import { byLocale, locales, defaultLocale } from '../../../lib/content';
+import { t as uiT } from '../../../lib/i18n';
 
 export async function getStaticPaths() {
   return locales
@@ -15,6 +16,6 @@ const fixability = byLocale(await getCollection('fixability'), locale);
 const materials = byLocale(await getCollection('materials'), locale);
 ---
 
-<Layout title="Data">
-  <DataContent fixability={fixability} materials={materials} />
+<Layout title={uiT(locale).data.title}>
+  <DataContent locale={locale} fixability={fixability} materials={materials} />
 </Layout>

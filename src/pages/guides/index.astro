@@ -3,10 +3,11 @@ import Layout from '../../layouts/Layout.astro';
 import GuidesList from '../../components/GuidesList.astro';
 import { getCollection } from 'astro:content';
 import { byLocale, defaultLocale } from '../../lib/content';
+import { t as uiT } from '../../lib/i18n';
 
 const guides = byLocale(await getCollection('guides'), defaultLocale);
 ---
 
-<Layout title="Guides">
+<Layout title={uiT(defaultLocale).guides.title}>
   <GuidesList locale={defaultLocale} guides={guides} />
 </Layout>

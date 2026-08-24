@@ -1,20 +1,19 @@
 ---
-name: ⟦needs translation to he⟧ Solid Hardwood (Oak)
+name: עץ מלא (אלון)
 bestFor:
-  - ⟦needs translation to he⟧ Furniture frames
-  - ⟦needs translation to he⟧ Load-bearing shelving
-  - ⟦needs translation to he⟧ Tool handles
+  - שלדים לרהיטים
+  - מדפים נושאי משקל
+  - ידיות לכלים
 durability: high
 recyclability: high
 summary: >
-  ⟦needs translation to he⟧ Dense, sands and refinishes well over decades of
-  use, and can be repaired with basic woodworking tools rather than replaced.
-  Compare against particleboard/MDF, which fails at fasteners and can't be
-  meaningfully repaired once swollen or delaminated.
+  צפוף, נשחק ומתחדש היטב לאורך עשרות שנות שימוש, וניתן לתקן אותו עם כלי
+  נגרות בסיסיים במקום להחליף. לעומתו, עץ מעובד (סיבית/MDF) נכשל באזורי
+  החיבור ולא ניתן לתקן אותו באופן משמעותי לאחר שהוא נפוח או מתקלף.
 translationStatus: machine
 translationOf: en/example-material
-sourceUpdated: '2026-08-22T15:59:58.892Z'
+sourceUpdated: "2026-08-24T17:53:10.000Z"
 ---
-⟦needs translation to he⟧ Placeholder entry for the materials reference. This is where a "what to
-build with" guide for durable, repairable furniture and fixtures would
-live, aimed at people buying or building rather than only fixing.
+
+רשומת דוגמה למדריך החומרים. כאן ימוקם מדריך "ממה לבנות" לרהיטים ומתקנים
+עמידים וניתנים לתיקון, המיועד לאנשים שקונים או בונים, ולא רק מתקנים.

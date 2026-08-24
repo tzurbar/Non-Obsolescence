@@ -1,20 +1,19 @@
 ---
 brand: Example Brand
-productCategory: ⟦needs translation to he⟧ Laptops
+productCategory: מחשבים ניידים
 score: 6.5
 summary: >
-  ⟦needs translation to he⟧ Mid-range repairability. Battery and storage are
-  user-replaceable with standard tools, but the display assembly requires
-  proprietary adhesive removal tools and screen replacements are not sold to
-  consumers.
+  יכולת תיקון בינונית. הסוללה והאחסון ניתנים להחלפה על ידי המשתמש עם כלים
+  סטנדרטיים, אבל מארז המסך דורש כלי הסרה מיוחדים להדבקה קניינית, וחלקי חילוף
+  למסך אינם נמכרים לצרכנים.
 sources:
-  - 'https://example.com/teardown-report'
-updated: 2026-08-22T00:00:00.000Z
+  - "https://example.com/teardown-report"
+updated: 2026-08-22
 translationStatus: machine
 translationOf: en/example-brand
-sourceUpdated: '2026-08-22T15:59:55.580Z'
+sourceUpdated: "2026-08-24T17:53:10.000Z"
 ---
-⟦needs translation to he⟧ This is placeholder content to demonstrate the data-page structure. Once
-real research is done, each entry here would cite a teardown, a repair
-manual, or a spare-parts availability check, and the score would follow a
-documented rubric (to be defined) rather than a gut feeling.
+
+זהו תוכן דוגמה להמחשת מבנה עמוד הנתונים. כשתיעשה מחקר אמיתי, כל רשומה כאן
+תצטט פירוק מוצר, מדריך תיקון, או בדיקת זמינות חלקי חילוף, והציון יתבסס על
+שיטת ניקוד מתועדת (שעוד תוגדר) ולא על תחושת בטן.

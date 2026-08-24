@@ -11,9 +11,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "translate": "node scripts/translate.mjs",
-    "build:watch": "nodemon --watch src --watch public -e astro,ts,tsx,md,mdx,css,js,svg --exec \"astro build\"",
-    "dev:functions": "wrangler pages dev dist --live-reload --port 8788",
-    "dev:full": "concurrently -k -n astro,wrangler \"npm:build:watch\" \"npm:dev:functions\"",
+    "dev:functions": "wrangler dev --port 8788",
+    "dev:full": "npm run build && npm run dev:functions",
     "review": "node scripts/review.mjs",
     "review:web": "node scripts/review-server.mjs"
   },
@@ -24,9 +23,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.20",
-    "concurrently": "^10.0.5",
     "gray-matter": "^4.0.3",
-    "nodemon": "^3.1.14",
     "wrangler": "^4.125.0"
   }
 }

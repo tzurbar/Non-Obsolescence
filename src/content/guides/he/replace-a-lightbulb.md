@@ -1,56 +1,46 @@
 ---
-title: ⟦needs translation to he⟧ How to Replace a Light Bulb
-productName: ⟦needs translation to he⟧ Standard Light Fixture
-category: ⟦needs translation to he⟧ Home & Electrical
+title: איך להחליף נורה
+productName: גוף תאורה סטנדרטי
+category: בית וחשמל
 difficulty: beginner
-estimatedTime: ⟦needs translation to he⟧ 5 minutes
+estimatedTime: 5 דקות
 tools:
-  - ⟦needs translation to he⟧ Replacement bulb
-  - ⟦needs translation to he⟧ Step stool (if needed)
+  - נורה חלופית
+  - שרפרף (אם צריך)
 coverImage: /guides/lightbulb/cover.svg
 featured: true
 authorName: Tzur
-publishDate: 2026-08-23T00:00:00.000Z
+publishDate: 2026-08-23
 partLinks:
-  - label: >-
-      ⟦needs translation to he⟧ LED bulb, E26 base, warm white (example
-      retailer)
-    url: 'https://example.com/parts/led-bulb-e26'
+  - label: "נורת LED, בסיס E26, אור לבן חם (חנות לדוגמה)"
+    url: "https://example.com/parts/led-bulb-e26"
 videoLinks:
-  - label: ⟦needs translation to he⟧ Full walkthrough (2 min)
-    url: 'https://www.youtube.com/watch?v=example-placeholder'
+  - label: "הדרכה מלאה (2 דקות)"
+    url: "https://www.youtube.com/watch?v=example-placeholder"
 steps:
-  - text: >-
-      ⟦needs translation to he⟧ Turn off the power. Switch off the fixture or
-      unplug the lamp.
+  - text: "מנתקים את החשמל. מכבים את המפסק של גוף התאורה או מנתקים את המנורה מהשקע."
     image: /guides/lightbulb/step-1.svg
-  - text: >-
-      ⟦needs translation to he⟧ Remove the old bulb. Turn it counter-clockwise
-      (for standard screw bases) until it comes free. For bayonet-mount bulbs,
-      push in slightly and twist.
+  - text: "מוציאים את הנורה הישנה. מסובבים נגד כיוון השעון (לבסיס הברגה סטנדרטי) עד שהיא משתחררת. לנורות עם בסיס בயונט, לוחצים קלות פנימה ומסובבים."
     image: /guides/lightbulb/step-2.svg
     videoLinks:
-      - label: '⟦needs translation to he⟧ Bayonet-mount removal, close-up (30s)'
-        url: 'https://www.youtube.com/watch?v=example-placeholder'
-  - text: >-
-      ⟦needs translation to he⟧ Check the socket. Make sure it's clean and the
-      contacts aren't corroded or bent.
-  - text: >-
-      ⟦needs translation to he⟧ Insert the new bulb. Turn it clockwise until
-      snug — don't overtighten.
+      - label: "הוצאת נורת בயונט, תקריב (30 שניות)"
+        url: "https://www.youtube.com/watch?v=example-placeholder"
+  - text: "בודקים את השקע. מוודאים שהוא נקי ושהמגעים לא מחלידים או מעוקלים."
+  - text: "מכניסים את הנורה החדשה. מסובבים עם כיוון השעון עד שהיא יושבת יציב — בלי להדק יותר מדי."
     image: /guides/lightbulb/step-4.svg
     partLinks:
-      - label: ⟦needs translation to he⟧ Same bulb model used in this guide
-        url: 'https://example.com/parts/led-bulb-e26'
-  - text: ⟦needs translation to he⟧ Restore power and test. Flip the switch back on.
+      - label: "אותו דגם נורה שמופיע במדריך הזה"
+        url: "https://example.com/parts/led-bulb-e26"
+  - text: "מחזירים את החשמל ובודקים שהיא עובדת."
 translationStatus: machine
 translationOf: en/replace-a-lightbulb
-sourceUpdated: '2026-08-23T01:03:22.744Z'
+sourceUpdated: "2026-08-24T17:53:10.000Z"
 ---
-⟦needs translation to he⟧ ## Safety first
 
-Turn off the light switch, and if you're working on a lamp, unplug it. Let the old bulb cool down before touching it if it's been on recently.
+## בטיחות לפני הכל
 
-## Disposal note
+מכבים את המתג, ואם מדובר במנורה, מנתקים אותה מהשקע. נותנים לנורה הישנה להתקרר לפני שנוגעים בה אם היא דלקה לאחרונה.
 
-Incandescent and LED bulbs can usually go in household trash, but CFLs contain a small amount of mercury and should be taken to a hazardous-waste or recycling drop-off point.
+## הערה לגבי סילוק
+
+נורות ליבון ו-LED אפשר בדרך כלל לזרוק לפח הביתי, אבל נורות פלואורסצנט קומפקטיות (CFL) מכילות כמות קטנה של כספית וצריך להעביר אותן לנקודת איסוף פסולת מסוכנת או מיחזור.

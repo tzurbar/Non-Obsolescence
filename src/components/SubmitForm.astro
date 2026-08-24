@@ -1,0 +1,230 @@
+---
+import { githubRepoUrl } from '../lib/content';
+import { t as uiT } from '../lib/i18n';
+
+interface Props {
+  locale: string;
+}
+
+const { locale } = Astro.props;
+const s = uiT(locale).submit;
+const issueFormHref = `${githubRepoUrl}/issues/new?template=submit-guide.yml`;
+---
+
+<section class="max-w-2xl mx-auto px-4 py-12">
+  <h1 class="text-3xl font-bold mb-2">{s.title}</h1>
+  <p class="text-stone-600 mb-8">{s.intro}</p>
+
+  <form id="guide-form" class="space-y-6" novalidate>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <label class="block sm:col-span-2">
+        <span class="text-sm font-semibold text-stone-700">{s.titleLabel} *</span>
+        <input name="title" required class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2" placeholder={s.titlePlaceholder} />
+      </label>
+      <label class="block">
+        <span class="text-sm font-semibold text-stone-700">{s.productLabel} *</span>
+        <input name="productName" required class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2" />
+      </label>
+      <label class="block">
+        <span class="text-sm font-semibold text-stone-700">{s.categoryLabel} *</span>
+        <input name="category" required class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2" placeholder={s.categoryPlaceholder} />
+      </label>
+      <label class="block">
+        <span class="text-sm font-semibold text-stone-700">{s.difficultyLabel} *</span>
+        <select name="difficulty" required class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2 bg-white">
+          <option value="beginner">{s.beginner}</option>
+          <option value="intermediate">{s.intermediate}</option>
+          <option value="advanced">{s.advanced}</option>
+        </select>
+      </label>
+      <label class="block">
+        <span class="text-sm font-semibold text-stone-700">{s.estimatedTimeLabel} *</span>
+        <input name="estimatedTime" required class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2" placeholder={s.estimatedTimePlaceholder} />
+      </label>
+    </div>
+
+    <label class="block">
+      <span class="text-sm font-semibold text-stone-700">{s.toolsLabel}</span>
+      <textarea name="tools" rows="2" class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2" placeholder={s.toolsPlaceholder}></textarea>
+    </label>
+
+    <label class="block">
+      <span class="text-sm font-semibold text-stone-700">{s.coverPhotoLabel}</span>
+      <input type="file" name="coverImage" accept="image/jpeg,image/png,image/webp,image/gif" class="mt-1 w-full text-sm" />
+      <span class="text-xs text-stone-500">{s.coverPhotoHelp}</span>
+    </label>
+
+    <div>
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-sm font-semibold text-stone-700">{s.stepsLabel} *</span>
+        <button type="button" id="add-step" class="text-sm text-emerald-700 hover:underline">{s.addStep}</button>
+      </div>
+      <div id="steps-list" class="space-y-4"></div>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2">
+      <label class="block">
+        <span class="text-sm font-semibold text-stone-700">{s.partLinksLabel}</span>
+        <textarea name="partLinks" rows="2" class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2" placeholder={s.linksPlaceholder}></textarea>
+      </label>
+      <label class="block">
+        <span class="text-sm font-semibold text-stone-700">{s.videoLinksLabel}</span>
+        <textarea name="videoLinks" rows="2" class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2" placeholder={s.linksPlaceholder}></textarea>
+      </label>
+    </div>
+
+    <label class="block">
+      <span class="text-sm font-semibold text-stone-700">{s.notesLabel}</span>
+      <textarea name="notes" rows="3" class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2"></textarea>
+    </label>
+
+    <label class="block">
+      <span class="text-sm font-semibold text-stone-700">{s.authorLabel}</span>
+      <input name="authorName" class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2" />
+    </label>
+
+    <label class="hidden" aria-hidden="true">
+      Leave this empty
+      <input name="website" tabindex="-1" autocomplete="off" />
+    </label>
+
+    <div>
+      <button type="submit" id="submit-btn" class="bg-emerald-700 text-white font-semibold px-6 py-3 rounded-lg hover:bg-emerald-800 transition disabled:opacity-50">
+        {s.submitButton}
+      </button>
+      <p id="form-status" class="mt-3 text-sm" role="status"></p>
+    </div>
+  </form>
+
+  <p class="mt-10 text-sm text-stone-500">
+    {s.githubPrompt}
+    <a href={issueFormHref} target="_blank" rel="noopener" class="text-emerald-700 hover:underline">{s.githubLink}</a>.
+  </p>
+</section>
+
+<template id="step-template">
+  <div class="step-row border border-stone-200 rounded-lg p-4 space-y-2">
+    <div class="flex items-center justify-between">
+      <span class="text-xs font-semibold text-stone-500 step-number"></span>
+      <button type="button" class="remove-step text-xs text-red-600 hover:underline">{s.remove}</button>
+    </div>
+    <textarea class="step-text w-full border border-stone-300 rounded-md px-3 py-2 text-sm" rows="2" placeholder={s.stepPlaceholder}></textarea>
+    <div class="grid gap-2 sm:grid-cols-3">
+      <input type="file" class="step-image text-sm" accept="image/jpeg,image/png,image/webp,image/gif" title={s.stepImageTitle} />
+      <input class="step-part border border-stone-300 rounded-md px-2 py-1.5 text-sm" placeholder={s.stepPartPlaceholder} />
+      <input class="step-video border border-stone-300 rounded-md px-2 py-1.5 text-sm" placeholder={s.stepVideoPlaceholder} />
+    </div>
+  </div>
+</template>
+
+<script define:vars={{ strings: { stepNumber: s.stepNumber, submitting: s.submitting, submitted: s.submitted, viewSubmission: s.viewSubmission, genericError: s.genericError, networkError: s.networkError } }}>
+  const stepsList = document.getElementById('steps-list');
+  const stepTemplate = document.getElementById('step-template');
+  const form = document.getElementById('guide-form');
+  const status = document.getElementById('form-status');
+  const submitBtn = document.getElementById('submit-btn');
+
+  function renumberSteps() {
+    stepsList.querySelectorAll('.step-row').forEach((row, i) => {
+      const label = row.querySelector('.step-number');
+      if (label) label.textContent = `${strings.stepNumber} ${i + 1}`;
+    });
+  }
+
+  function addStep() {
+    const node = stepTemplate.content.cloneNode(true);
+    const removeBtn = node.querySelector('.remove-step');
+    removeBtn?.addEventListener('click', (e) => {
+      e.target.closest('.step-row')?.remove();
+      renumberSteps();
+    });
+    stepsList.appendChild(node);
+    renumberSteps();
+  }
+
+  document.getElementById('add-step')?.addEventListener('click', addStep);
+  addStep();
+  addStep();
+
+  function parseLinkLines(text) {
+    return text
+      .split('\n')
+      .map((line) => line.trim())
+      .filter(Boolean)
+      .map((line) => {
+        const [label, url] = line.split('|').map((s) => s.trim());
+        return { label: label || url, url: url || label };
+      });
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    status.textContent = strings.submitting;
+    status.className = 'mt-3 text-sm text-stone-500';
+
+    const sourceFormData = new FormData(form);
+    const stepRows = Array.from(stepsList.querySelectorAll('.step-row'));
+    const steps = stepRows.map((row) => ({
+      text: row.querySelector('.step-text').value.trim(),
+      partLink: row.querySelector('.step-part').value.trim(),
+      videoLink: row.querySelector('.step-video').value.trim()
+    }));
+
+    const upload = new FormData();
+    for (const key of ['title', 'productName', 'category', 'difficulty', 'estimatedTime', 'tools', 'notes', 'authorName', 'website']) {
+      upload.set(key, String(sourceFormData.get(key) || ''));
+    }
+    upload.set(
+      'partLinks',
+      parseLinkLines(String(sourceFormData.get('partLinks') || ''))
+        .map((l) => `${l.label} | ${l.url}`)
+        .join('\n')
+    );
+    upload.set(
+      'videoLinks',
+      parseLinkLines(String(sourceFormData.get('videoLinks') || ''))
+        .map((l) => `${l.label} | ${l.url}`)
+        .join('\n')
+    );
+    upload.set('stepsJson', JSON.stringify(steps));
+
+    const coverInput = form.querySelector('input[name="coverImage"]');
+    if (coverInput.files?.[0]) upload.set('coverImage', coverInput.files[0]);
+    stepRows.forEach((row, i) => {
+      const file = row.querySelector('.step-image').files?.[0];
+      if (file) upload.set(`stepImage_${i}`, file);
+    });
+
+    try {
+      const res = await fetch('/api/submit-guide', {
+        method: 'POST',
+        body: upload
+      });
+      const result = await res.json();
+      if (result.ok) {
+        status.textContent = strings.submitted;
+        status.className = 'mt-3 text-sm text-emerald-700';
+        const link = document.createElement('a');
+        link.href = result.issueUrl;
+        link.target = '_blank';
+        link.rel = 'noopener';
+        link.textContent = ' ' + strings.viewSubmission;
+        link.className = 'underline';
+        status.appendChild(link);
+        form.reset();
+        stepsList.innerHTML = '';
+        addStep();
+        addStep();
+      } else {
+        status.textContent = result.error || strings.genericError;
+        status.className = 'mt-3 text-sm text-red-600';
+      }
+    } catch {
+      status.textContent = strings.networkError;
+      status.className = 'mt-3 text-sm text-red-600';
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+</script>

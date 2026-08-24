@@ -1,5 +1,6 @@
 ---
 import GuideCard from './GuideCard.astro';
+import { t as uiT } from '../lib/i18n';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -9,22 +10,19 @@ interface Props {
 
 const { locale, guides } = Astro.props;
 const featured = guides.filter((g) => g.data.featured);
+const s = uiT(locale).home;
 ---
 
 <section class="bg-emerald-700 text-white">
   <div class="max-w-5xl mx-auto px-4 py-16 text-center">
-    <h1 class="text-4xl font-bold tracking-tight">Fix it. Don't toss it.</h1>
-    <p class="mt-4 text-emerald-100 max-w-2xl mx-auto">
-      Free, community-built repair and building guides &mdash; plus data on which
-      products are actually worth fixing, and which materials are worth
-      building with.
-    </p>
+    <h1 class="text-4xl font-bold tracking-tight">{s.heroTitle}</h1>
+    <p class="mt-4 text-emerald-100 max-w-2xl mx-auto">{s.heroSubtitle}</p>
   </div>
 </section>
 
 <section class="max-w-5xl mx-auto px-4 py-12">
-  <h2 class="text-2xl font-bold mb-6">Featured Guides</h2>
-  {featured.length === 0 && <p class="text-stone-500">No featured guides yet.</p>}
+  <h2 class="text-2xl font-bold mb-6">{s.featuredGuides}</h2>
+  {featured.length === 0 && <p class="text-stone-500">{s.noFeatured}</p>}
   <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
     {featured.map((guide) => <GuideCard guide={guide} locale={locale} />)}
   </div>
