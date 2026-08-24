@@ -39,6 +39,7 @@ const TRANSLATABLE_FIELDS = {
 const TRANSLATABLE_LEAF_KEYS = new Set(['text', 'title', 'label']);
 
 async function translateText(text, targetLocale) {
+  if (!text.trim()) return text; // nothing to translate - don't manufacture a placeholder out of blank input
   const endpoint = process.env.TRANSLATION_API_URL;
   if (!endpoint) {
     return `⟦needs translation to ${targetLocale}⟧ ${text}`;
