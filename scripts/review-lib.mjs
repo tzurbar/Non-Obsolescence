@@ -134,7 +134,7 @@ export async function deleteRemoteFile(repo, token, filePath, sha, message) {
   });
 }
 
-function yamlString(value) {
+export function yamlString(value) {
   return `"${String(value).replace(/"/g, '\\"')}"`;
 }
 
@@ -199,7 +199,7 @@ export function buildGuideMarkdown({ data, steps, localImagePaths, publishDate }
 // depending on someone remembering to run it later. Failures here don't
 // block the approval itself (the guide is already published in English);
 // they're just logged for whoever's watching the review tool's output.
-function runTranslate() {
+export function runTranslate() {
   return new Promise((resolve) => {
     const child = spawn(process.execPath, [path.join(ROOT, 'scripts', 'translate.mjs')], {
       cwd: ROOT,

@@ -14,7 +14,8 @@
     "dev:functions": "wrangler dev --port 8788",
     "dev:full": "npm run build && npm run dev:functions",
     "review": "node scripts/review.mjs",
-    "review:web": "node scripts/review-server.mjs"
+    "review:web": "node scripts/review-server.mjs",
+    "data:edit": "node scripts/data-editor.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
