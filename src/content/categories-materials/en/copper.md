@@ -1,0 +1,4 @@
+---
+label: "Copper"
+parentId: "metal"
+---
