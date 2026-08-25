@@ -1,5 +1,8 @@
 ---
-label: "⟦needs translation to es⟧ Brass"
-parentId: "metal"
+label: Latón
+parentId: metal
 translationStatus: machine
+translationOf: en/brass
+sourceUpdated: '2026-08-25T00:04:28.536Z'
 ---
+

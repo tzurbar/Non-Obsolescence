@@ -1,5 +1,8 @@
 ---
-label: "⟦needs translation to es⟧ Hardwood"
-parentId: "wood"
+label: Madera dura
+parentId: wood
 translationStatus: machine
+translationOf: en/hardwood
+sourceUpdated: '2026-08-25T00:04:28.536Z'
 ---
+

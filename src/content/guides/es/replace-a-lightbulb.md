@@ -1,56 +1,52 @@
 ---
-title: ⟦needs translation to es⟧ How to Replace a Light Bulb
-productName: ⟦needs translation to es⟧ Standard Light Fixture
+title: Cómo reemplazar una bombilla.
+productName: Luminaria estándar
 categoryId: home-electrical
 difficulty: beginner
-estimatedTime: ⟦needs translation to es⟧ 5 minutes
+estimatedTime: 5 minutos
 tools:
-  - ⟦needs translation to es⟧ Replacement bulb
-  - ⟦needs translation to es⟧ Step stool (if needed)
+  - Bombilla de repuesto
+  - Escalera de pie (si es necesario)
 coverImage: /guides/lightbulb/cover.svg
 featured: true
 authorName: Tzur
 publishDate: 2026-08-23T00:00:00.000Z
 partLinks:
-  - label: >-
-      ⟦needs translation to es⟧ LED bulb, E26 base, warm white (example
-      retailer)
+  - label: 'Bombilla LED, base E26, blanco cálido (ejemplo de minorista)'
     url: 'https://example.com/parts/led-bulb-e26'
 videoLinks:
-  - label: ⟦needs translation to es⟧ Full walkthrough (2 min)
+  - label: Recorrido completo (2 min)
     url: 'https://www.youtube.com/watch?v=example-placeholder'
 steps:
-  - text: >-
-      ⟦needs translation to es⟧ Turn off the power. Switch off the fixture or
-      unplug the lamp.
+  - text: Apaga la energía. Apaga el aparato o desenchufa la lámpara.
     image: /guides/lightbulb/step-1.svg
   - text: >-
-      ⟦needs translation to es⟧ Remove the old bulb. Turn it counter-clockwise
-      (for standard screw bases) until it comes free. For bayonet-mount bulbs,
-      push in slightly and twist.
+      Retira la bombilla vieja. Gírala en sentido antihorario (para bases de
+      tornillo estándar) hasta que se suelte. Para las bombillas de montura de
+      bayoneta, empuja ligeramente y gira.
     image: /guides/lightbulb/step-2.svg
     videoLinks:
-      - label: '⟦needs translation to es⟧ Bayonet-mount removal, close-up (30s)'
+      - label: 'Eliminación de montura de bayoneta, primer plano (30s)'
         url: 'https://www.youtube.com/watch?v=example-placeholder'
   - text: >-
-      ⟦needs translation to es⟧ Check the socket. Make sure it's clean and the
-      contacts aren't corroded or bent.
+      Revisa la toma. Asegúrate de que esté limpia y de que los contactos no
+      estén corroídos ni doblados.
   - text: >-
-      ⟦needs translation to es⟧ Insert the new bulb. Turn it clockwise until
-      snug — don't overtighten.
+      Inserte la nueva bombilla. Gírela en el sentido de las agujas del reloj
+      hasta que esté ajustada; no la apriete demasiado.
     image: /guides/lightbulb/step-4.svg
     partLinks:
-      - label: ⟦needs translation to es⟧ Same bulb model used in this guide
+      - label: El mismo modelo de bombilla utilizado en esta guía.
         url: 'https://example.com/parts/led-bulb-e26'
-  - text: ⟦needs translation to es⟧ Restore power and test. Flip the switch back on.
+  - text: Restablece la energía y prueba. Vuelve a encender el interruptor.
 translationStatus: machine
 translationOf: en/replace-a-lightbulb
-sourceUpdated: '2026-08-23T01:03:22.744Z'
+sourceUpdated: '2026-08-25T00:04:28.542Z'
 ---
-⟦needs translation to es⟧ ## Safety first
+## Seguridad primero
 
-Turn off the light switch, and if you're working on a lamp, unplug it. Let the old bulb cool down before touching it if it's been on recently.
+Apaga el interruptor de la luz y, si estás trabajando en una lámpara, desconéctala. Deja que la bombilla vieja se enfríe antes de tocarla si ha estado encendida recientemente.
 
-## Disposal note
+## Nota de eliminación
 
-Incandescent and LED bulbs can usually go in household trash, but CFLs contain a small amount of mercury and should be taken to a hazardous-waste or recycling drop-off point.
+Las bombillas incandescentes y LED generalmente pueden ir a la basura doméstica, pero las bombillas CFL contienen una pequeña cantidad de mercurio y deben ser llevadas a un punto de recolección de desechos peligrosos o reciclaje.

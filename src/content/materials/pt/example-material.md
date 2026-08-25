@@ -1,21 +1,19 @@
 ---
-name: ⟦needs translation to pt⟧ Solid Hardwood (Oak)
+name: Madeira Sólida (Carvalho)
 categoryId: hardwood
 bestFor:
-  - ⟦needs translation to pt⟧ Furniture frames
-  - ⟦needs translation to pt⟧ Load-bearing shelving
-  - ⟦needs translation to pt⟧ Tool handles
+  - Estruturas de móveis
+  - Prateleiras suportantes
+  - Mangas de ferramentas
 durability: high
 recyclability: high
-summary: >
-  ⟦needs translation to pt⟧ Dense, sands and refinishes well over decades of
-  use, and can be repaired with basic woodworking tools rather than replaced.
-  Compare against particleboard/MDF, which fails at fasteners and can't be
-  meaningfully repaired once swollen or delaminated.
+summary: >-
+  Denso, areias e refina bem ao longo de décadas de uso e pode ser reparado com
+  ferramentas de marcenaria básicas em vez de ser substituído. Compare com
+  aglomerado/MDF, que falha em fixadores e não pode ser reparado de forma
+  significativa uma vez que inche ou se delamine.
 translationStatus: machine
 translationOf: en/example-material
-sourceUpdated: '2026-08-22T15:59:58.892Z'
+sourceUpdated: '2026-08-25T00:04:28.559Z'
 ---
-⟦needs translation to pt⟧ Placeholder entry for the materials reference. This is where a "what to
-build with" guide for durable, repairable furniture and fixtures would
-live, aimed at people buying or building rather than only fixing.
+Entrada de espaço reservado para a referência de materiais. Aqui é onde um guia "o que construir com" para móveis e acessórios duráveis e reparáveis estaria, direcionado a pessoas que compram ou constroem, em vez de apenas consertar.

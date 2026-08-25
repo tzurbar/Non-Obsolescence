@@ -1,4 +1,7 @@
 ---
-label: "⟦needs translation to pt⟧ Wood"
+label: Madeira
 translationStatus: machine
+translationOf: en/wood
+sourceUpdated: '2026-08-25T00:04:28.536Z'
 ---
+

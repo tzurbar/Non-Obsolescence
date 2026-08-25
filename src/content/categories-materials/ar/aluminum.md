@@ -1,5 +1,8 @@
 ---
-label: "⟦needs translation to ar⟧ Aluminum"
-parentId: "metal"
+label: الألمنيوم
+parentId: metal
 translationStatus: machine
+translationOf: en/aluminum
+sourceUpdated: '2026-08-25T00:04:28.536Z'
 ---
+

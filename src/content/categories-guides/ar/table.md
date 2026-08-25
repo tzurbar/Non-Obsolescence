@@ -1,4 +1,7 @@
 ---
-label: "⟦needs translation to ar⟧ Table"
+label: طاولة
 translationStatus: machine
+translationOf: en/table
+sourceUpdated: '2026-08-25T00:04:28.524Z'
 ---
+

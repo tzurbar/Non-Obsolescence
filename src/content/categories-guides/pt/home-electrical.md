@@ -1,4 +1,7 @@
 ---
-label: "⟦needs translation to pt⟧ Home & Electrical"
+label: Casa e Elétrico
 translationStatus: machine
+translationOf: en/home-electrical
+sourceUpdated: '2026-08-25T00:04:28.509Z'
 ---
+

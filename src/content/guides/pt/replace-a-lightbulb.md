@@ -1,56 +1,52 @@
 ---
-title: ⟦needs translation to pt⟧ How to Replace a Light Bulb
-productName: ⟦needs translation to pt⟧ Standard Light Fixture
+title: Como Trocar uma Lâmpada
+productName: Luminária padrão
 categoryId: home-electrical
 difficulty: beginner
-estimatedTime: ⟦needs translation to pt⟧ 5 minutes
+estimatedTime: 5 minutos
 tools:
-  - ⟦needs translation to pt⟧ Replacement bulb
-  - ⟦needs translation to pt⟧ Step stool (if needed)
+  - Lâmpada de reposição
+  - Escadinha (se necessário)
 coverImage: /guides/lightbulb/cover.svg
 featured: true
 authorName: Tzur
 publishDate: 2026-08-23T00:00:00.000Z
 partLinks:
-  - label: >-
-      ⟦needs translation to pt⟧ LED bulb, E26 base, warm white (example
-      retailer)
+  - label: 'Lâmpada LED, base E26, branca quente (exemplo de varejista)'
     url: 'https://example.com/parts/led-bulb-e26'
 videoLinks:
-  - label: ⟦needs translation to pt⟧ Full walkthrough (2 min)
+  - label: Guia completo (2 min)
     url: 'https://www.youtube.com/watch?v=example-placeholder'
 steps:
-  - text: >-
-      ⟦needs translation to pt⟧ Turn off the power. Switch off the fixture or
-      unplug the lamp.
+  - text: Desligue a energia. Desligue o dispositivo ou desconecte a lâmpada.
     image: /guides/lightbulb/step-1.svg
   - text: >-
-      ⟦needs translation to pt⟧ Remove the old bulb. Turn it counter-clockwise
-      (for standard screw bases) until it comes free. For bayonet-mount bulbs,
-      push in slightly and twist.
+      Remova a lâmpada antiga. Gire-a no sentido anti-horário (para bases de
+      rosca padrão) até que ela se desapegue. Para lâmpadas de encaixe tipo
+      bayonet, pressione levemente e gire.
     image: /guides/lightbulb/step-2.svg
     videoLinks:
-      - label: '⟦needs translation to pt⟧ Bayonet-mount removal, close-up (30s)'
+      - label: 'Remoção de montagem por baioneta, em close (30s)'
         url: 'https://www.youtube.com/watch?v=example-placeholder'
   - text: >-
-      ⟦needs translation to pt⟧ Check the socket. Make sure it's clean and the
-      contacts aren't corroded or bent.
+      Verifique o soquete. Certifique-se de que está limpo e que os contatos não
+      estão corroídos ou tortos.
   - text: >-
-      ⟦needs translation to pt⟧ Insert the new bulb. Turn it clockwise until
-      snug — don't overtighten.
+      Insira a nova lâmpada. Vire-a no sentido horário até ficar firme - não
+      aperte demais.
     image: /guides/lightbulb/step-4.svg
     partLinks:
-      - label: ⟦needs translation to pt⟧ Same bulb model used in this guide
+      - label: Mesmo modelo de lâmpada usado neste guia
         url: 'https://example.com/parts/led-bulb-e26'
-  - text: ⟦needs translation to pt⟧ Restore power and test. Flip the switch back on.
+  - text: Restaure a energia e teste. Ligue o interruptor novamente.
 translationStatus: machine
 translationOf: en/replace-a-lightbulb
-sourceUpdated: '2026-08-23T01:03:22.744Z'
+sourceUpdated: '2026-08-25T00:04:28.542Z'
 ---
-⟦needs translation to pt⟧ ## Safety first
+## Segurança em primeiro lugar
 
-Turn off the light switch, and if you're working on a lamp, unplug it. Let the old bulb cool down before touching it if it's been on recently.
+Desligue o interruptor e, se estiver trabalhando em uma lâmpada, desconecte-a. Deixe a lâmpada antiga esfriar antes de tocá-la se ela tiver estado acesa recentemente.
 
-## Disposal note
+## Nota de descarte
 
-Incandescent and LED bulbs can usually go in household trash, but CFLs contain a small amount of mercury and should be taken to a hazardous-waste or recycling drop-off point.
+Lâmpadas incandescentes e LED geralmente podem ser descartadas no lixo doméstico, mas lâmpadas fluorescentes compactas (CFLs) contêm uma pequena quantidade de mercúrio e devem ser levadas a um ponto de coleta de resíduos perigosos ou de reciclagem.

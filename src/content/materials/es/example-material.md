@@ -1,21 +1,19 @@
 ---
-name: ⟦needs translation to es⟧ Solid Hardwood (Oak)
+name: Madera Dura Sólida (Roble)
 categoryId: hardwood
 bestFor:
-  - ⟦needs translation to es⟧ Furniture frames
-  - ⟦needs translation to es⟧ Load-bearing shelving
-  - ⟦needs translation to es⟧ Tool handles
+  - Estructuras de muebles
+  - Estanterías portantes
+  - Mangos de herramientas
 durability: high
 recyclability: high
-summary: >
-  ⟦needs translation to es⟧ Dense, sands and refinishes well over decades of
-  use, and can be repaired with basic woodworking tools rather than replaced.
-  Compare against particleboard/MDF, which fails at fasteners and can't be
-  meaningfully repaired once swollen or delaminated.
+summary: >-
+  Denso, se lija y acaba bien tras décadas de uso, y puede ser reparado con
+  herramientas básicas de carpintería en lugar de ser reemplazado. Comparado con
+  la madera aglomerada/MDF, que falla en los sujetadores y no puede ser reparada
+  de manera significativa una vez que está hinchada o deslaminada.
 translationStatus: machine
 translationOf: en/example-material
-sourceUpdated: '2026-08-22T15:59:58.892Z'
+sourceUpdated: '2026-08-25T00:04:28.559Z'
 ---
-⟦needs translation to es⟧ Placeholder entry for the materials reference. This is where a "what to
-build with" guide for durable, repairable furniture and fixtures would
-live, aimed at people buying or building rather than only fixing.
+Entrada de marcador de posición para la referencia de materiales. Aquí es donde habría una guía de "qué construir con" para muebles y accesorios duraderos y reparables, dirigida a personas que compran o construyen en lugar de solo reparar.

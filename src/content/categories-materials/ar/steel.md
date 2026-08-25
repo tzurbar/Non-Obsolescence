@@ -1,5 +1,8 @@
 ---
-label: "⟦needs translation to ar⟧ Steel"
-parentId: "metal"
+label: فولاذ
+parentId: metal
 translationStatus: machine
+translationOf: en/steel
+sourceUpdated: '2026-08-25T00:04:28.536Z'
 ---
+

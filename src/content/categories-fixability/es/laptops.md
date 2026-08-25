@@ -1,4 +1,7 @@
 ---
-label: "⟦needs translation to es⟧ Laptops"
+label: Portátiles
 translationStatus: machine
+translationOf: en/laptops
+sourceUpdated: '2026-08-25T00:04:28.509Z'
 ---
+

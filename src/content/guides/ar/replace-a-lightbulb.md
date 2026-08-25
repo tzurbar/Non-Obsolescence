@@ -1,56 +1,50 @@
 ---
-title: ⟦needs translation to ar⟧ How to Replace a Light Bulb
-productName: ⟦needs translation to ar⟧ Standard Light Fixture
+title: كيفية استبدال لمبة كهربائية
+productName: تركيب الإضاءة القياسي
 categoryId: home-electrical
 difficulty: beginner
-estimatedTime: ⟦needs translation to ar⟧ 5 minutes
+estimatedTime: 5 دقائق
 tools:
-  - ⟦needs translation to ar⟧ Replacement bulb
-  - ⟦needs translation to ar⟧ Step stool (if needed)
+  - مصباح بديل
+  - سلم صغير (إذا لزم الأمر)
 coverImage: /guides/lightbulb/cover.svg
 featured: true
 authorName: Tzur
 publishDate: 2026-08-23T00:00:00.000Z
 partLinks:
-  - label: >-
-      ⟦needs translation to ar⟧ LED bulb, E26 base, warm white (example
-      retailer)
+  - label: مصباح LED، قاعدة E26، أبيض دافئ (مثال بائع تجزئة)
     url: 'https://example.com/parts/led-bulb-e26'
 videoLinks:
-  - label: ⟦needs translation to ar⟧ Full walkthrough (2 min)
+  - label: دليل كامل (2 دقيقة)
     url: 'https://www.youtube.com/watch?v=example-placeholder'
 steps:
-  - text: >-
-      ⟦needs translation to ar⟧ Turn off the power. Switch off the fixture or
-      unplug the lamp.
+  - text: قم بإيقاف تشغيل الطاقة. أوقف تشغيل الإضاءة أو افصل المصباح.
     image: /guides/lightbulb/step-1.svg
   - text: >-
-      ⟦needs translation to ar⟧ Remove the old bulb. Turn it counter-clockwise
-      (for standard screw bases) until it comes free. For bayonet-mount bulbs,
-      push in slightly and twist.
+      قم بإزالة المصباح القديم. قم بتدويره عكس عقارب الساعة (للقواعد اللولبية
+      القياسية) حتى يتم فكّه. أما بالنسبة للمصابيح ذات قاعدة مزلاج، فادفعها
+      قليلاً وقم بتدويرها.
     image: /guides/lightbulb/step-2.svg
     videoLinks:
-      - label: '⟦needs translation to ar⟧ Bayonet-mount removal, close-up (30s)'
+      - label: إزالة تركيب bayonet، لقطة قريبة (30 ثانية)
         url: 'https://www.youtube.com/watch?v=example-placeholder'
+  - text: تحقق من السوكيت. تأكد من أنه نظيف وأن التوصيلات ليست متهالكة أو منحنية.
   - text: >-
-      ⟦needs translation to ar⟧ Check the socket. Make sure it's clean and the
-      contacts aren't corroded or bent.
-  - text: >-
-      ⟦needs translation to ar⟧ Insert the new bulb. Turn it clockwise until
-      snug — don't overtighten.
+      أدخل المصباح الجديد. قم بلفه في اتجاه عقارب الساعة حتى يصبح محكومًا — لا
+      تشدّه بشدة.
     image: /guides/lightbulb/step-4.svg
     partLinks:
-      - label: ⟦needs translation to ar⟧ Same bulb model used in this guide
+      - label: نموذج المصباح نفسه المستخدم في هذا الدليل
         url: 'https://example.com/parts/led-bulb-e26'
-  - text: ⟦needs translation to ar⟧ Restore power and test. Flip the switch back on.
+  - text: استعد الطاقة واختبر. قم بإعادة تشغيل المفتاح.
 translationStatus: machine
 translationOf: en/replace-a-lightbulb
-sourceUpdated: '2026-08-23T01:03:22.744Z'
+sourceUpdated: '2026-08-25T00:04:28.542Z'
 ---
-⟦needs translation to ar⟧ ## Safety first
+## السلامة أولاً
 
-Turn off the light switch, and if you're working on a lamp, unplug it. Let the old bulb cool down before touching it if it's been on recently.
+قم بإيقاف تشغيل مفتاح الضوء، وإذا كنت تعمل على مصباح، فقم بفصله. اترك اللمبة القديمة تبرد قبل لمسها إذا كانت قد كانت تعمل مؤخراً.
 
-## Disposal note
+## ملاحظة عن التخلص
 
-Incandescent and LED bulbs can usually go in household trash, but CFLs contain a small amount of mercury and should be taken to a hazardous-waste or recycling drop-off point.
+يمكن عادةً وضع المصابيح المتوهجة و LED في القمامة المنزلية، ولكن مصابيح CFL تحتوي على كمية صغيرة من الزئبق ويجب أخذها إلى نقطة التخلص من النفايات الخطرة أو نقطة إعادة التدوير.

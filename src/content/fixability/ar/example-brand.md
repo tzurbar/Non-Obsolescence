@@ -2,19 +2,15 @@
 brand: Example Brand
 categoryId: laptops
 score: 6.5
-summary: >
-  ⟦needs translation to ar⟧ Mid-range repairability. Battery and storage are
-  user-replaceable with standard tools, but the display assembly requires
-  proprietary adhesive removal tools and screen replacements are not sold to
-  consumers.
+summary: >-
+  قابلية الإصلاح متوسطة. البطارية والتخزين قابلة للاستبدال من قبل المستخدم
+  باستخدام أدوات قياسية، ولكن تجميع الشاشة يتطلب أدوات إزالة لاصق مخصص واستبدال
+  الشاشة غير متاح للمستهلكين.
 sources:
   - 'https://example.com/teardown-report'
 updated: 2026-08-22T00:00:00.000Z
 translationStatus: machine
 translationOf: en/example-brand
-sourceUpdated: '2026-08-22T15:59:55.580Z'
+sourceUpdated: '2026-08-25T00:04:28.542Z'
 ---
-⟦needs translation to ar⟧ This is placeholder content to demonstrate the data-page structure. Once
-real research is done, each entry here would cite a teardown, a repair
-manual, or a spare-parts availability check, and the score would follow a
-documented rubric (to be defined) rather than a gut feeling.
+هذا محتوى مؤقت لعرض هيكل صفحة البيانات. بمجرد إجراء بحث حقيقي، سيكون لكل عنصر هنا استشهاد بتفكيك أو دليل إصلاح أو تحقق من توافر قطع الغيار، وسيتبع التقييم معايير موثقة (سيتم تعريفها) بدلاً من الشعور البديهي.

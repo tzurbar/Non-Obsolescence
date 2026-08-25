@@ -1,21 +1,19 @@
 ---
-name: ⟦needs translation to ar⟧ Solid Hardwood (Oak)
+name: خشب صلب (بلوط)
 categoryId: hardwood
 bestFor:
-  - ⟦needs translation to ar⟧ Furniture frames
-  - ⟦needs translation to ar⟧ Load-bearing shelving
-  - ⟦needs translation to ar⟧ Tool handles
+  - إطارات الأثاث
+  - رفوف تحمل الوزن
+  - مقابض الأدوات
 durability: high
 recyclability: high
-summary: >
-  ⟦needs translation to ar⟧ Dense, sands and refinishes well over decades of
-  use, and can be repaired with basic woodworking tools rather than replaced.
-  Compare against particleboard/MDF, which fails at fasteners and can't be
-  meaningfully repaired once swollen or delaminated.
+summary: >-
+  سميك، الرمال ويعاد تجهيزه بشكل جيد على مدى عقود من الاستخدام، ويمكن إصلاحه
+  باستخدام أدوات النجارة الأساسية بدلاً من استبداله. قارن ذلك باللوح الجزيئي /
+  MDF، الذي يفشل عند الموصلات ولا يمكن إصلاحه بشكل ذي معنى بمجرد أن ينتفخ أو
+  ينفصل.
 translationStatus: machine
 translationOf: en/example-material
-sourceUpdated: '2026-08-22T15:59:58.892Z'
+sourceUpdated: '2026-08-25T00:04:28.559Z'
 ---
-⟦needs translation to ar⟧ Placeholder entry for the materials reference. This is where a "what to
-build with" guide for durable, repairable furniture and fixtures would
-live, aimed at people buying or building rather than only fixing.
+مدخل احتياطي لمراجع المواد. هذا هو المكان الذي ستتواجد فيه دليل "ماذا يتم البناء به" للأثاث والتركيبات المتينة وقابلة للإصلاح، موجه للأشخاص الذين يشترون أو يبنون بدلاً من أن يقوموا بالإصلاح فقط.
