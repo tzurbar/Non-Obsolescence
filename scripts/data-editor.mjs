@@ -15,7 +15,7 @@ import { readdir, readFile, writeFile, unlink } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
-import { ROOT, slugify, yamlString, runTranslate } from './review-lib.mjs';
+import { ROOT, slugify, yamlString, runTranslate, resolveLocalCategoryId } from './review-lib.mjs';
 
 const PORT = 5680;
 
@@ -109,7 +109,7 @@ async function listHtml() {
     .map(
       (e) => `<div class="border border-stone-200 rounded-lg p-5 mb-4">
         <div class="flex items-center justify-between">
-          <h3 class="font-semibold">${escapeHtml(e.data.brand)} &mdash; ${escapeHtml(e.data.productCategory)}</h3>
+          <h3 class="font-semibold">${escapeHtml(e.data.brand)} &mdash; ${escapeHtml(e.data.categoryId || '(uncategorized)')}</h3>
           <span class="text-emerald-700 font-bold">${Number(e.data.score).toFixed(1)}/10</span>
         </div>
         <p class="mt-2 text-sm text-stone-600">${escapeHtml(e.data.summary)}</p>
@@ -162,7 +162,7 @@ function fixabilityFormHtml(data = {}, slug = '') {
       <input type="hidden" name="slug" value="${escapeHtml(slug)}">
       <div class="grid gap-4 sm:grid-cols-2">
         ${field('Brand', 'brand', data.brand || '')}
-        ${field('Product category', 'productCategory', data.productCategory || '', { placeholder: 'Laptops, Smartphones, Vacuum cleaners...' })}
+        ${field('Category ID', 'categoryId', data.categoryId || '', { placeholder: 'slug from a categories-fixability/en file, or use the web manager’s picker instead' })}
       </div>
       ${field('Score (0-10)', 'score', data.score ?? '', { type: 'number', step: '0.1' })}
       ${textareaField('Summary', 'summary', data.summary || '', { placeholder: 'What makes this brand/category repairable or not - screws vs adhesive, spare parts, parts pairing, etc.' })}
@@ -179,6 +179,7 @@ function materialsFormHtml(data = {}, slug = '') {
     <form method="POST" action="/materials/save" class="space-y-4">
       <input type="hidden" name="slug" value="${escapeHtml(slug)}">
       ${field('Name', 'name', data.name || '', { placeholder: 'Solid Hardwood (Oak)' })}
+      ${field('Category ID', 'categoryId', data.categoryId || '', { placeholder: 'slug from a categories-materials/en file, or use the web manager’s picker instead' })}
       <div class="grid gap-4 sm:grid-cols-2">
         ${selectField('Durability', 'durability', data.durability || 'medium', ['low', 'medium', 'high'])}
         ${selectField('Recyclability', 'recyclability', data.recyclability || 'medium', ['low', 'medium', 'high'])}
@@ -193,7 +194,7 @@ function materialsFormHtml(data = {}, slug = '') {
 function buildFixabilityMarkdown(data, existing) {
   const lines = ['---'];
   lines.push(`brand: ${yamlString(data.brand)}`);
-  lines.push(`productCategory: ${yamlString(data.productCategory)}`);
+  lines.push(`categoryId: ${yamlString(data.categoryId)}`);
   lines.push(`score: ${Number(data.score)}`);
   lines.push(`summary: >\n  ${data.summary.trim().replace(/\n/g, '\n  ')}`);
   const sources = data.sources.split('\n').map((s) => s.trim()).filter(Boolean);
@@ -212,6 +213,7 @@ function buildFixabilityMarkdown(data, existing) {
 function buildMaterialsMarkdown(data, existing) {
   const lines = ['---'];
   lines.push(`name: ${yamlString(data.name)}`);
+  if (data.categoryId) lines.push(`categoryId: ${yamlString(data.categoryId)}`);
   const bestFor = data.bestFor.split('\n').map((s) => s.trim()).filter(Boolean);
   if (bestFor.length > 0) {
     lines.push('bestFor:');
@@ -286,16 +288,17 @@ async function main() {
           if (collection === 'fixability') {
             const data = {
               brand: form.get('brand') || '',
-              productCategory: form.get('productCategory') || '',
+              categoryId: await resolveLocalCategoryId('fixability', { categoryId: form.get('categoryId') }),
               score: form.get('score') || '0',
               summary: form.get('summary') || '',
               sources: form.get('sources') || ''
             };
-            slug = slugInput || slugify(`${data.brand}-${data.productCategory}`);
+            slug = slugInput || slugify(data.brand);
             markdown = buildFixabilityMarkdown(data, existing);
           } else {
             const data = {
               name: form.get('name') || '',
+              categoryId: await resolveLocalCategoryId('materials', { categoryId: form.get('categoryId') }),
               durability: form.get('durability') || 'medium',
               recyclability: form.get('recyclability') || 'medium',
               bestFor: form.get('bestFor') || '',

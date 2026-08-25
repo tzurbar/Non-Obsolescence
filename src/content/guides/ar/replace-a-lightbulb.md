@@ -1,7 +1,7 @@
 ---
 title: ⟦needs translation to ar⟧ How to Replace a Light Bulb
 productName: ⟦needs translation to ar⟧ Standard Light Fixture
-category: ⟦needs translation to ar⟧ Home & Electrical
+categoryId: home-electrical
 difficulty: beginner
 estimatedTime: ⟦needs translation to ar⟧ 5 minutes
 tools:

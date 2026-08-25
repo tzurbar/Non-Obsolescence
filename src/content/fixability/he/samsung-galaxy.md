@@ -1,6 +1,6 @@
 ---
 brand: "Samsung"
-productCategory: "סמארטפונים (Galaxy)"
+categoryId: smartphones
 score: 5
 summary: >
   הרכבה מודבקת בצורה כבדה בדומה ל-Apple - מסכים וסוללות דורשים חום והסרת

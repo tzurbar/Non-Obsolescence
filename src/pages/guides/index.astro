@@ -6,8 +6,9 @@ import { byLocale, defaultLocale } from '../../lib/content';
 import { t as uiT } from '../../lib/i18n';
 
 const guides = byLocale(await getCollection('guides'), defaultLocale);
+const categories = byLocale(await getCollection('categoriesGuides'), defaultLocale);
 ---
 
 <Layout title={uiT(defaultLocale).guides.title}>
-  <GuidesList locale={defaultLocale} guides={guides} />
+  <GuidesList locale={defaultLocale} guides={guides} categories={categories} />
 </Layout>

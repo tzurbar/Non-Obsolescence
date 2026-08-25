@@ -1,6 +1,6 @@
 ---
 brand: Example Brand
-productCategory: Laptops
+categoryId: laptops
 score: 6.5
 summary: >
   Mid-range repairability. Battery and storage are user-replaceable with

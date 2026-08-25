@@ -1,0 +1,4 @@
+---
+label: "מטבח"
+translationStatus: machine
+---

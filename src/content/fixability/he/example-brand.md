@@ -1,6 +1,6 @@
 ---
 brand: Example Brand
-productCategory: מחשבים ניידים
+categoryId: laptops
 score: 6.5
 summary: >
   יכולת תיקון בינונית. הסוללה והאחסון ניתנים להחלפה על ידי המשתמש עם כלים

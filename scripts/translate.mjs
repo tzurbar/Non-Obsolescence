@@ -28,9 +28,12 @@ const TARGET_LOCALES = ['he', 'ar', 'es', 'pt'];
 const LOCALE_NAMES = { he: 'Hebrew', ar: 'Arabic', es: 'Spanish', pt: 'Portuguese' };
 
 const TRANSLATABLE_FIELDS = {
-  guides: ['title', 'productName', 'category', 'estimatedTime', 'tools', 'steps', 'partLinks', 'videoLinks'],
-  fixability: ['productCategory', 'summary'],
-  materials: ['name', 'bestFor', 'summary']
+  guides: ['title', 'productName', 'estimatedTime', 'tools', 'steps', 'partLinks', 'videoLinks'],
+  fixability: ['summary'],
+  materials: ['name', 'bestFor', 'summary'],
+  'categories-guides': ['label'],
+  'categories-fixability': ['label'],
+  'categories-materials': ['label']
 };
 
 // Within a translatable field's value, only string leaves under these keys get

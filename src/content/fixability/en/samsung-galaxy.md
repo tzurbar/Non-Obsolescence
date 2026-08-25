@@ -1,6 +1,6 @@
 ---
 brand: "Samsung"
-productCategory: "Smartphones (Galaxy)"
+categoryId: smartphones
 score: 5
 summary: >
   Heavily glued assembly similar to Apple's - screens and batteries

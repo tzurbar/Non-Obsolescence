@@ -1,6 +1,6 @@
 ---
 brand: Example Brand
-productCategory: ⟦needs translation to pt⟧ Laptops
+categoryId: laptops
 score: 6.5
 summary: >
   ⟦needs translation to pt⟧ Mid-range repairability. Battery and storage are

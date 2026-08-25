@@ -1,5 +1,6 @@
 ---
 name: "Stainless Steel"
+categoryId: steel
 bestFor:
   - "Fasteners and brackets"
   - "Outdoor hardware"

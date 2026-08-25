@@ -1,21 +1,36 @@
 ---
 import GuideCard from './GuideCard.astro';
+import CategoryFilter from './CategoryFilter.astro';
 import { t as uiT } from '../lib/i18n';
+import { flattenIndented, ancestorChainIds } from '../lib/categories';
+import { slugOf } from '../lib/content';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
   locale: string;
   guides: CollectionEntry<'guides'>[];
+  categories: CollectionEntry<'categoriesGuides'>[];
 }
 
-const { locale, guides } = Astro.props;
+const { locale, guides, categories } = Astro.props;
 const s = uiT(locale).guides;
+const nodes = flattenIndented(categories);
+const labelOf = (id: string) => categories.find((c) => slugOf(c.id) === id)?.data.label || '';
 ---
 
 <section class="max-w-5xl mx-auto px-4 py-12">
   <h1 class="text-3xl font-bold mb-8">{s.title}</h1>
-  {guides.length === 0 && <p class="text-stone-500">{s.empty}</p>}
-  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-    {guides.map((guide) => <GuideCard guide={guide} locale={locale} />)}
+  <CategoryFilter nodes={nodes} scopeId="guides" allLabel={s.allCategories} searchPlaceholder={s.searchPlaceholder} />
+  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-filter-target="guides">
+    {guides.map((guide) => (
+      <GuideCard
+        guide={guide}
+        locale={locale}
+        categoryLabel={labelOf(guide.data.categoryId)}
+        ancestorIds={ancestorChainIds(categories, guide.data.categoryId)}
+      />
+    ))}
+    <p class="text-stone-500 sm:col-span-2 lg:col-span-3" data-empty-state style="display: none">{s.empty}</p>
   </div>
+  {guides.length === 0 && <p class="text-stone-500">{s.empty}</p>}
 </section>

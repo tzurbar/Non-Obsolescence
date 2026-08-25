@@ -1,5 +1,6 @@
 ---
 name: "Particleboard / MDF"
+categoryId: engineered-wood
 bestFor:
   - "Low-cost flat-pack furniture"
   - "Non-structural panels"

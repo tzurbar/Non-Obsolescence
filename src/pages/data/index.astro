@@ -7,8 +7,16 @@ import { t as uiT } from '../../lib/i18n';
 
 const fixability = byLocale(await getCollection('fixability'), defaultLocale);
 const materials = byLocale(await getCollection('materials'), defaultLocale);
+const fixabilityCategories = byLocale(await getCollection('categoriesFixability'), defaultLocale);
+const materialsCategories = byLocale(await getCollection('categoriesMaterials'), defaultLocale);
 ---
 
 <Layout title={uiT(defaultLocale).data.title}>
-  <DataContent locale={defaultLocale} fixability={fixability} materials={materials} />
+  <DataContent
+    locale={defaultLocale}
+    fixability={fixability}
+    materials={materials}
+    fixabilityCategories={fixabilityCategories}
+    materialsCategories={materialsCategories}
+  />
 </Layout>

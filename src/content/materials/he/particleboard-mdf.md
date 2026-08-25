@@ -1,5 +1,6 @@
 ---
 name: "עץ מעובד / MDF"
+categoryId: engineered-wood
 bestFor:
   - "רהיטים זולים בשטוח"
   - "פאנלים לא-מבניים"

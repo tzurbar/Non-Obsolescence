@@ -14,7 +14,12 @@ export const ui = {
       featuredGuides: 'Featured Guides',
       noFeatured: 'No featured guides yet.'
     },
-    guides: { title: 'All Guides', empty: 'No guides yet in this language.' },
+    guides: {
+      title: 'All Guides',
+      empty: 'No guides yet in this language.',
+      allCategories: 'All categories',
+      searchPlaceholder: 'Search guides…'
+    },
     guideDetail: { toolsNeeded: 'Tools needed', by: 'by', step: 'Step' },
     linkList: { videos: 'Videos', parts: 'Where to get parts' },
     draftBanner: {
@@ -28,7 +33,11 @@ export const ui = {
       fixabilityHeading: 'Fixability by Brand',
       materialsHeading: 'Materials Reference',
       durability: 'Durability',
-      recyclability: 'Recyclability'
+      recyclability: 'Recyclability',
+      allCategories: 'All categories',
+      searchFixabilityPlaceholder: 'Search brands…',
+      searchMaterialsPlaceholder: 'Search materials…',
+      noResults: 'Nothing matches that filter.'
     },
     submit: {
       title: 'Submit a Guide',
@@ -82,7 +91,12 @@ export const ui = {
       featuredGuides: 'מדריכים נבחרים',
       noFeatured: 'עדיין אין מדריכים נבחרים.'
     },
-    guides: { title: 'כל המדריכים', empty: 'עדיין אין מדריכים בשפה הזו.' },
+    guides: {
+      title: 'כל המדריכים',
+      empty: 'עדיין אין מדריכים בשפה הזו.',
+      allCategories: 'כל הקטגוריות',
+      searchPlaceholder: 'חיפוש מדריכים…'
+    },
     guideDetail: { toolsNeeded: 'כלים נדרשים', by: 'מאת', step: 'שלב' },
     linkList: { videos: 'סרטונים', parts: 'איפה להשיג חלקים' },
     draftBanner: {
@@ -96,7 +110,11 @@ export const ui = {
       fixabilityHeading: 'יכולת תיקון לפי מותג',
       materialsHeading: 'מדריך חומרים',
       durability: 'עמידות',
-      recyclability: 'מחזוריות'
+      recyclability: 'מחזוריות',
+      allCategories: 'כל הקטגוריות',
+      searchFixabilityPlaceholder: 'חיפוש מותגים…',
+      searchMaterialsPlaceholder: 'חיפוש חומרים…',
+      noResults: 'שום דבר לא תואם את הסינון הזה.'
     },
     submit: {
       title: 'הגישו מדריך',

@@ -1,6 +1,6 @@
 ---
 brand: "Apple"
-productCategory: "Smartphones (iPhone)"
+categoryId: smartphones
 score: 4
 summary: >
   Physical teardown difficulty has improved generation over generation

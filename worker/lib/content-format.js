@@ -66,7 +66,7 @@ export function parseLegacyBody(body) {
 
   return {
     productName: line('Product'),
-    category: line('Category'),
+    categorySuggestion: line('Category'),
     difficulty,
     estimatedTime: line('Estimated time'),
     authorName: line('Submitted by'),
@@ -82,7 +82,7 @@ export function buildGuideMarkdown({ data, steps, localImagePaths, publishDate, 
   const lines = ['---'];
   lines.push(`title: ${yamlString(data.title)}`);
   lines.push(`productName: ${yamlString(data.productName)}`);
-  lines.push(`category: ${yamlString(data.category)}`);
+  lines.push(`categoryId: ${yamlString(data.categoryId)}`);
   lines.push(`difficulty: ${data.difficulty}`);
   lines.push(`estimatedTime: ${yamlString(data.estimatedTime)}`);
 
@@ -136,10 +136,19 @@ export function buildGuideMarkdown({ data, steps, localImagePaths, publishDate, 
   return lines.join('\n') + '\n';
 }
 
+export function buildCategoryMarkdown(data, translationStatus) {
+  const lines = ['---'];
+  lines.push(`label: ${yamlString(data.label)}`);
+  if (data.parentId) lines.push(`parentId: ${yamlString(data.parentId)}`);
+  if (translationStatus) lines.push(`translationStatus: ${translationStatus}`);
+  lines.push('---');
+  return lines.join('\n') + '\n';
+}
+
 export function buildFixabilityMarkdown(data, translationStatus) {
   const lines = ['---'];
   lines.push(`brand: ${yamlString(data.brand)}`);
-  lines.push(`productCategory: ${yamlString(data.productCategory)}`);
+  lines.push(`categoryId: ${yamlString(data.categoryId)}`);
   lines.push(`score: ${Number(data.score)}`);
   lines.push(`summary: >\n  ${data.summary.trim().replace(/\n/g, '\n  ')}`);
   const sources = (data.sources || '').split('\n').map((s) => s.trim()).filter(Boolean);
@@ -158,6 +167,7 @@ export function buildFixabilityMarkdown(data, translationStatus) {
 export function buildMaterialsMarkdown(data, translationStatus) {
   const lines = ['---'];
   lines.push(`name: ${yamlString(data.name)}`);
+  if (data.categoryId) lines.push(`categoryId: ${yamlString(data.categoryId)}`);
   const bestFor = (data.bestFor || '').split('\n').map((s) => s.trim()).filter(Boolean);
   if (bestFor.length > 0) {
     lines.push('bestFor:');

@@ -1,7 +1,7 @@
 ---
 title: איך להחליף נורה
 productName: גוף תאורה סטנדרטי
-category: בית וחשמל
+categoryId: home-electrical
 difficulty: beginner
 estimatedTime: 5 דקות
 tools:

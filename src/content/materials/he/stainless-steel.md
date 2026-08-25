@@ -1,5 +1,6 @@
 ---
 name: "פלדת אל-חלד"
+categoryId: steel
 bestFor:
   - "חיזוקים ותושבות"
   - "חומרת חוץ"

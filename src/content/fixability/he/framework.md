@@ -1,6 +1,6 @@
 ---
 brand: "Framework"
-productCategory: "מחשבים ניידים"
+categoryId: laptops
 score: 10
 summary: >
   נבנה סביב יכולת תיקון כעיקרון עיצוב מרכזי: ברגים במקום דבק, יציאות

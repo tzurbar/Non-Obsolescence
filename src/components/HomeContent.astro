@@ -1,16 +1,20 @@
 ---
 import GuideCard from './GuideCard.astro';
 import { t as uiT } from '../lib/i18n';
+import { ancestorChainIds } from '../lib/categories';
+import { slugOf } from '../lib/content';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
   locale: string;
   guides: CollectionEntry<'guides'>[];
+  categories: CollectionEntry<'categoriesGuides'>[];
 }
 
-const { locale, guides } = Astro.props;
+const { locale, guides, categories } = Astro.props;
 const featured = guides.filter((g) => g.data.featured);
 const s = uiT(locale).home;
+const labelOf = (id: string) => categories.find((c) => slugOf(c.id) === id)?.data.label || '';
 ---
 
 <section class="bg-emerald-700 text-white">
@@ -24,6 +28,13 @@ const s = uiT(locale).home;
   <h2 class="text-2xl font-bold mb-6">{s.featuredGuides}</h2>
   {featured.length === 0 && <p class="text-stone-500">{s.noFeatured}</p>}
   <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-    {featured.map((guide) => <GuideCard guide={guide} locale={locale} />)}
+    {featured.map((guide) => (
+      <GuideCard
+        guide={guide}
+        locale={locale}
+        categoryLabel={labelOf(guide.data.categoryId)}
+        ancestorIds={ancestorChainIds(categories, guide.data.categoryId)}
+      />
+    ))}
   </div>
 </section>

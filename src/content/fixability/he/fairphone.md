@@ -1,6 +1,6 @@
 ---
 brand: "Fairphone"
-productCategory: "סמארטפונים"
+categoryId: smartphones
 score: 10
 summary: >
   נקודת הייחוס לטלפונים ניתנים לתיקון. מחוברים בברגים ולא בדבק, כך שהסוללה,

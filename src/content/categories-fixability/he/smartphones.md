@@ -1,0 +1,4 @@
+---
+label: "סמארטפונים"
+translationStatus: machine
+---

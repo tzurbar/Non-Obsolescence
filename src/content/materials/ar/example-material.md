@@ -1,5 +1,6 @@
 ---
 name: ⟦needs translation to ar⟧ Solid Hardwood (Oak)
+categoryId: hardwood
 bestFor:
   - ⟦needs translation to ar⟧ Furniture frames
   - ⟦needs translation to ar⟧ Load-bearing shelving

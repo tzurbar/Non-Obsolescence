@@ -5,18 +5,23 @@ import type { CollectionEntry } from 'astro:content';
 interface Props {
   guide: CollectionEntry<'guides'>;
   locale: string;
+  categoryLabel: string;
+  ancestorIds: string[];
 }
 
-const { guide, locale } = Astro.props;
+const { guide, locale, categoryLabel, ancestorIds } = Astro.props;
 const href = localePath(locale, `guides/${slugOf(guide.id)}`);
+const search = `${guide.data.title} ${categoryLabel}`.toLowerCase();
 ---
 
 <a
   href={href}
   class="block border border-stone-200 rounded-lg p-5 hover:border-emerald-600 hover:shadow-sm transition"
+  data-search={search}
+  data-ancestors={ancestorIds.join(',')}
 >
   <p class="text-xs uppercase tracking-wide text-emerald-700 font-semibold">
-    {guide.data.category}
+    {categoryLabel}
   </p>
   <h3 class="mt-1 font-semibold text-stone-900">{guide.data.title}</h3>
   <p class="mt-2 text-sm text-stone-500">

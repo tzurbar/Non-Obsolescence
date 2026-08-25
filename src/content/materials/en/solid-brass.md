@@ -1,5 +1,6 @@
 ---
 name: "Solid Brass"
+categoryId: brass
 bestFor:
   - "Hinges and hardware"
   - "Fittings and fasteners"

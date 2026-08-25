@@ -1,6 +1,6 @@
 ---
 brand: "Fairphone"
-productCategory: "Smartphones"
+categoryId: smartphones
 score: 10
 summary: >
   The reference point for repairable phones. Held together with screws

@@ -13,8 +13,9 @@ export async function getStaticPaths() {
 
 const { locale } = Astro.params;
 const guides = byLocale(await getCollection('guides'), locale);
+const categories = byLocale(await getCollection('categoriesGuides'), locale);
 ---
 
 <Layout title={uiT(locale).guides.title}>
-  <GuidesList locale={locale} guides={guides} />
+  <GuidesList locale={locale} guides={guides} categories={categories} />
 </Layout>

@@ -1,0 +1,71 @@
+---
+import type { CategoryNode } from '../lib/categories';
+
+interface Props {
+  nodes: CategoryNode[];
+  scopeId: string;
+  allLabel: string;
+  searchPlaceholder: string;
+}
+
+const { nodes, scopeId, allLabel, searchPlaceholder } = Astro.props;
+---
+
+{nodes.length > 0 && (
+  <div class="mb-6 flex flex-wrap gap-3 items-center" data-filter-controls={scopeId}>
+    <select class="border border-stone-300 rounded-md px-3 py-2 text-sm bg-white" data-role="category-select">
+      <option value="">{allLabel}</option>
+      {nodes.map((n) => (
+        <option value={n.id}>{'—'.repeat(n.depth)} {n.label}</option>
+      ))}
+    </select>
+    <input
+      type="search"
+      class="border border-stone-300 rounded-md px-3 py-2 text-sm flex-1"
+      style="min-width: 200px"
+      placeholder={searchPlaceholder}
+      data-role="search-input"
+    />
+  </div>
+)}
+
+<script define:vars={{ scopeId }}>
+  // This script runs inline, synchronously, at its position in the HTML -
+  // which is *before* the data-filter-target sibling below it (that markup
+  // hasn't been parsed yet). Deferring to DOMContentLoaded ensures the
+  // target/items actually exist when we query for them.
+  function init() {
+    const controls = document.querySelector(`[data-filter-controls="${scopeId}"]`);
+    const target = document.querySelector(`[data-filter-target="${scopeId}"]`);
+    if (!controls || !target) return;
+
+    const select = controls.querySelector('[data-role="category-select"]');
+    const search = controls.querySelector('[data-role="search-input"]');
+    const items = Array.from(target.querySelectorAll('[data-search]'));
+    const emptyState = target.querySelector('[data-empty-state]');
+
+    function apply() {
+      const cat = select.value;
+      const q = search.value.trim().toLowerCase();
+      let visibleCount = 0;
+      items.forEach((item) => {
+        const ancestors = (item.dataset.ancestors || '').split(',');
+        const matchesCategory = !cat || ancestors.includes(cat);
+        const matchesSearch = !q || (item.dataset.search || '').includes(q);
+        const show = matchesCategory && matchesSearch;
+        item.style.display = show ? '' : 'none';
+        if (show) visibleCount++;
+      });
+      if (emptyState) emptyState.style.display = visibleCount === 0 ? '' : 'none';
+    }
+
+    select.addEventListener('change', apply);
+    search.addEventListener('input', apply);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+</script>

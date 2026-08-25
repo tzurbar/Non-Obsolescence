@@ -14,8 +14,16 @@ export async function getStaticPaths() {
 const { locale } = Astro.params;
 const fixability = byLocale(await getCollection('fixability'), locale);
 const materials = byLocale(await getCollection('materials'), locale);
+const fixabilityCategories = byLocale(await getCollection('categoriesFixability'), locale);
+const materialsCategories = byLocale(await getCollection('categoriesMaterials'), locale);
 ---
 
 <Layout title={uiT(locale).data.title}>
-  <DataContent locale={locale} fixability={fixability} materials={materials} />
+  <DataContent
+    locale={locale}
+    fixability={fixability}
+    materials={materials}
+    fixabilityCategories={fixabilityCategories}
+    materialsCategories={materialsCategories}
+  />
 </Layout>

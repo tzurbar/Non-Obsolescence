@@ -194,7 +194,7 @@ async function issueHtml({ repo, token, number }) {
       <div class="grid gap-4 sm:grid-cols-2">
         ${field('Guide title', 'title', data.title, { wrapperClass: 'sm:col-span-2' })}
         ${field('Product / product type', 'productName', data.productName)}
-        ${field('Category', 'category', data.category)}
+        ${field('Category ID', 'categoryId', data.category || '', { placeholder: 'slug from a categories-guides/en file, or use the web manager’s picker instead' })}
         <label class="block">
           <span class="field-label">Difficulty</span>
           <select name="difficulty" class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2 bg-white">
@@ -250,7 +250,7 @@ function submissionFromForm(form) {
   const data = {
     title: form.get('title') || '',
     productName: form.get('productName') || '',
-    category: form.get('category') || '',
+    categoryId: form.get('categoryId') || '',
     difficulty: form.get('difficulty') || 'beginner',
     estimatedTime: form.get('estimatedTime') || '',
     tools: form.get('tools') || '',

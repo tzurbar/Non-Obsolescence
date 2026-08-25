@@ -1,6 +1,6 @@
 ---
 brand: "Dell"
-productCategory: "מחשבים ניידים (קווי עסקים)"
+categoryId: laptops
 score: 8
 summary: >
   המחשבים הניידים העסקיים של Dell (Latitude, Precision) שומרים על עיצוב

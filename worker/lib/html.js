@@ -155,6 +155,30 @@ export function selectField(label, name, value, options) {
   </label>`;
 }
 
+export function categoryPickerFields(nodes, currentId, suggestedNewLabel = '') {
+  const indent = (depth) => '&nbsp;&nbsp;'.repeat(depth) + (depth > 0 ? '↳ ' : '');
+  const options = nodes.map((n) => `<option value="${n.slug}" ${n.slug === currentId ? 'selected' : ''}>${indent(n.depth)}${escapeHtml(n.label)}</option>`).join('');
+  const parentOptions = `<option value="">— top level —</option>` + nodes.map((n) => `<option value="${n.slug}">${indent(n.depth)}${escapeHtml(n.label)}</option>`).join('');
+  // Only pre-fill the "new category" box with the submitter's suggestion if
+  // it doesn't already match an existing category (otherwise the picker
+  // above already covers it).
+  const prefill = suggestedNewLabel && !nodes.some((n) => n.label.toLowerCase() === suggestedNewLabel.toLowerCase()) ? suggestedNewLabel : '';
+  return `<div>
+    <span class="field-label">Category</span>
+    <select name="categoryId" class="mt-1">
+      <option value="">— none —</option>
+      ${options}
+    </select>
+  </div>
+  <div class="mt-2">
+    <span class="field-label" style="font-weight:400;color:#78716c">Or add a new category</span>
+    <div class="grid gap-2 sm:grid-cols-2 mt-1">
+      <input name="newCategoryLabel" value="${escapeHtml(prefill)}" placeholder="New category name" />
+      <select name="newCategoryParentId">${parentOptions}</select>
+    </div>
+  </div>`;
+}
+
 export async function readFormBody(request) {
   return new URLSearchParams(await request.text());
 }

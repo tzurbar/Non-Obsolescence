@@ -1,6 +1,6 @@
 ---
 brand: "Dell"
-productCategory: "Laptops (business lines)"
+categoryId: laptops
 score: 8
 summary: >
   Dell's business laptops (Latitude, Precision) keep the socketed,

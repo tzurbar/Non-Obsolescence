@@ -1,6 +1,6 @@
 ---
 brand: "Framework"
-productCategory: "Laptops"
+categoryId: laptops
 score: 10
 summary: >
   Built around repairability as the core design principle: screws instead

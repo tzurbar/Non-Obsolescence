@@ -1,5 +1,6 @@
 ---
 name: "Aluminum (extruded or sheet)"
+categoryId: aluminum
 bestFor:
   - "Outdoor furniture frames"
   - "Brackets and hardware"

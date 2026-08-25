@@ -1,11 +1,12 @@
 import { listDirectory, getFile, putFile, deleteFile } from '../lib/github.js';
 import { slugify, buildFixabilityMarkdown, buildMaterialsMarkdown, parseFrontmatter } from '../lib/content-format.js';
-import { escapeHtml, page, field, textareaField, selectField, readFormBody } from '../lib/html.js';
+import { escapeHtml, page, field, textareaField, selectField, categoryPickerFields, readFormBody } from '../lib/html.js';
 import { translateEntry, TARGET_LOCALES } from '../lib/translate.js';
+import { flattenIndented, listCategories, resolveCategoryId } from '../lib/categories.js';
 
 const FIELDS = {
-  fixability: { fields: ['productCategory', 'summary'], build: buildFixabilityMarkdown },
-  materials: { fields: ['name', 'bestFor', 'summary'], build: buildMaterialsMarkdown }
+  fixability: { fields: ['summary'], build: buildFixabilityMarkdown, domain: 'fixability' },
+  materials: { fields: ['name', 'bestFor', 'summary'], build: buildMaterialsMarkdown, domain: 'materials' }
 };
 
 async function listEntries(repo, token, collection) {
@@ -18,14 +19,24 @@ async function listEntries(repo, token, collection) {
   return entries;
 }
 
+function labelFor(categoryEntries, categoryId) {
+  const entry = categoryEntries.find((c) => c.slug === categoryId);
+  return entry ? entry.data.label : categoryId ? '(unknown category)' : '(uncategorized)';
+}
+
 async function listHtml(repo, token) {
-  const [fixability, materials] = await Promise.all([listEntries(repo, token, 'fixability'), listEntries(repo, token, 'materials')]);
+  const [fixability, materials, fixCats, matCats] = await Promise.all([
+    listEntries(repo, token, 'fixability'),
+    listEntries(repo, token, 'materials'),
+    listCategories(repo, token, 'fixability'),
+    listCategories(repo, token, 'materials')
+  ]);
 
   const fixabilityCards = fixability
     .map(
-      (e) => `<div class="border border-stone-200 rounded-lg p-5 mb-4">
+      (e) => `<div class="border border-stone-200 rounded-lg p-5 mb-4" data-category="${escapeHtml(e.data.categoryId || '')}" data-search="${escapeHtml((e.data.brand + ' ' + labelFor(fixCats, e.data.categoryId)).toLowerCase())}">
         <div class="flex items-center justify-between">
-          <h3 class="font-semibold">${escapeHtml(e.data.brand)} &mdash; ${escapeHtml(e.data.productCategory)}</h3>
+          <h3 class="font-semibold">${escapeHtml(e.data.brand)} &mdash; ${escapeHtml(labelFor(fixCats, e.data.categoryId))}</h3>
           <span class="text-emerald-700 font-bold">${Number(e.data.score).toFixed(1)}/10</span>
         </div>
         <p class="mt-2 text-sm text-stone-600">${escapeHtml(e.data.summary)}</p>
@@ -41,9 +52,9 @@ async function listHtml(repo, token) {
 
   const materialsCards = materials
     .map(
-      (e) => `<div class="border border-stone-200 rounded-lg p-5 mb-4">
+      (e) => `<div class="border border-stone-200 rounded-lg p-5 mb-4" data-category="${escapeHtml(e.data.categoryId || '')}" data-search="${escapeHtml((e.data.name + ' ' + labelFor(matCats, e.data.categoryId)).toLowerCase())}">
         <h3 class="font-semibold">${escapeHtml(e.data.name)}</h3>
-        <p class="mt-1 text-xs text-stone-500 uppercase tracking-wide">Durability: ${e.data.durability} &middot; Recyclability: ${e.data.recyclability}</p>
+        <p class="mt-1 text-xs text-stone-500 uppercase tracking-wide">${escapeHtml(labelFor(matCats, e.data.categoryId))} &middot; Durability: ${e.data.durability} &middot; Recyclability: ${e.data.recyclability}</p>
         <p class="mt-2 text-sm text-stone-600">${escapeHtml(e.data.summary)}</p>
         <div class="mt-3 flex gap-2">
           <a href="/manager/data/materials/${e.slug}" class="text-sm text-emerald-700 hover:underline">Edit</a>
@@ -58,26 +69,30 @@ async function listHtml(repo, token) {
   return `<div class="max-w-3xl mx-auto px-4 py-12">
     <div class="flex items-center justify-between mb-4">
       <h1 class="text-2xl font-bold">Fixability by Brand</h1>
-      <a href="/manager/data/fixability/new" class="bg-emerald-700 text-white font-semibold px-4 py-2 rounded-lg hover:bg-emerald-800 transition text-sm">+ Add entry</a>
+      <div class="flex gap-2">
+        <a href="/manager/data/categories/fixability" class="text-sm text-emerald-700 hover:underline" style="align-self:center">Manage categories</a>
+        <a href="/manager/data/fixability/new" class="bg-emerald-700 text-white font-semibold px-4 py-2 rounded-lg hover:bg-emerald-800 transition text-sm">+ Add entry</a>
+      </div>
     </div>
     ${fixabilityCards || '<p class="text-stone-500">No entries yet.</p>'}
     <div class="flex items-center justify-between mb-4 mt-10">
       <h1 class="text-2xl font-bold">Materials Reference</h1>
-      <a href="/manager/data/materials/new" class="bg-emerald-700 text-white font-semibold px-4 py-2 rounded-lg hover:bg-emerald-800 transition text-sm">+ Add material</a>
+      <div class="flex gap-2">
+        <a href="/manager/data/categories/materials" class="text-sm text-emerald-700 hover:underline" style="align-self:center">Manage categories</a>
+        <a href="/manager/data/materials/new" class="bg-emerald-700 text-white font-semibold px-4 py-2 rounded-lg hover:bg-emerald-800 transition text-sm">+ Add material</a>
+      </div>
     </div>
     ${materialsCards || '<p class="text-stone-500">No entries yet.</p>'}
   </div>`;
 }
 
-function fixabilityFormHtml(data = {}, slug = '') {
+function fixabilityFormHtml(data = {}, slug = '', categoryNodes = []) {
   return `<div class="max-w-2xl mx-auto px-4 py-12">
     <a href="/manager/data" class="text-sm text-stone-500 hover:text-emerald-700">&larr; Back</a>
     <h1 class="text-2xl font-bold mt-2 mb-6">${slug ? 'Edit' : 'Add'} fixability entry</h1>
     <form method="POST" action="/manager/data/fixability/${slug || 'new'}" class="space-y-4">
-      <div class="grid gap-4 sm:grid-cols-2">
-        ${field('Brand', 'brand', data.brand || '')}
-        ${field('Product category', 'productCategory', data.productCategory || '', { placeholder: 'Laptops, Smartphones, Vacuum cleaners...' })}
-      </div>
+      ${field('Brand', 'brand', data.brand || '')}
+      ${categoryPickerFields(categoryNodes, data.categoryId || '')}
       ${field('Score (0-10)', 'score', data.score ?? '', { type: 'number', step: '0.1' })}
       ${textareaField('Summary', 'summary', data.summary || '', { placeholder: 'What makes this brand/category repairable or not.' })}
       ${textareaField('Sources', 'sources', (data.sources || []).join('\n'), { placeholder: 'One URL per line', rows: 2 })}
@@ -86,12 +101,13 @@ function fixabilityFormHtml(data = {}, slug = '') {
   </div>`;
 }
 
-function materialsFormHtml(data = {}, slug = '') {
+function materialsFormHtml(data = {}, slug = '', categoryNodes = []) {
   return `<div class="max-w-2xl mx-auto px-4 py-12">
     <a href="/manager/data" class="text-sm text-stone-500 hover:text-emerald-700">&larr; Back</a>
     <h1 class="text-2xl font-bold mt-2 mb-6">${slug ? 'Edit' : 'Add'} material</h1>
     <form method="POST" action="/manager/data/materials/${slug || 'new'}" class="space-y-4">
       ${field('Name', 'name', data.name || '', { placeholder: 'Solid Hardwood (Oak)' })}
+      ${categoryPickerFields(categoryNodes, data.categoryId || '')}
       <div class="grid gap-4 sm:grid-cols-2">
         ${selectField('Durability', 'durability', data.durability || 'medium', ['low', 'medium', 'high'])}
         ${selectField('Recyclability', 'recyclability', data.recyclability || 'medium', ['low', 'medium', 'high'])}
@@ -112,6 +128,9 @@ async function translateDataEntry({ repo, token, env, collection, slug, data }) 
       const existingData = parseFrontmatter(existing.content).data;
       if (existingData.translationStatus === 'reviewed') continue; // never clobber a human-checked translation
     }
+    // categoryId isn't in `fields`, so translateEntry passes it through
+    // unchanged - the category tree itself is translated separately, by
+    // its own entries, when a category is created.
     const translatedData = await translateEntry({ data, fields, env, targetLocale: locale });
     const markdown = FIELDS[collection].build(translatedData, 'machine');
     await putFile(repo, token, path, markdown, `${existing ? 'Update' : 'Add'} ${locale} draft for ${slug}`, existing?.sha);
@@ -120,35 +139,43 @@ async function translateDataEntry({ repo, token, env, collection, slug, data }) 
 
 export const routes = {
   async list({ repo, token, url }) {
-    return page({ title: 'Data', body: await listHtml(repo, token), flash: url.searchParams.get('flash'),  activeTab: 'data' });
+    return page({ title: 'Data', body: await listHtml(repo, token), flash: url.searchParams.get('flash'), activeTab: 'data' });
   },
-  async newForm({ collection }) {
-    const html = collection === 'fixability' ? fixabilityFormHtml() : materialsFormHtml();
-    return page({ title: `Add ${collection}`, body: html, flash: null,  activeTab: 'data' });
+  async newForm({ repo, token, collection }) {
+    const categoryNodes = flattenIndented(await listCategories(repo, token, FIELDS[collection].domain));
+    const html = collection === 'fixability' ? fixabilityFormHtml({}, '', categoryNodes) : materialsFormHtml({}, '', categoryNodes);
+    return page({ title: `Add ${collection}`, body: html, flash: null, activeTab: 'data' });
   },
   async editForm({ repo, token, collection, slug }) {
-    const file = await getFile(repo, token, `src/content/${collection}/en/${slug}.md`);
+    const [file, categoryNodes] = await Promise.all([
+      getFile(repo, token, `src/content/${collection}/en/${slug}.md`),
+      listCategories(repo, token, FIELDS[collection].domain).then(flattenIndented)
+    ]);
     const data = parseFrontmatter(file.content).data;
-    const html = collection === 'fixability' ? fixabilityFormHtml(data, slug) : materialsFormHtml(data, slug);
-    return page({ title: `Edit ${collection}`, body: html, flash: null,  activeTab: 'data' });
+    const html = collection === 'fixability' ? fixabilityFormHtml(data, slug, categoryNodes) : materialsFormHtml(data, slug, categoryNodes);
+    return page({ title: `Edit ${collection}`, body: html, flash: null, activeTab: 'data' });
   },
   async save({ repo, token, env, request, collection, slugParam }) {
     const form = await readFormBody(request);
     const isNew = slugParam === 'new';
+    const domain = FIELDS[collection].domain;
+    const existingCategories = await listCategories(repo, token, domain);
+    const categoryId = await resolveCategoryId({ repo, token, env, domain, form, existingCategories });
 
     let data, slug;
     if (collection === 'fixability') {
       data = {
         brand: form.get('brand') || '',
-        productCategory: form.get('productCategory') || '',
+        categoryId,
         score: form.get('score') || '0',
         summary: form.get('summary') || '',
         sources: form.get('sources') || ''
       };
-      slug = isNew ? slugify(`${data.brand}-${data.productCategory}`) : slugParam;
+      slug = isNew ? slugify(`${data.brand}`) : slugParam;
     } else {
       data = {
         name: form.get('name') || '',
+        categoryId,
         durability: form.get('durability') || 'medium',
         recyclability: form.get('recyclability') || 'medium',
         bestFor: form.get('bestFor') || '',

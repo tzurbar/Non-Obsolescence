@@ -1,0 +1,4 @@
+---
+label: "שולחן"
+translationStatus: machine
+---

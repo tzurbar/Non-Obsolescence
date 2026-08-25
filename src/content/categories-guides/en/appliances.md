@@ -1,0 +1,4 @@
+---
+label: "Appliances"
+parentId: "kitchen"
+---

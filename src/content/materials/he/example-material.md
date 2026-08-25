@@ -1,5 +1,6 @@
 ---
 name: עץ מלא (אלון)
+categoryId: hardwood
 bestFor:
   - שלדים לרהיטים
   - מדפים נושאי משקל

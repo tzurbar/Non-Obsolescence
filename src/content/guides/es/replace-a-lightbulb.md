@@ -1,7 +1,7 @@
 ---
 title: ⟦needs translation to es⟧ How to Replace a Light Bulb
 productName: ⟦needs translation to es⟧ Standard Light Fixture
-category: ⟦needs translation to es⟧ Home & Electrical
+categoryId: home-electrical
 difficulty: beginner
 estimatedTime: ⟦needs translation to es⟧ 5 minutes
 tools:

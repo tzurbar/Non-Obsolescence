@@ -1,9 +1,10 @@
 import { listPendingIssues, getIssue, commentOnIssue, closeIssue, getDefaultBranch, getFileBinary, putFileBinary, putFile, deleteFile } from '../lib/github.js';
 import { parseSubmissionData, parseLegacyBody, slugify, buildGuideMarkdown } from '../lib/content-format.js';
-import { escapeHtml, page, field, textareaField, readFormBody } from '../lib/html.js';
+import { escapeHtml, page, field, textareaField, categoryPickerFields, readFormBody } from '../lib/html.js';
 import { translateEntry, TARGET_LOCALES } from '../lib/translate.js';
+import { flattenIndented, listCategories, resolveCategoryId } from '../lib/categories.js';
 
-const GUIDE_FIELDS = ['title', 'productName', 'category', 'estimatedTime', 'tools', 'partLinks', 'videoLinks', 'notes'];
+const GUIDE_FIELDS = ['title', 'productName', 'estimatedTime', 'tools', 'partLinks', 'videoLinks', 'notes'];
 
 function stepRowHtml(step, imagePath, imgSrc) {
   return `<div class="step-row border border-stone-200 rounded-lg p-4 space-y-2">
@@ -62,9 +63,13 @@ async function listHtml(repo, token) {
 async function issueHtml(repo, token, number) {
   const issue = await getIssue(repo, token, number);
   const submission = parseSubmissionData(issue.body);
-  const data = submission?.data || {};
-  const steps = submission?.steps || [];
+  const legacy = !submission ? parseLegacyBody(issue.body) : null;
+  const data = submission?.data || legacy || {};
+  const steps = submission?.steps || legacy?.steps || [];
   const imagePaths = submission?.imagePaths || { cover: null, steps: [] };
+  const categorySuggestion = data.category || data.categorySuggestion || '';
+
+  const categoryNodes = flattenIndented(await listCategories(repo, token, 'guides'));
 
   let rawUrl = () => null;
   if (imagePaths.cover || imagePaths.steps.some(Boolean)) {
@@ -89,7 +94,6 @@ async function issueHtml(repo, token, number) {
       <div class="grid gap-4 sm:grid-cols-2">
         ${field('Guide title', 'title', data.title, { wrapperClass: 'sm:col-span-2' })}
         ${field('Product / product type', 'productName', data.productName)}
-        ${field('Category', 'category', data.category)}
         <label class="block">
           <span class="field-label">Difficulty</span>
           <select name="difficulty" class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2 bg-white">
@@ -98,6 +102,8 @@ async function issueHtml(repo, token, number) {
         </label>
         ${field('Estimated time', 'estimatedTime', data.estimatedTime)}
       </div>
+      ${categorySuggestion ? `<p class="text-xs text-stone-500">Submitter suggested: "${escapeHtml(categorySuggestion)}"</p>` : ''}
+      ${categoryPickerFields(categoryNodes, '', categorySuggestion)}
       ${textareaField('Tools needed', 'tools', data.tools, { placeholder: 'One per line' })}
       ${cover ? `<div><span class="field-label">Cover photo</span><img src="${cover}" alt="Cover" class="mt-1 max-w-xs rounded-lg border border-stone-200"></div>` : ''}
       <input type="hidden" name="coverImagePath" value="${escapeHtml(imagePaths.cover || '')}">
@@ -150,7 +156,7 @@ async function translateAndPublish({ repo, token, env, slug, guideMarkdownData, 
   for (const locale of TARGET_LOCALES) {
     const translatedData = await translateEntry({
       data: guideMarkdownData,
-      fields: ['title', 'productName', 'category', 'estimatedTime', 'tools', 'partLinks', 'videoLinks', 'notes'],
+      fields: ['title', 'productName', 'estimatedTime', 'tools', 'partLinks', 'videoLinks', 'notes'],
       env,
       targetLocale: locale
     });
@@ -174,15 +180,18 @@ async function translateAndPublish({ repo, token, env, slug, guideMarkdownData, 
 
 export const routes = {
   async list({ repo, token, url }) {
-    return page({ title: 'Pending submissions', body: await listHtml(repo, token), flash: url.searchParams.get('flash'),  activeTab: 'submissions' });
+    return page({ title: 'Pending submissions', body: await listHtml(repo, token), flash: url.searchParams.get('flash'), activeTab: 'submissions' });
   },
   async detail({ repo, token, number }) {
-    return page({ title: `Issue #${number}`, body: await issueHtml(repo, token, number), flash: null,  activeTab: 'submissions' });
+    return page({ title: `Issue #${number}`, body: await issueHtml(repo, token, number), flash: null, activeTab: 'submissions' });
   },
   async approve({ repo, token, env, request, number }) {
     const form = await readFormBody(request);
     const issue = await getIssue(repo, token, number);
     const { data, steps, imagePaths } = submissionFromForm(form);
+
+    const existingCategories = await listCategories(repo, token, 'guides');
+    data.categoryId = await resolveCategoryId({ repo, token, env, domain: 'guides', form, existingCategories });
 
     let slug = slugify(data.title);
     const existing = await getFileBinary(repo, token, `src/content/guides/en/${slug}.md`).catch(() => null);

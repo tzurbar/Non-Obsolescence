@@ -1,7 +1,7 @@
 ---
 title: How to Replace a Light Bulb
 productName: Standard Light Fixture
-category: Home & Electrical
+categoryId: home-electrical
 difficulty: beginner
 estimatedTime: 5 minutes
 tools:

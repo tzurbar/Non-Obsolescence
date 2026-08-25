@@ -23,12 +23,36 @@ const step = z.object({
   videoLinks: z.array(link).default([])
 });
 
+// One tree per domain (guides / fixability / materials) - a category is a
+// node with an optional parentId pointing at another category in the same
+// domain+locale. No depth limit; the manager UI is how these get authored.
+const category = z.object({
+  label: z.string(),
+  parentId: z.string().optional(),
+  ...translationFields
+});
+
+const categoriesGuides = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/categories-guides' }),
+  schema: category
+});
+
+const categoriesFixability = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/categories-fixability' }),
+  schema: category
+});
+
+const categoriesMaterials = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/categories-materials' }),
+  schema: category
+});
+
 const guides = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/guides' }),
   schema: z.object({
     title: z.string(),
     productName: z.string(),
-    category: z.string(),
+    categoryId: z.string(),
     difficulty: z.enum(['beginner', 'intermediate', 'advanced']),
     estimatedTime: z.string(),
     tools: z.array(z.string()).default([]),
@@ -47,7 +71,7 @@ const fixability = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/fixability' }),
   schema: z.object({
     brand: z.string(),
-    productCategory: z.string(),
+    categoryId: z.string(),
     score: z.number().min(0).max(10),
     summary: z.string(),
     sources: z.array(z.string()).default([]),
@@ -60,6 +84,7 @@ const materials = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/materials' }),
   schema: z.object({
     name: z.string(),
+    categoryId: z.string().optional(),
     bestFor: z.array(z.string()).default([]),
     durability: z.enum(['low', 'medium', 'high']),
     recyclability: z.enum(['low', 'medium', 'high']),
@@ -68,4 +93,4 @@ const materials = defineCollection({
   })
 });
 
-export const collections = { guides, fixability, materials };
+export const collections = { guides, fixability, materials, categoriesGuides, categoriesFixability, categoriesMaterials };

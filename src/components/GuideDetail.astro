@@ -1,9 +1,10 @@
 ---
 import DraftBanner from './DraftBanner.astro';
 import LinkList from './LinkList.astro';
-import { render } from 'astro:content';
-import { githubEditBase, localeOf } from '../lib/content';
+import { render, getCollection } from 'astro:content';
+import { githubEditBase, localeOf, byLocale } from '../lib/content';
 import { t as uiT } from '../lib/i18n';
+import { breadcrumb } from '../lib/categories';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -13,14 +14,17 @@ interface Props {
 const { guide } = Astro.props;
 const { Content } = await render(guide);
 const editHref = `${githubEditBase}/src/content/guides/${guide.id}.md`;
-const s = uiT(localeOf(guide.id)).guideDetail;
+const locale = localeOf(guide.id);
+const s = uiT(locale).guideDetail;
+const categories = byLocale(await getCollection('categoriesGuides'), locale);
+const categoryLabel = breadcrumb(categories, guide.data.categoryId);
 ---
 
 <article class="max-w-3xl mx-auto px-4 py-12">
   <DraftBanner status={guide.data.translationStatus} editHref={editHref} locale={localeOf(guide.id)} />
 
   <p class="text-xs uppercase tracking-wide text-emerald-700 font-semibold">
-    {guide.data.category}
+    {categoryLabel}
   </p>
   <h1 class="text-3xl font-bold mt-1">{guide.data.title}</h1>
   <p class="mt-2 text-sm text-stone-500">

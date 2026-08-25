@@ -1,0 +1,4 @@
+---
+label: "Aluminum"
+parentId: "metal"
+---

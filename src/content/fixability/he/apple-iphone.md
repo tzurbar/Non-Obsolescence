@@ -1,6 +1,6 @@
 ---
 brand: "Apple"
-productCategory: "סמארטפונים (iPhone)"
+categoryId: smartphones
 score: 4
 summary: >
   קושי הפירוק הפיזי השתפר מדור לדור (יותר ברגים מאשר בדגמים מוקדמים), אבל

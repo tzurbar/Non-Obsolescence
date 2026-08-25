@@ -86,7 +86,7 @@ export function parseLegacyBody(body) {
 
   return {
     productName: line('Product'),
-    category: line('Category'),
+    categorySuggestion: line('Category'),
     difficulty,
     estimatedTime: line('Estimated time'),
     authorName: line('Submitted by'),
@@ -138,11 +138,35 @@ export function yamlString(value) {
   return `"${String(value).replace(/"/g, '\\"')}"`;
 }
 
+const CATEGORY_DOMAIN_FOLDERS = { guides: 'categories-guides', fixability: 'categories-fixability', materials: 'categories-materials' };
+
+// Minimal local-tool equivalent of the manager's category picker: if a real
+// categoryId was already provided (typed into the web tool), trust it.
+// Otherwise fall back to whatever free-text category label is available
+// (e.g. the submitter's suggestion) and auto-create it as a top-level
+// category if nothing matches yet. No parent selection here - for real
+// tree management, use the web manager (/manager/data/categories), which
+// this is a fallback for, not a replacement of.
+export async function resolveLocalCategoryId(domain, { categoryId, categoryLabel }) {
+  if (categoryId?.trim()) return categoryId.trim();
+  const label = (categoryLabel || '').trim();
+  if (!label) return '';
+  const folder = CATEGORY_DOMAIN_FOLDERS[domain];
+  const dir = path.join(ROOT, 'src', 'content', folder, 'en');
+  await mkdir(dir, { recursive: true });
+  const slug = slugify(label);
+  const filePath = path.join(dir, `${slug}.md`);
+  if (!existsSync(filePath)) {
+    await writeFile(filePath, `---\nlabel: ${yamlString(label)}\n---\n`);
+  }
+  return slug;
+}
+
 export function buildGuideMarkdown({ data, steps, localImagePaths, publishDate }) {
   const lines = ['---'];
   lines.push(`title: ${yamlString(data.title)}`);
   lines.push(`productName: ${yamlString(data.productName)}`);
-  lines.push(`category: ${yamlString(data.category)}`);
+  lines.push(`categoryId: ${yamlString(data.categoryId)}`);
   lines.push(`difficulty: ${data.difficulty}`);
   lines.push(`estimatedTime: ${yamlString(data.estimatedTime)}`);
 
@@ -242,6 +266,10 @@ export async function getIssue(repo, token, number) {
 
 export async function approveSubmission({ repo, token, issue, submission }) {
   const { data, steps, imagePaths } = submission;
+  data.categoryId = await resolveLocalCategoryId('guides', {
+    categoryId: data.categoryId,
+    categoryLabel: data.category || data.categorySuggestion
+  });
   let slug = slugify(data.title);
   const filePath = path.join(ROOT, 'src', 'content', 'guides', 'en', `${slug}.md`);
   if (existsSync(filePath)) slug = `${slug}-${issue.number}`;

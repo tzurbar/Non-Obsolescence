@@ -1,5 +1,6 @@
 ---
 name: Solid Hardwood (Oak)
+categoryId: hardwood
 bestFor:
   - Furniture frames
   - Load-bearing shelving

@@ -1,0 +1,4 @@
+---
+label: "מתכת"
+translationStatus: machine
+---

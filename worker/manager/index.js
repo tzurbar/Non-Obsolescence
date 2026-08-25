@@ -5,6 +5,7 @@
 
 import { routes as submissionRoutes } from './submissions.js';
 import { routes as dataRoutes } from './data.js';
+import { routes as categoryRoutes } from './categories.js';
 
 function textResponse(text, status = 200) {
   return new Response(text, { status, headers: { 'Content-Type': 'text/plain' } });
@@ -44,6 +45,21 @@ async function dispatch(url, request, env) {
 
   if (method === 'GET' && (path === '/manager/data' || path === '/manager/data/')) {
     return htmlResponse(await dataRoutes.list(ctx));
+  }
+
+  m = path.match(/^\/manager\/data\/categories\/(guides|fixability|materials)$/);
+  if (method === 'GET' && m) return htmlResponse(await categoryRoutes.list({ ...ctx, domain: m[1] }));
+
+  m = path.match(/^\/manager\/data\/categories\/(guides|fixability|materials)\/add$/);
+  if (method === 'POST' && m) {
+    const { redirect } = await categoryRoutes.add({ ...ctx, domain: m[1] });
+    return Response.redirect(new URL(redirect, url), 303);
+  }
+
+  m = path.match(/^\/manager\/data\/categories\/(guides|fixability|materials)\/([^/]+)\/delete$/);
+  if (method === 'POST' && m) {
+    const { redirect } = await categoryRoutes.delete({ ...ctx, domain: m[1], slug: m[2] });
+    return Response.redirect(new URL(redirect, url), 303);
   }
 
   m = path.match(/^\/manager\/data\/(fixability|materials)\/new$/);
