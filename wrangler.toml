@@ -10,3 +10,12 @@ compatibility_date = "2026-08-23"
 [assets]
 directory = "./dist"
 binding = "ASSETS"
+
+# Non-secret config, safe to commit - unlike dashboard-only "Runtime
+# variables", these live in the repo so they deploy with every push and
+# can't get silently wiped out by a Cloudflare-triggered rebuild.
+# TRANSLATION_API_KEY stays dashboard-only (Secret) since it must never be
+# committed to git.
+[vars]
+TRANSLATION_API_URL = "https://api.openai.com/v1/chat/completions"
+TRANSLATION_MODEL = "gpt-4o-mini"
