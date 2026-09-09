@@ -1,8 +1,9 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
 import SubmitForm from '../../../components/SubmitForm.astro';
+import { getCollection } from 'astro:content';
 import { t as uiT } from '../../../lib/i18n';
-import { locales, defaultLocale } from '../../../lib/content';
+import { byLocale, locales, defaultLocale } from '../../../lib/content';
 
 export async function getStaticPaths() {
   return locales
@@ -11,8 +12,9 @@ export async function getStaticPaths() {
 }
 
 const { locale } = Astro.params;
+const categories = byLocale(await getCollection('categoriesGuides'), locale);
 ---
 
 <Layout title={uiT(locale).submit.title}>
-  <SubmitForm locale={locale} />
+  <SubmitForm locale={locale} categories={categories} />
 </Layout>

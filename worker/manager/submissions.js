@@ -103,7 +103,7 @@ async function issueHtml(repo, token, number) {
         ${field('Estimated time', 'estimatedTime', data.estimatedTime)}
       </div>
       ${categorySuggestion ? `<p class="text-xs text-stone-500">Submitter suggested: "${escapeHtml(categorySuggestion)}"</p>` : ''}
-      ${categoryPickerFields(categoryNodes, '', categorySuggestion)}
+      ${categoryPickerFields(categoryNodes, data.categoryId || '', categorySuggestion)}
       ${textareaField('Tools needed', 'tools', data.tools, { placeholder: 'One per line' })}
       ${cover ? `<div><span class="field-label">Cover photo</span><img src="${cover}" alt="Cover" class="mt-1 max-w-xs rounded-lg border border-stone-200"></div>` : ''}
       <input type="hidden" name="coverImagePath" value="${escapeHtml(imagePaths.cover || '')}">
@@ -120,6 +120,7 @@ async function issueHtml(repo, token, number) {
       </div>
       ${textareaField('Notes', 'notes', data.notes, { rows: 3 })}
       ${field('Submitted by', 'authorName', data.authorName)}
+      ${data.authorContact?.trim() ? `<p class="text-xs text-stone-500">Contact: ${escapeHtml(data.authorContact)}</p>` : ''}
       <button type="submit" class="bg-emerald-700 text-white font-semibold px-6 py-3 rounded-lg hover:bg-emerald-800 transition">Approve &amp; publish</button>
     </form>
     <form method="POST" action="/manager/submissions/${number}/reject" class="mt-4">

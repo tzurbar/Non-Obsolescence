@@ -1,14 +1,18 @@
 ---
 import { githubRepoUrl } from '../lib/content';
 import { t as uiT } from '../lib/i18n';
+import { flattenIndented } from '../lib/categories';
+import type { CollectionEntry } from 'astro:content';
 
 interface Props {
   locale: string;
+  categories: CollectionEntry<'categoriesGuides'>[];
 }
 
-const { locale } = Astro.props;
+const { locale, categories } = Astro.props;
 const s = uiT(locale).submit;
 const issueFormHref = `${githubRepoUrl}/issues/new?template=submit-guide.yml`;
+const categoryNodes = flattenIndented(categories);
 ---
 
 <section class="max-w-2xl mx-auto px-4 py-12">
@@ -25,10 +29,31 @@ const issueFormHref = `${githubRepoUrl}/issues/new?template=submit-guide.yml`;
         <span class="text-sm font-semibold text-stone-700">{s.productLabel} *</span>
         <input name="productName" required class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2" />
       </label>
-      <label class="block">
+      <div class="block">
         <span class="text-sm font-semibold text-stone-700">{s.categoryLabel} *</span>
-        <input name="category" required class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2" placeholder={s.categoryPlaceholder} />
-      </label>
+        <input
+          type="text"
+          id="category-search"
+          class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2 text-sm"
+          placeholder={s.categorySearchPlaceholder}
+          autocomplete="off"
+        />
+        <select id="category-select" class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2 bg-white">
+          <option value="" disabled selected>{s.categorySelectPlaceholder}</option>
+          {categoryNodes.map((n) => (
+            <option value={n.id} data-label={n.label}>{'—'.repeat(n.depth)} {n.label}</option>
+          ))}
+          <option value="__new__">{s.categoryNotListed}</option>
+        </select>
+        <input
+          type="text"
+          name="newCategoryLabel"
+          id="new-category-input"
+          class="hidden mt-2 w-full border border-stone-300 rounded-md px-3 py-2 text-sm"
+          placeholder={s.newCategoryPlaceholder}
+        />
+        <p id="category-error" class="hidden mt-1 text-xs text-red-600">{s.categoryRequiredError}</p>
+      </div>
       <label class="block">
         <span class="text-sm font-semibold text-stone-700">{s.difficultyLabel} *</span>
         <select name="difficulty" required class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2 bg-white">
@@ -43,10 +68,29 @@ const issueFormHref = `${githubRepoUrl}/issues/new?template=submit-guide.yml`;
       </label>
     </div>
 
-    <label class="block">
-      <span class="text-sm font-semibold text-stone-700">{s.toolsLabel}</span>
-      <textarea name="tools" rows="2" class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2" placeholder={s.toolsPlaceholder}></textarea>
-    </label>
+    <div>
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-sm font-semibold text-stone-700">{s.toolsLabel}</span>
+        <button type="button" id="add-tool" class="text-sm text-emerald-700 hover:underline">{s.addTool}</button>
+      </div>
+      <div id="tools-list" class="space-y-2"></div>
+    </div>
+
+    <div>
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-sm font-semibold text-stone-700">{s.partLinksLabel}</span>
+        <button type="button" id="add-part-link" class="text-sm text-emerald-700 hover:underline">{s.addPartLink}</button>
+      </div>
+      <div id="part-links-list" class="space-y-2"></div>
+    </div>
+
+    <div>
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-sm font-semibold text-stone-700">{s.videoLinksLabel}</span>
+        <button type="button" id="add-video-link" class="text-sm text-emerald-700 hover:underline">{s.addVideoLink}</button>
+      </div>
+      <div id="video-links-list" class="space-y-2"></div>
+    </div>
 
     <label class="block">
       <span class="text-sm font-semibold text-stone-700">{s.coverPhotoLabel}</span>
@@ -62,26 +106,21 @@ const issueFormHref = `${githubRepoUrl}/issues/new?template=submit-guide.yml`;
       <div id="steps-list" class="space-y-4"></div>
     </div>
 
-    <div class="grid gap-4 sm:grid-cols-2">
-      <label class="block">
-        <span class="text-sm font-semibold text-stone-700">{s.partLinksLabel}</span>
-        <textarea name="partLinks" rows="2" class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2" placeholder={s.linksPlaceholder}></textarea>
-      </label>
-      <label class="block">
-        <span class="text-sm font-semibold text-stone-700">{s.videoLinksLabel}</span>
-        <textarea name="videoLinks" rows="2" class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2" placeholder={s.linksPlaceholder}></textarea>
-      </label>
-    </div>
-
     <label class="block">
       <span class="text-sm font-semibold text-stone-700">{s.notesLabel}</span>
       <textarea name="notes" rows="3" class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2"></textarea>
     </label>
 
-    <label class="block">
-      <span class="text-sm font-semibold text-stone-700">{s.authorLabel}</span>
-      <input name="authorName" class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2" />
-    </label>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <label class="block">
+        <span class="text-sm font-semibold text-stone-700">{s.authorLabel}</span>
+        <input name="authorName" class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2" />
+      </label>
+      <label class="block">
+        <span class="text-sm font-semibold text-stone-700">{s.authorContactLabel}</span>
+        <input name="authorContact" class="mt-1 w-full border border-stone-300 rounded-md px-3 py-2" placeholder={s.authorContactPlaceholder} />
+      </label>
+    </div>
 
     <label class="hidden" aria-hidden="true">
       Leave this empty
@@ -109,20 +148,33 @@ const issueFormHref = `${githubRepoUrl}/issues/new?template=submit-guide.yml`;
       <button type="button" class="remove-step text-xs text-red-600 hover:underline">{s.remove}</button>
     </div>
     <textarea class="step-text w-full border border-stone-300 rounded-md px-3 py-2 text-sm" rows="2" placeholder={s.stepPlaceholder}></textarea>
-    <div class="grid gap-2 sm:grid-cols-3">
-      <input type="file" class="step-image text-sm" accept="image/jpeg,image/png,image/webp,image/gif" title={s.stepImageTitle} />
-      <input class="step-part border border-stone-300 rounded-md px-2 py-1.5 text-sm" placeholder={s.stepPartPlaceholder} />
-      <input class="step-video border border-stone-300 rounded-md px-2 py-1.5 text-sm" placeholder={s.stepVideoPlaceholder} />
-    </div>
+    <input type="file" class="step-image text-sm" accept="image/jpeg,image/png,image/webp,image/gif" title={s.stepImageTitle} />
   </div>
 </template>
 
-<script define:vars={{ strings: { stepNumber: s.stepNumber, submitting: s.submitting, submitted: s.submitted, viewSubmission: s.viewSubmission, genericError: s.genericError, networkError: s.networkError } }}>
-  const stepsList = document.getElementById('steps-list');
-  const stepTemplate = document.getElementById('step-template');
+<template id="tool-template">
+  <div class="tool-row flex items-center gap-2">
+    <input class="tool-input flex-1 border border-stone-300 rounded-md px-3 py-2 text-sm" placeholder={s.toolPlaceholder} />
+    <button type="button" class="remove-tool text-xs text-red-600 hover:underline">{s.remove}</button>
+  </div>
+</template>
+
+<template id="link-row-template">
+  <div class="link-row grid gap-2 sm:grid-cols-[1fr_1fr_auto] items-center">
+    <input class="link-name border border-stone-300 rounded-md px-3 py-2 text-sm" placeholder={s.linkNamePlaceholder} />
+    <input class="link-url border border-stone-300 rounded-md px-3 py-2 text-sm" type="url" placeholder={s.linkUrlPlaceholder} />
+    <button type="button" class="remove-link text-xs text-red-600 hover:underline">{s.remove}</button>
+  </div>
+</template>
+
+<script define:vars={{ strings: { stepNumber: s.stepNumber, submitting: s.submitting, submitted: s.submitted, viewSubmission: s.viewSubmission, genericError: s.genericError, networkError: s.networkError, categoryRequiredError: s.categoryRequiredError } }}>
   const form = document.getElementById('guide-form');
   const status = document.getElementById('form-status');
   const submitBtn = document.getElementById('submit-btn');
+
+  // --- Steps (unchanged pattern: text + optional photo, no per-step links anymore) ---
+  const stepsList = document.getElementById('steps-list');
+  const stepTemplate = document.getElementById('step-template');
 
   function renumberSteps() {
     stepsList.querySelectorAll('.step-row').forEach((row, i) => {
@@ -133,8 +185,7 @@ const issueFormHref = `${githubRepoUrl}/issues/new?template=submit-guide.yml`;
 
   function addStep() {
     const node = stepTemplate.content.cloneNode(true);
-    const removeBtn = node.querySelector('.remove-step');
-    removeBtn?.addEventListener('click', (e) => {
+    node.querySelector('.remove-step')?.addEventListener('click', (e) => {
       e.target.closest('.step-row')?.remove();
       renumberSteps();
     });
@@ -146,19 +197,98 @@ const issueFormHref = `${githubRepoUrl}/issues/new?template=submit-guide.yml`;
   addStep();
   addStep();
 
-  function parseLinkLines(text) {
-    return text
-      .split('\n')
-      .map((line) => line.trim())
-      .filter(Boolean)
-      .map((line) => {
-        const [label, url] = line.split('|').map((s) => s.trim());
-        return { label: label || url, url: url || label };
-      });
+  // --- Tools: one input per tool, added one at a time ---
+  const toolsList = document.getElementById('tools-list');
+  const toolTemplate = document.getElementById('tool-template');
+
+  function addTool() {
+    const node = toolTemplate.content.cloneNode(true);
+    node.querySelector('.remove-tool')?.addEventListener('click', (e) => e.target.closest('.tool-row')?.remove());
+    toolsList.appendChild(node);
+  }
+
+  document.getElementById('add-tool')?.addEventListener('click', addTool);
+  addTool();
+
+  // --- Part links / video links: guide-level only, name+URL pairs ---
+  const partLinksList = document.getElementById('part-links-list');
+  const videoLinksList = document.getElementById('video-links-list');
+  const linkRowTemplate = document.getElementById('link-row-template');
+
+  function addLinkRow(container) {
+    const node = linkRowTemplate.content.cloneNode(true);
+    node.querySelector('.remove-link')?.addEventListener('click', (e) => e.target.closest('.link-row')?.remove());
+    container.appendChild(node);
+  }
+
+  document.getElementById('add-part-link')?.addEventListener('click', () => addLinkRow(partLinksList));
+  document.getElementById('add-video-link')?.addEventListener('click', () => addLinkRow(videoLinksList));
+  addLinkRow(partLinksList);
+  addLinkRow(videoLinksList);
+
+  function collectLinks(container) {
+    return Array.from(container.querySelectorAll('.link-row'))
+      .map((row) => ({
+        name: row.querySelector('.link-name').value.trim(),
+        url: row.querySelector('.link-url').value.trim()
+      }))
+      .filter((l) => l.name || l.url)
+      .map((l) => `${l.name || l.url} | ${l.url || l.name}`)
+      .join('\n');
+  }
+
+  // --- Category: searchable select + "not listed yet" fallback ---
+  const categorySearch = document.getElementById('category-search');
+  const categorySelect = document.getElementById('category-select');
+  const newCategoryInput = document.getElementById('new-category-input');
+  const categoryError = document.getElementById('category-error');
+  const placeholderOption = Array.from(categorySelect.options).find((o) => o.value === '');
+  const newCategoryOption = Array.from(categorySelect.options).find((o) => o.value === '__new__');
+  const allCategoryOptions = Array.from(categorySelect.options).filter((o) => o.value !== '__new__' && o.value !== '');
+
+  function applyCategorySearch() {
+    const q = categorySearch.value.trim().toLowerCase();
+    const currentValue = categorySelect.value;
+    categorySelect.innerHTML = '';
+    categorySelect.appendChild(placeholderOption);
+    allCategoryOptions
+      .filter((o) => !q || o.dataset.label.toLowerCase().includes(q) || o.value === currentValue)
+      .forEach((o) => categorySelect.appendChild(o));
+    categorySelect.appendChild(newCategoryOption);
+    categorySelect.value = currentValue;
+  }
+
+  categorySearch.addEventListener('input', applyCategorySearch);
+
+  function updateNewCategoryVisibility() {
+    const isNew = categorySelect.value === '__new__';
+    newCategoryInput.classList.toggle('hidden', !isNew);
+    if (!isNew) newCategoryInput.value = '';
+  }
+
+  categorySelect.addEventListener('change', updateNewCategoryVisibility);
+  updateNewCategoryVisibility();
+
+  function readCategory() {
+    if (categorySelect.value === '') return null;
+    if (categorySelect.value === '__new__') {
+      const label = newCategoryInput.value.trim();
+      return label ? { category: label, categoryId: '' } : null;
+    }
+    const opt = categorySelect.selectedOptions[0];
+    return opt ? { category: opt.dataset.label, categoryId: opt.value } : null;
   }
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    const category = readCategory();
+    categoryError.classList.toggle('hidden', !!category);
+    if (!category) {
+      categoryError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
     submitBtn.disabled = true;
     status.textContent = strings.submitting;
     status.className = 'mt-3 text-sm text-stone-500';
@@ -167,26 +297,25 @@ const issueFormHref = `${githubRepoUrl}/issues/new?template=submit-guide.yml`;
     const stepRows = Array.from(stepsList.querySelectorAll('.step-row'));
     const steps = stepRows.map((row) => ({
       text: row.querySelector('.step-text').value.trim(),
-      partLink: row.querySelector('.step-part').value.trim(),
-      videoLink: row.querySelector('.step-video').value.trim()
+      partLink: '',
+      videoLink: ''
     }));
 
     const upload = new FormData();
-    for (const key of ['title', 'productName', 'category', 'difficulty', 'estimatedTime', 'tools', 'notes', 'authorName', 'website']) {
+    for (const key of ['title', 'productName', 'difficulty', 'estimatedTime', 'notes', 'authorName', 'authorContact', 'website']) {
       upload.set(key, String(sourceFormData.get(key) || ''));
     }
+    upload.set('category', category.category);
+    upload.set('categoryId', category.categoryId);
     upload.set(
-      'partLinks',
-      parseLinkLines(String(sourceFormData.get('partLinks') || ''))
-        .map((l) => `${l.label} | ${l.url}`)
+      'tools',
+      Array.from(toolsList.querySelectorAll('.tool-input'))
+        .map((i) => i.value.trim())
+        .filter(Boolean)
         .join('\n')
     );
-    upload.set(
-      'videoLinks',
-      parseLinkLines(String(sourceFormData.get('videoLinks') || ''))
-        .map((l) => `${l.label} | ${l.url}`)
-        .join('\n')
-    );
+    upload.set('partLinks', collectLinks(partLinksList));
+    upload.set('videoLinks', collectLinks(videoLinksList));
     upload.set('stepsJson', JSON.stringify(steps));
 
     const coverInput = form.querySelector('input[name="coverImage"]');
@@ -216,6 +345,14 @@ const issueFormHref = `${githubRepoUrl}/issues/new?template=submit-guide.yml`;
         stepsList.innerHTML = '';
         addStep();
         addStep();
+        toolsList.innerHTML = '';
+        addTool();
+        partLinksList.innerHTML = '';
+        videoLinksList.innerHTML = '';
+        addLinkRow(partLinksList);
+        addLinkRow(videoLinksList);
+        applyCategorySearch();
+        updateNewCategoryVisibility();
       } else {
         status.textContent = result.error || strings.genericError;
         status.className = 'mt-3 text-sm text-red-600';

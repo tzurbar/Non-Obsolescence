@@ -96,6 +96,7 @@ export function buildIssueBody(data, steps, imagePaths) {
   if (data.videoLinks?.trim()) lines.push(`\n**Video links:**\n${data.videoLinks}`);
   if (data.notes?.trim()) lines.push(`\n**Notes:**\n${data.notes}`);
   if (data.authorName?.trim()) lines.push(`\n**Submitted by:** ${data.authorName}`);
+  if (data.authorContact?.trim()) lines.push(`**Contact:** ${data.authorContact}`);
 
   if (imagePaths.cover || imagePaths.steps.some(Boolean)) {
     lines.push(
@@ -127,7 +128,21 @@ export async function onRequestPost({ request, env }) {
   }
 
   const body = {};
-  for (const key of ['title', 'productName', 'category', 'difficulty', 'estimatedTime', 'tools', 'notes', 'authorName', 'website', 'partLinks', 'videoLinks']) {
+  for (const key of [
+    'title',
+    'productName',
+    'category',
+    'categoryId',
+    'difficulty',
+    'estimatedTime',
+    'tools',
+    'notes',
+    'authorName',
+    'authorContact',
+    'website',
+    'partLinks',
+    'videoLinks'
+  ]) {
     body[key] = form.get(key) ?? '';
   }
 
