@@ -1,16 +1,23 @@
 ---
 name: "Particleboard / MDF"
-categoryId: engineered-wood
+categoryId: "engineered-timber"
 bestFor:
-  - "Low-cost flat-pack furniture"
-  - "Non-structural panels"
+  - "Cabinet backs and drawer bottoms"
+  - "Painted interior panels"
+  - "Dry, low-load indoor furniture"
 durability: low
-recyclability: medium
-summary: >
-  Cheap and consistent to manufacture, but fails right where furniture
-  needs strength most: screw holes strip out after a few disassemblies,
-  and any water exposure causes irreversible swelling. Once a fastener
-  point fails or a panel swells, repair usually isn't practical - compare
-  against solid hardwood, which can be re-glued, re-drilled, and refinished
-  instead of replaced.
+recyclability: low
+tensileStrength: low
+compressiveStrength: low
+flexibility: low
+waterResistance: low
+strengths:
+  - "Cheap, flat and dimensionally consistent"
+  - "Takes veneer and paint well (MDF)"
+  - "No grain, knots or movement"
+weaknesses:
+  - "Screw holes strip after a few disassemblies"
+  - "Swells irreversibly with any water exposure"
+  - "Weak in tension - sags under load over time"
+summary: "Wood dust and chips bonded with resin. Cheap, flat and stable in dry conditions, and the single biggest reason flat-pack furniture ends up on the kerb - once a fixing point strips or a panel swells, it cannot meaningfully be repaired."
 ---

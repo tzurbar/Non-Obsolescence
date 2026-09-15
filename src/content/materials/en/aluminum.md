@@ -1,16 +1,23 @@
 ---
-name: "Aluminum (extruded or sheet)"
-categoryId: aluminum
+name: "Aluminium (extruded or sheet)"
+categoryId: "non-ferrous"
 bestFor:
+  - "Window and door frames"
   - "Outdoor furniture frames"
-  - "Brackets and hardware"
-  - "Lightweight structural parts"
+  - "Brackets and lightweight structures"
 durability: high
 recyclability: high
-summary: >
-  Doesn't rust, holds up outdoors without a protective finish, and
-  recycles almost indefinitely at a fraction of the energy cost of virgin
-  aluminum production. Lighter than steel for the same part, though softer
-  and less rigid, so it's a better fit for frames and brackets than for
-  parts that take heavy repeated stress.
+tensileStrength: medium
+compressiveStrength: medium
+flexibility: medium
+waterResistance: high
+strengths:
+  - "Does not rust - fine outdoors untreated"
+  - "Light, roughly a third the weight of steel"
+  - "Recycles at a fraction of the energy of new metal"
+weaknesses:
+  - "Softer and less stiff than steel"
+  - "Fatigues under repeated flexing"
+  - "Harder to weld well than steel"
+summary: "About a third the weight of steel and corrosion-resistant without any coating, because it forms its own oxide layer. Softer and less stiff than steel, so it belongs in frames and brackets rather than parts taking heavy repeated stress."
 ---

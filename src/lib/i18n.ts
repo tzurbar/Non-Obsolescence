@@ -41,7 +41,17 @@ export const ui = {
       allCategories: 'All categories',
       searchFixabilityPlaceholder: 'Search brands…',
       searchMaterialsPlaceholder: 'Search materials…',
-      noResults: 'Nothing matches that filter.'
+      noResults: 'Nothing matches that filter.',
+      pullStrength: 'Pull strength',
+      pushStrength: 'Push strength',
+      flexibility: 'Flexibility',
+      waterResistance: 'Water resistance',
+      strengths: 'Strengths',
+      weaknesses: 'Weaknesses',
+      goodFor: 'Good for',
+      ratingLow: 'Low',
+      ratingMedium: 'Medium',
+      ratingHigh: 'High'
     },
     submit: {
       title: 'Submit a Guide',
@@ -127,7 +137,17 @@ export const ui = {
       allCategories: 'כל הקטגוריות',
       searchFixabilityPlaceholder: 'חיפוש מותגים…',
       searchMaterialsPlaceholder: 'חיפוש חומרים…',
-      noResults: 'שום דבר לא תואם את הסינון הזה.'
+      noResults: 'שום דבר לא תואם את הסינון הזה.',
+      pullStrength: 'חוזק משיכה',
+      pushStrength: 'חוזק לחיצה',
+      flexibility: 'גמישות',
+      waterResistance: 'עמידות במים',
+      strengths: 'חוזקות',
+      weaknesses: 'חולשות',
+      goodFor: 'מתאים ל',
+      ratingLow: 'נמוך',
+      ratingMedium: 'בינוני',
+      ratingHigh: 'גבוה'
     },
     submit: {
       title: 'הגישו מדריך',
@@ -213,7 +233,17 @@ export const ui = {
       allCategories: 'جميع الفئات',
       searchFixabilityPlaceholder: 'ابحث عن العلامات التجارية…',
       searchMaterialsPlaceholder: 'ابحث عن المواد…',
-      noResults: 'لا يوجد ما يطابق هذا الفلتر.'
+      noResults: 'لا يوجد ما يطابق هذا الفلتر.',
+      pullStrength: 'قوة الشد',
+      pushStrength: 'قوة الضغط',
+      flexibility: 'المرونة',
+      waterResistance: 'مقاومة الماء',
+      strengths: 'نقاط القوة',
+      weaknesses: 'نقاط الضعف',
+      goodFor: 'مناسب لـ',
+      ratingLow: 'منخفض',
+      ratingMedium: 'متوسط',
+      ratingHigh: 'مرتفع'
     },
     submit: {
       title: 'أرسل دليلاً',
@@ -299,7 +329,17 @@ export const ui = {
       allCategories: 'Todas las categorías',
       searchFixabilityPlaceholder: 'Buscar marcas…',
       searchMaterialsPlaceholder: 'Buscar materiales…',
-      noResults: 'Nada coincide con ese filtro.'
+      noResults: 'Nada coincide con ese filtro.',
+      pullStrength: 'Resistencia a la tracción',
+      pushStrength: 'Resistencia a la compresión',
+      flexibility: 'Flexibilidad',
+      waterResistance: 'Resistencia al agua',
+      strengths: 'Fortalezas',
+      weaknesses: 'Debilidades',
+      goodFor: 'Bueno para',
+      ratingLow: 'Baja',
+      ratingMedium: 'Media',
+      ratingHigh: 'Alta'
     },
     submit: {
       title: 'Enviar una guía',
@@ -385,7 +425,17 @@ export const ui = {
       allCategories: 'Todas as categorias',
       searchFixabilityPlaceholder: 'Buscar marcas…',
       searchMaterialsPlaceholder: 'Buscar materiais…',
-      noResults: 'Nada corresponde a esse filtro.'
+      noResults: 'Nada corresponde a esse filtro.',
+      pullStrength: 'Resistência à tração',
+      pushStrength: 'Resistência à compressão',
+      flexibility: 'Flexibilidade',
+      waterResistance: 'Resistência à água',
+      strengths: 'Pontos fortes',
+      weaknesses: 'Pontos fracos',
+      goodFor: 'Bom para',
+      ratingLow: 'Baixa',
+      ratingMedium: 'Média',
+      ratingHigh: 'Alta'
     },
     submit: {
       title: 'Enviar um guia',

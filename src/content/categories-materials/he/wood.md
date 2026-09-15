@@ -1,4 +1,0 @@
----
-label: "עץ"
-translationStatus: machine
----

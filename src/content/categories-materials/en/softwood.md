@@ -1,0 +1,4 @@
+---
+label: "Softwood"
+parentId: "timber"
+---

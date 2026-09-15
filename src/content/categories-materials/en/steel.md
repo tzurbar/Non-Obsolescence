@@ -1,4 +1,0 @@
----
-label: "Steel"
-parentId: "metal"
----

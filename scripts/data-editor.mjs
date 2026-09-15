@@ -181,10 +181,16 @@ function materialsFormHtml(data = {}, slug = '') {
       ${field('Name', 'name', data.name || '', { placeholder: 'Solid Hardwood (Oak)' })}
       ${field('Category ID', 'categoryId', data.categoryId || '', { placeholder: 'slug from a categories-materials/en file, or use the web manager’s picker instead' })}
       <div class="grid gap-4 sm:grid-cols-2">
+        ${selectField('Pull strength (tensile)', 'tensileStrength', data.tensileStrength || 'medium', ['low', 'medium', 'high'])}
+        ${selectField('Push strength (compressive)', 'compressiveStrength', data.compressiveStrength || 'medium', ['low', 'medium', 'high'])}
+        ${selectField('Flexibility', 'flexibility', data.flexibility || 'medium', ['low', 'medium', 'high'])}
+        ${selectField('Water resistance', 'waterResistance', data.waterResistance || 'medium', ['low', 'medium', 'high'])}
         ${selectField('Durability', 'durability', data.durability || 'medium', ['low', 'medium', 'high'])}
         ${selectField('Recyclability', 'recyclability', data.recyclability || 'medium', ['low', 'medium', 'high'])}
       </div>
       ${textareaField('Best for', 'bestFor', (data.bestFor || []).join('\n'), { placeholder: 'One per line: Furniture frames, Shelving, Tool handles...', rows: 3 })}
+      ${textareaField('Strengths', 'strengths', (data.strengths || []).join('\n'), { placeholder: 'One per line', rows: 3 })}
+      ${textareaField('Weaknesses', 'weaknesses', (data.weaknesses || []).join('\n'), { placeholder: 'One per line', rows: 3 })}
       ${textareaField('Summary', 'summary', data.summary || '', { placeholder: 'What it is good for and why, compared to cheaper alternatives.' })}
       <button type="submit" class="bg-emerald-700 text-white font-semibold px-6 py-3 rounded-lg hover:bg-emerald-800 transition">Save</button>
     </form>
@@ -223,6 +229,15 @@ function buildMaterialsMarkdown(data, existing) {
   }
   lines.push(`durability: ${data.durability}`);
   lines.push(`recyclability: ${data.recyclability}`);
+  for (const key of ['tensileStrength', 'compressiveStrength', 'flexibility', 'waterResistance']) {
+    if (data[key]) lines.push(`${key}: ${data[key]}`);
+  }
+  for (const key of ['strengths', 'weaknesses']) {
+    const items = (data[key] || '').split('\n').map((s) => s.trim()).filter(Boolean);
+    if (items.length === 0) continue;
+    lines.push(`${key}:`);
+    items.forEach((item) => lines.push(`  - ${yamlString(item)}`));
+  }
   lines.push(`summary: >\n  ${data.summary.trim().replace(/\n/g, '\n  ')}`);
   if (existing?.translationStatus) lines.push(`translationStatus: ${existing.translationStatus}`);
   lines.push('---');
@@ -301,7 +316,13 @@ async function main() {
               categoryId: await resolveLocalCategoryId('materials', { categoryId: form.get('categoryId') }),
               durability: form.get('durability') || 'medium',
               recyclability: form.get('recyclability') || 'medium',
+              tensileStrength: form.get('tensileStrength') || '',
+              compressiveStrength: form.get('compressiveStrength') || '',
+              flexibility: form.get('flexibility') || '',
+              waterResistance: form.get('waterResistance') || '',
               bestFor: form.get('bestFor') || '',
+              strengths: form.get('strengths') || '',
+              weaknesses: form.get('weaknesses') || '',
               summary: form.get('summary') || ''
             };
             slug = slugInput || slugify(data.name);

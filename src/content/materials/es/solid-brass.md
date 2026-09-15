@@ -1,20 +1,31 @@
 ---
 name: Latón macizo
-categoryId: brass
+categoryId: non-ferrous
 bestFor:
-  - Bisagras y herrajes
-  - Accesorios y sujetadores
-  - Accesorios de fontanería
+  - 'Grifos, válvulas y accesorios de fontanería'
+  - Herrajes para puertas y ventanas
+  - Cojinetes y bujes
 durability: high
 recyclability: high
+tensileStrength: medium
+compressiveStrength: medium
+flexibility: medium
+waterResistance: high
+strengths:
+  - Resistente a la corrosión en servicio húmedo
+  - Las máquinas limpian con precisión las roscas.
+  - No chispa; autolubricante contra el acero
+weaknesses:
+  - 'Se desincoriza en algunas condiciones de agua, volviéndose quebradizo.'
+  - Más caro que las alternativas chapadas.
+  - Se empaña a menos que esté lacado o pulido.
 summary: >-
-  Resistente a la corrosión, envejece con una pátina en lugar de degradarse y es
-  completamente reciclable sin perder calidad. Cuesta más al principio que el
-  hardware de acero chapado o aleaciones de zinc, pero no se oxida, no se
-  perfora ni se atora como lo hacen los accesorios chapados más baratos después
-  de años de uso.
+  Una aleación de cobre y zinc que se mecaniza de maravilla y resiste la
+  corrosión, razón por la cual las válvulas, grifos y herrajes de calidad están
+  hechos de este material. La señal de un accesorio barato es una aleación de
+  zinc niquelada que finge ser esta.
 translationStatus: machine
 translationOf: en/solid-brass
-sourceUpdated: '2026-08-25T00:04:28.559Z'
+sourceUpdated: '2026-09-15T07:18:52.448Z'
 ---
 

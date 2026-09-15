@@ -1,20 +1,31 @@
 ---
-name: Painel de partículas / MDF
-categoryId: engineered-wood
+name: Papel prensado / MDF
+categoryId: engineered-timber
 bestFor:
-  - Móveis de montagem a baixo custo
-  - Painéis não estruturais
+  - Costas de armário e fundos de gaveta
+  - Painéis interiores pintados
+  - Móveis internos secos e de baixa carga
 durability: low
-recyclability: medium
+recyclability: low
+tensileStrength: low
+compressiveStrength: low
+flexibility: low
+waterResistance: low
+strengths:
+  - 'Barato, plano e dimensionamente consistente'
+  - Aceita lâmina e tinta bem (MDF)
+  - 'Sem grão, nós ou movimento'
+weaknesses:
+  - Os furos dos parafusos ficam estragados após algumas desmontagens.
+  - Incha irreversivelmente com qualquer exposição à água.
+  - Fraco em tensão - cede sob carga com o tempo
 summary: >-
-  Barato e consistente para fabricar, mas falha exatamente onde os móveis
-  precisam de mais resistência: os furos para parafusos se desgastam após
-  algumas desmontagens, e qualquer exposição à água causa inchaço irreversível.
-  Uma vez que um ponto de fixação falha ou um painel incha, o reparo geralmente
-  não é prático - em comparação com madeira maciça, que pode ser re-colada,
-  re-furada e acabada em vez de ser substituída.
+  Pó e lascas de madeira aglutinados com resina. Barato, plano e estável em
+  condições secas, e a maior razão pela qual os móveis desmontáveis acabam na
+  calçada - uma vez que um ponto de fixação se solta ou um painel incha, não
+  pode ser reparado de forma significativa.
 translationStatus: machine
 translationOf: en/particleboard-mdf
-sourceUpdated: '2026-08-25T00:04:28.559Z'
+sourceUpdated: '2026-09-15T07:18:52.448Z'
 ---
 

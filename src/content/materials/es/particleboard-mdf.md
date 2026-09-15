@@ -1,20 +1,31 @@
 ---
 name: Tablero de partículas / MDF
-categoryId: engineered-wood
+categoryId: engineered-timber
 bestFor:
-  - Muebles de paquete plano de bajo costo
-  - Paneles no estructurales
+  - Contrachapados de fondo para muebles y cajones
+  - Paneles interiores pintados
+  - Muebles de interior secos y de baja carga
 durability: low
-recyclability: medium
+recyclability: low
+tensileStrength: low
+compressiveStrength: low
+flexibility: low
+waterResistance: low
+strengths:
+  - 'Barato, plano y dimensionalmente consistente'
+  - Acepta bien la chapa y la pintura (MDF)
+  - 'Sin grano, nudos ni movimiento'
+weaknesses:
+  - Los agujeros de los tornillos se desgastan después de algunos desensambles.
+  - Se hincha irreversiblemente con cualquier exposición al agua.
+  - Débil en tensión - se hunde bajo carga con el tiempo
 summary: >-
-  Barato y consistente de fabricar, pero falla justo donde los muebles necesitan
-  más resistencia: los agujeros de los tornillos se desgastan después de algunos
-  desmontajes, y cualquier exposición al agua causa una hinchazón irreversible.
-  Una vez que un punto de sujeción falla o un panel se hincha, la reparación
-  generalmente no es práctica - en comparación con la madera dura sólida, que
-  puede ser re-encolada, re-perforada y reacondicionada en lugar de reemplazada.
+  Polvo de madera y astillas unidas con resina. Barato, plano y estable en
+  condiciones secas, y la razón más importante por la que los muebles en kit
+  terminan en la acera: una vez que un punto de fijación se aferra o un panel se
+  hincha, no se puede reparar de manera significativa.
 translationStatus: machine
 translationOf: en/particleboard-mdf
-sourceUpdated: '2026-08-25T00:04:28.559Z'
+sourceUpdated: '2026-09-15T07:18:52.448Z'
 ---
 

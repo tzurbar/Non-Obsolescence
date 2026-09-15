@@ -176,6 +176,13 @@ export function buildMaterialsMarkdown(data, translationStatus) {
   const lines = ['---'];
   lines.push(`name: ${yamlString(data.name)}`);
   if (data.categoryId) lines.push(`categoryId: ${yamlString(data.categoryId)}`);
+  const listField = (key, value) => {
+    const items = (value || '').split('\n').map((s) => s.trim()).filter(Boolean);
+    if (items.length === 0) return;
+    lines.push(`${key}:`);
+    items.forEach((s) => lines.push(`  - ${yamlString(s)}`));
+  };
+
   const bestFor = (data.bestFor || '').split('\n').map((s) => s.trim()).filter(Boolean);
   if (bestFor.length > 0) {
     lines.push('bestFor:');
@@ -185,6 +192,12 @@ export function buildMaterialsMarkdown(data, translationStatus) {
   }
   lines.push(`durability: ${data.durability}`);
   lines.push(`recyclability: ${data.recyclability}`);
+  // Optional in the schema, so only written when actually set.
+  for (const key of ['tensileStrength', 'compressiveStrength', 'flexibility', 'waterResistance']) {
+    if (data[key]) lines.push(`${key}: ${data[key]}`);
+  }
+  listField('strengths', data.strengths);
+  listField('weaknesses', data.weaknesses);
   lines.push(`summary: >\n  ${data.summary.trim().replace(/\n/g, '\n  ')}`);
   if (translationStatus) lines.push(`translationStatus: ${translationStatus}`);
   lines.push('---');

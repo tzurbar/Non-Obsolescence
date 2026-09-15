@@ -1,7 +1,7 @@
 ---
-label: معدن
+label: معادن
 translationStatus: machine
 translationOf: en/metal
-sourceUpdated: '2026-08-25T00:04:28.536Z'
+sourceUpdated: '2026-09-15T07:18:52.448Z'
 ---
 

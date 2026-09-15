@@ -43,6 +43,9 @@ const { nodes, scopeId, allLabel, searchPlaceholder } = Astro.props;
     const search = controls.querySelector('[data-role="search-input"]');
     const items = Array.from(target.querySelectorAll('[data-search]'));
     const emptyState = target.querySelector('[data-empty-state]');
+    // Section/subsection wrappers, so filtering doesn't leave a row of
+    // headings with nothing under them.
+    const groups = Array.from(target.querySelectorAll('[data-filter-group]'));
 
     function apply() {
       const cat = select.value;
@@ -55,6 +58,12 @@ const { nodes, scopeId, allLabel, searchPlaceholder } = Astro.props;
         const show = matchesCategory && matchesSearch;
         item.style.display = show ? '' : 'none';
         if (show) visibleCount++;
+      });
+      // Each group looks at the items beneath it, whose visibility is already
+      // settled above - so nesting needs no particular order here.
+      groups.forEach((group) => {
+        const hasVisible = Array.from(group.querySelectorAll('[data-search]')).some((el) => el.style.display !== 'none');
+        group.style.display = hasVisible ? '' : 'none';
       });
       if (emptyState) emptyState.style.display = visibleCount === 0 ? '' : 'none';
     }

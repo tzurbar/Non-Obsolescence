@@ -6,7 +6,7 @@ import { flattenIndented, listCategories, resolveCategoryId } from '../lib/categ
 
 const FIELDS = {
   fixability: { fields: ['summary'], build: buildFixabilityMarkdown, domain: 'fixability' },
-  materials: { fields: ['name', 'bestFor', 'summary'], build: buildMaterialsMarkdown, domain: 'materials' }
+  materials: { fields: ['name', 'bestFor', 'strengths', 'weaknesses', 'summary'], build: buildMaterialsMarkdown, domain: 'materials' }
 };
 
 async function listEntries(repo, token, collection) {
@@ -109,10 +109,18 @@ function materialsFormHtml(data = {}, slug = '', categoryNodes = []) {
       ${field('Name', 'name', data.name || '', { placeholder: 'Solid Hardwood (Oak)' })}
       ${categoryPickerFields(categoryNodes, data.categoryId || '')}
       <div class="grid gap-4 sm:grid-cols-2">
+        ${selectField('Pull strength (tensile)', 'tensileStrength', data.tensileStrength || 'medium', ['low', 'medium', 'high'])}
+        ${selectField('Push strength (compressive)', 'compressiveStrength', data.compressiveStrength || 'medium', ['low', 'medium', 'high'])}
+        ${selectField('Flexibility', 'flexibility', data.flexibility || 'medium', ['low', 'medium', 'high'])}
+        ${selectField('Water resistance', 'waterResistance', data.waterResistance || 'medium', ['low', 'medium', 'high'])}
         ${selectField('Durability', 'durability', data.durability || 'medium', ['low', 'medium', 'high'])}
         ${selectField('Recyclability', 'recyclability', data.recyclability || 'medium', ['low', 'medium', 'high'])}
       </div>
       ${textareaField('Best for', 'bestFor', (data.bestFor || []).join('\n'), { placeholder: 'One per line', rows: 3 })}
+      <div class="grid gap-4 sm:grid-cols-2">
+        ${textareaField('Strengths', 'strengths', (data.strengths || []).join('\n'), { placeholder: 'One per line', rows: 3 })}
+        ${textareaField('Weaknesses', 'weaknesses', (data.weaknesses || []).join('\n'), { placeholder: 'One per line', rows: 3 })}
+      </div>
       ${textareaField('Summary', 'summary', data.summary || '', { placeholder: 'What it is good for and why.' })}
       <button type="submit" class="bg-emerald-700 text-white font-semibold px-6 py-3 rounded-lg hover:bg-emerald-800 transition">Save</button>
     </form>
@@ -178,7 +186,13 @@ export const routes = {
         categoryId,
         durability: form.get('durability') || 'medium',
         recyclability: form.get('recyclability') || 'medium',
+        tensileStrength: form.get('tensileStrength') || '',
+        compressiveStrength: form.get('compressiveStrength') || '',
+        flexibility: form.get('flexibility') || '',
+        waterResistance: form.get('waterResistance') || '',
         bestFor: form.get('bestFor') || '',
+        strengths: form.get('strengths') || '',
+        weaknesses: form.get('weaknesses') || '',
         summary: form.get('summary') || ''
       };
       slug = isNew ? slugify(data.name) : slugParam;

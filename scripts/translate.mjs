@@ -30,7 +30,7 @@ const LOCALE_NAMES = { he: 'Hebrew', ar: 'Arabic', es: 'Spanish', pt: 'Portugues
 const TRANSLATABLE_FIELDS = {
   guides: ['title', 'productName', 'estimatedTime', 'tools', 'steps', 'partLinks', 'videoLinks'],
   fixability: ['summary'],
-  materials: ['name', 'bestFor', 'summary'],
+  materials: ['name', 'bestFor', 'summary', 'strengths', 'weaknesses'],
   'categories-guides': ['label'],
   'categories-fixability': ['label'],
   'categories-materials': ['label']
@@ -58,7 +58,11 @@ async function translateText(text, targetLocale) {
       messages: [
         {
           role: 'system',
-          content: `Translate the given text to ${LOCALE_NAMES[targetLocale]}. Reply with only the translated text, no notes or quotes.`
+          content:
+            `Translate the given text into ${LOCALE_NAMES[targetLocale]}. It comes from a repair and building reference site, ` +
+            `so it is full of tool, material and construction terms. Use the ordinary term a tradesperson in that language ` +
+            `would actually say; never leave an English word in place, or transliterate one, when a real equivalent exists. ` +
+            `Keep the length and tone close to the original. Reply with only the translated text, no notes or quotes.`
         },
         { role: 'user', content: text }
       ]
@@ -153,7 +157,16 @@ async function processCollection(collection) {
   }
 }
 
-for (const collection of Object.keys(TRANSLATABLE_FIELDS)) {
+// Optional collection filter: `npm run translate -- materials`. Staleness is
+// judged by the English file's mtime, which git resets on checkout/rebase -
+// so without a filter a run after one of those re-translates the whole tree,
+// spending money to replace existing translations with fresh ones that
+// aren't necessarily better. Naming collections keeps a run to what changed.
+const only = process.argv.slice(2).filter(Boolean);
+const collections = Object.keys(TRANSLATABLE_FIELDS).filter((c) => only.length === 0 || only.includes(c));
+if (only.length > 0) console.log(`Only translating: ${collections.join(', ')}\n`);
+
+for (const collection of collections) {
   await processCollection(collection);
 }
 

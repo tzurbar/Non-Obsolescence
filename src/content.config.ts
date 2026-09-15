@@ -80,14 +80,28 @@ const fixability = defineCollection({
   })
 });
 
+// Comparable ratings rather than prose, so two materials can be read
+// side by side. Deliberately coarse - "high/medium/low" is honest about
+// how precise a general-purpose reference can be, where a real number
+// would imply a precision that depends on grade, treatment and load case.
+const rating = z.enum(['low', 'medium', 'high']);
+
 const materials = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/materials' }),
   schema: z.object({
     name: z.string(),
     categoryId: z.string().optional(),
     bestFor: z.array(z.string()).default([]),
-    durability: z.enum(['low', 'medium', 'high']),
-    recyclability: z.enum(['low', 'medium', 'high']),
+    durability: rating,
+    recyclability: rating,
+    // Pull vs push are called out separately because that difference is
+    // the whole story for several of these (concrete, cast iron).
+    tensileStrength: rating.optional(),
+    compressiveStrength: rating.optional(),
+    flexibility: rating.optional(),
+    waterResistance: rating.optional(),
+    strengths: z.array(z.string()).default([]),
+    weaknesses: z.array(z.string()).default([]),
     summary: z.string(),
     ...translationFields
   })

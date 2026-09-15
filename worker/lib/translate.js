@@ -22,7 +22,14 @@ async function translateText(text, targetLocale, env) {
     body: JSON.stringify({
       model: env.TRANSLATION_MODEL || 'default',
       messages: [
-        { role: 'system', content: `Translate the given text to ${LOCALE_NAMES[targetLocale]}. Reply with only the translated text, no notes or quotes.` },
+        {
+          role: 'system',
+          content:
+            `Translate the given text into ${LOCALE_NAMES[targetLocale]}. It comes from a repair and building reference site, ` +
+            `so it is full of tool, material and construction terms. Use the ordinary term a tradesperson in that language ` +
+            `would actually say; never leave an English word in place, or transliterate one, when a real equivalent exists. ` +
+            `Keep the length and tone close to the original. Reply with only the translated text, no notes or quotes.`
+        },
         { role: 'user', content: text }
       ]
     })

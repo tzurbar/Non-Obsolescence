@@ -1,4 +1,4 @@
 ---
 label: "Hardwood"
-parentId: "wood"
+parentId: "timber"
 ---

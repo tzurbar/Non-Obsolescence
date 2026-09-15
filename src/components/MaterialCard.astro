@@ -1,0 +1,89 @@
+---
+import { t as uiT } from '../lib/i18n';
+import { ancestorChainIds } from '../lib/categories';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'materials'>;
+  categories: CollectionEntry<'categoriesMaterials'>[];
+  locale: string;
+}
+
+const { entry, categories, locale } = Astro.props;
+const s = uiT(locale).data;
+const d = entry.data;
+
+// Ratings are shown as a three-step bar rather than the words "low/medium/
+// high": it compares at a glance across a page this dense, and it sidesteps
+// adjective agreement, which differs by gender in Hebrew, Spanish and
+// Portuguese depending on which property the word follows.
+const LEVELS = { low: 1, medium: 2, high: 3 } as const;
+const ratingWord = { low: s.ratingLow, medium: s.ratingMedium, high: s.ratingHigh } as const;
+
+const properties = [
+  { label: s.pullStrength, value: d.tensileStrength },
+  { label: s.pushStrength, value: d.compressiveStrength },
+  { label: s.flexibility, value: d.flexibility },
+  { label: s.waterResistance, value: d.waterResistance },
+  { label: s.durability, value: d.durability },
+  { label: s.recyclability, value: d.recyclability }
+].filter((p) => p.value);
+
+const searchText = `${d.name} ${d.summary} ${d.bestFor.join(' ')}`.toLowerCase();
+---
+
+<div
+  class="border border-stone-200 rounded-lg p-5 bg-white"
+  data-search={searchText}
+  data-ancestors={ancestorChainIds(categories, d.categoryId || '').join(',')}
+>
+  <h5 class="font-semibold text-stone-900">{d.name}</h5>
+  <p class="mt-2 text-sm text-stone-600">{d.summary}</p>
+
+  <dl class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
+    {properties.map((p) => (
+      <div class="flex items-center justify-between gap-3">
+        <dt class="text-xs text-stone-500">{p.label}</dt>
+        <dd class="flex gap-0.5 shrink-0" title={`${p.label}: ${ratingWord[p.value!]}`}>
+          {[1, 2, 3].map((step) => (
+            <span
+              class={`block w-4 h-1.5 rounded-sm ${step <= LEVELS[p.value!] ? 'bg-emerald-600' : 'bg-stone-200'}`}
+            ></span>
+          ))}
+          <span class="sr-only">{ratingWord[p.value!]}</span>
+        </dd>
+      </div>
+    ))}
+  </dl>
+
+  {(d.strengths.length > 0 || d.weaknesses.length > 0) && (
+    <div class="mt-4 grid gap-4 sm:grid-cols-2 text-sm">
+      {d.strengths.length > 0 && (
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-wide text-emerald-700">{s.strengths}</p>
+          <ul class="mt-1 space-y-1 text-stone-600">
+            {d.strengths.map((item) => (
+              <li class="flex gap-2"><span class="text-emerald-600" aria-hidden="true">+</span>{item}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {d.weaknesses.length > 0 && (
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-wide text-amber-700">{s.weaknesses}</p>
+          <ul class="mt-1 space-y-1 text-stone-600">
+            {d.weaknesses.map((item) => (
+              <li class="flex gap-2"><span class="text-amber-600" aria-hidden="true">&minus;</span>{item}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  )}
+
+  {d.bestFor.length > 0 && (
+    <p class="mt-4 text-xs text-stone-500">
+      <span class="font-semibold">{s.goodFor}:</span> {d.bestFor.join(' · ')}
+    </p>
+  )}
+</div>
