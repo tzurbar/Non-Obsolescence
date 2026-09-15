@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import { t as uiT } from '../lib/i18n';
+import { manifestHref } from '../lib/manifest';
 
 interface Props {
   title: string;
@@ -11,7 +12,8 @@ const { title } = Astro.props;
 const locale = Astro.currentLocale ?? 'en';
 const rtlLocales = ['he', 'ar'];
 const dir = rtlLocales.includes(locale) ? 'rtl' : 'ltr';
-const footerTagline = uiT(locale).footer.tagline;
+const strings = uiT(locale);
+const footerTagline = strings.footer.tagline;
 ---
 
 <html lang={locale} dir={dir}>
@@ -20,6 +22,17 @@ const footerTagline = uiT(locale).footer.tagline;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- Home-screen app. iOS ignores most of the manifest, so it needs its
+         own icon/title/status-bar tags alongside it. -->
+    <link rel="manifest" href={manifestHref(locale)} />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content={strings.app.shortName} />
+
     <title>{title} · Non-Obsolescence</title>
   </head>
   <body class="min-h-screen bg-stone-50 text-stone-900 flex flex-col">
@@ -29,6 +42,45 @@ const footerTagline = uiT(locale).footer.tagline;
     </main>
     <footer class="border-t border-stone-200 mt-16 py-8 text-center text-sm text-stone-500">
       <p>&copy; {new Date().getFullYear()} {footerTagline}</p>
+      <button id="install-app" type="button" hidden class="mt-3 text-emerald-700 font-medium hover:underline">
+        {strings.app.install}
+      </button>
     </footer>
+
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(() => {});
+        });
+      }
+    </script>
+
+    <!-- Inline: beforeinstallprompt can fire before a bundled module script
+         would have run, and it only fires once - miss it and there's no
+         install button to offer. Browsers that never fire it (iOS, or an
+         already-installed app) simply leave the button hidden; there, the
+         Share > Add to Home Screen route is the platform's own. -->
+    <script is:inline>
+      (function () {
+        var button = document.getElementById('install-app');
+        var prompt = null;
+        if (!button) return;
+        window.addEventListener('beforeinstallprompt', function (event) {
+          event.preventDefault();
+          prompt = event;
+          button.hidden = false;
+        });
+        button.addEventListener('click', function () {
+          if (!prompt) return;
+          button.hidden = true;
+          prompt.prompt();
+          prompt = null;
+        });
+        window.addEventListener('appinstalled', function () {
+          button.hidden = true;
+          prompt = null;
+        });
+      })();
+    </script>
   </body>
 </html>

@@ -7,6 +7,10 @@ export const ui = {
   en: {
     nav: { guides: 'Guides', data: 'Data', submit: 'Submit' },
     footer: { tagline: "Non-Obsolescence — fix it, don't toss it." },
+    // Home-screen app identity: shortName is what fits under an icon
+    // (~12 chars before phones truncate it), name is the full label
+    // shown in the install prompt.
+    app: { name: 'Non-Obsolescence', shortName: 'Fix It', install: 'Install app' },
     home: {
       heroTitle: "Fix it. Don't toss it.",
       heroSubtitle:
@@ -92,6 +96,7 @@ export const ui = {
   he: {
     nav: { guides: 'מדריכים', data: 'נתונים', submit: 'הגשה' },
     footer: { tagline: 'לא-מתיישן — לתקן במקום לזרוק.' },
+    app: { name: 'לא-מתיישן', shortName: 'לתקן', install: 'התקנת האפליקציה' },
     home: {
       heroTitle: 'לתקן. לא לזרוק.',
       heroSubtitle:
@@ -177,6 +182,7 @@ export const ui = {
   ar: {
     nav: { guides: 'إرشادات', data: 'بيانات', submit: 'إرسال' },
     footer: { tagline: 'عدم القابلية للتقادم — أصلحه، لا تتخلص منه.' },
+    app: { name: 'عدم القابلية للتقادم', shortName: 'أصلحه', install: 'تثبيت التطبيق' },
     home: {
       heroTitle: 'أصلحه. لا ترميه.',
       heroSubtitle:
@@ -262,6 +268,7 @@ export const ui = {
   es: {
     nav: { guides: 'Guías', data: 'Datos', submit: 'Enviar' },
     footer: { tagline: 'No obsolescencia — repáralo, no lo tires.' },
+    app: { name: 'No obsolescencia', shortName: 'Repáralo', install: 'Instalar app' },
     home: {
       heroTitle: 'Repáralo. No lo tires.',
       heroSubtitle:
@@ -347,6 +354,7 @@ export const ui = {
   pt: {
     nav: { guides: 'Guias', data: 'Dados', submit: 'Enviar' },
     footer: { tagline: 'Não Obsolescência — conserte, não jogue fora.' },
+    app: { name: 'Não Obsolescência', shortName: 'Conserte', install: 'Instalar app' },
     home: {
       heroTitle: 'Conserte. Não jogue fora.',
       heroSubtitle:
@@ -438,6 +446,7 @@ export function t(locale: string) {
   return {
     nav: { ...ui.en.nav, ...dict.nav },
     footer: { ...ui.en.footer, ...dict.footer },
+    app: { ...ui.en.app, ...dict.app },
     home: { ...ui.en.home, ...dict.home },
     guides: { ...ui.en.guides, ...dict.guides },
     guideDetail: { ...ui.en.guideDetail, ...dict.guideDetail },
