@@ -49,6 +49,30 @@ async function translateValue(value, targetLocale, env) {
   return value;
 }
 
+// Link blocks reach the Worker as flat "Label | URL" lines (that's the shape
+// the forms post), so they can't go through translateValue - it would hand
+// the whole line to the model and the URL would come back "translated",
+// which is exactly how you end up with dead links in four languages. Only
+// the label is translated; the URL is copied verbatim.
+export async function translateLinkBlock(text, { env, targetLocale }) {
+  const lines = (text || '')
+    .split('\n')
+    .map((l) => l.trim())
+    .filter(Boolean);
+  const out = [];
+  for (const line of lines) {
+    const separator = line.indexOf('|');
+    if (separator === -1) {
+      out.push(line);
+      continue;
+    }
+    const label = line.slice(0, separator).trim();
+    const url = line.slice(separator + 1).trim();
+    out.push(`${await translateText(label, targetLocale, env)} | ${url}`);
+  }
+  return out.join('\n');
+}
+
 // fields: which top-level keys of `data` to translate. `data` values may be
 // plain strings (translated directly) or arrays/objects (walked recursively,
 // translating only text/title/label leaves).

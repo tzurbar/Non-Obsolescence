@@ -6,6 +6,7 @@
 import { routes as submissionRoutes } from './submissions.js';
 import { routes as dataRoutes } from './data.js';
 import { routes as categoryRoutes } from './categories.js';
+import { routes as guideRoutes } from './guides.js';
 
 function textResponse(text, status = 200) {
   return new Response(text, { status, headers: { 'Content-Type': 'text/plain' } });
@@ -40,6 +41,23 @@ async function dispatch(url, request, env) {
   m = path.match(/^\/manager\/submissions\/(\d+)\/reject$/);
   if (method === 'POST' && m) {
     const { redirect } = await submissionRoutes.reject({ ...ctx, number: m[1] });
+    return Response.redirect(new URL(redirect, url), 303);
+  }
+
+  if (method === 'GET' && (path === '/manager/guides' || path === '/manager/guides/')) {
+    return htmlResponse(await guideRoutes.list(ctx));
+  }
+
+  m = path.match(/^\/manager\/guides\/([^/]+)\/delete$/);
+  if (method === 'POST' && m) {
+    const { redirect } = await guideRoutes.delete({ ...ctx, slug: m[1] });
+    return Response.redirect(new URL(redirect, url), 303);
+  }
+
+  m = path.match(/^\/manager\/guides\/([^/]+)$/);
+  if (method === 'GET' && m) return htmlResponse(await guideRoutes.editForm({ ...ctx, slug: m[1] }));
+  if (method === 'POST' && m) {
+    const { redirect } = await guideRoutes.save({ ...ctx, slug: m[1] });
     return Response.redirect(new URL(redirect, url), 303);
   }
 

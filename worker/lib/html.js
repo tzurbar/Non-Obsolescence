@@ -19,6 +19,7 @@ const UTILITY_CSS = `
   .block { display: block; }
   .inline-block { display: inline-block; }
   .flex { display: flex; }
+  .flex-1 { flex: 1 1 0%; }
   .grid { display: grid; }
   .items-center { align-items: center; }
   .justify-between { justify-content: space-between; }
@@ -35,7 +36,7 @@ const UTILITY_CSS = `
   .w-full { width: 100%; }
   .mt-1 { margin-top: 0.25rem; } .mt-2 { margin-top: 0.5rem; } .mt-3 { margin-top: 0.75rem; }
   .mt-4 { margin-top: 1rem; } .mt-6 { margin-top: 1.5rem; } .mt-10 { margin-top: 2.5rem; }
-  .mb-2 { margin-bottom: 0.5rem; } .mb-4 { margin-bottom: 1rem; } .mb-6 { margin-bottom: 1.5rem; }
+  .mb-1 { margin-bottom: 0.25rem; } .mb-2 { margin-bottom: 0.5rem; } .mb-4 { margin-bottom: 1rem; } .mb-6 { margin-bottom: 1.5rem; }
   .p-4 { padding: 1rem; } .p-5 { padding: 1.25rem; }
   .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
   .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
@@ -104,6 +105,7 @@ const ADMIN_CSS = `
 export function page({ title, body, flash, activeTab }) {
   const tabs = [
     { href: '/manager', label: 'Submissions', key: 'submissions' },
+    { href: '/manager/guides', label: 'Guides', key: 'guides' },
     { href: '/manager/data', label: 'Data', key: 'data' }
   ];
   return `<!doctype html>

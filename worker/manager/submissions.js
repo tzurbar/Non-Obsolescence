@@ -1,7 +1,7 @@
 import { listPendingIssues, getIssue, commentOnIssue, closeIssue, getDefaultBranch, getFileBinary, putFileBinary, putFile, deleteFile } from '../lib/github.js';
 import { parseSubmissionData, parseLegacyBody, slugify, buildGuideMarkdown } from '../lib/content-format.js';
 import { escapeHtml, page, field, textareaField, categoryPickerFields, readFormBody } from '../lib/html.js';
-import { translateEntry, TARGET_LOCALES } from '../lib/translate.js';
+import { translateEntry, translateLinkBlock, TARGET_LOCALES } from '../lib/translate.js';
 import { flattenIndented, listCategories, resolveCategoryId } from '../lib/categories.js';
 
 const GUIDE_FIELDS = ['title', 'productName', 'estimatedTime', 'tools', 'partLinks', 'videoLinks', 'notes'];
@@ -157,15 +157,18 @@ async function translateAndPublish({ repo, token, env, slug, guideMarkdownData, 
   for (const locale of TARGET_LOCALES) {
     const translatedData = await translateEntry({
       data: guideMarkdownData,
-      fields: ['title', 'productName', 'estimatedTime', 'tools', 'partLinks', 'videoLinks', 'notes'],
+      fields: ['title', 'productName', 'estimatedTime', 'tools', 'notes'],
       env,
       targetLocale: locale
     });
+    // Labels get translated, URLs are left alone - see translateLinkBlock.
+    translatedData.partLinks = await translateLinkBlock(guideMarkdownData.partLinks, { env, targetLocale: locale });
+    translatedData.videoLinks = await translateLinkBlock(guideMarkdownData.videoLinks, { env, targetLocale: locale });
     const translatedSteps = await Promise.all(
       steps.map(async (step) => ({
         text: await translateEntry({ data: { text: step.text }, fields: ['text'], env, targetLocale: locale }).then((d) => d.text),
-        partLink: step.partLink,
-        videoLink: step.videoLink
+        partLink: await translateLinkBlock(step.partLink, { env, targetLocale: locale }),
+        videoLink: await translateLinkBlock(step.videoLink, { env, targetLocale: locale })
       }))
     );
     const markdown = buildGuideMarkdown({

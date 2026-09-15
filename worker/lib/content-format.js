@@ -95,7 +95,10 @@ export function buildGuideMarkdown({ data, steps, localImagePaths, publishDate, 
   }
 
   if (localImagePaths.cover) lines.push(`coverImage: ${localImagePaths.cover}`);
-  lines.push(`featured: false`);
+  // Newly approved submissions pass nothing here and stay unfeatured; the
+  // guide editor passes the current value through so re-saving a featured
+  // guide doesn't quietly drop it off the home page.
+  lines.push(`featured: ${data.featured === true ? 'true' : 'false'}`);
   if (data.authorName?.trim()) lines.push(`authorName: ${yamlString(data.authorName)}`);
   lines.push(`publishDate: ${publishDate}`);
 
@@ -129,8 +132,13 @@ export function buildGuideMarkdown({ data, steps, localImagePaths, publishDate, 
   lines.push('---');
   if (data.notes?.trim()) {
     lines.push('');
-    lines.push('## Notes');
-    lines.push('');
+    // Guides written by hand bring their own headings ("## Safety first").
+    // Only add the Notes heading for plain prose, so re-saving an existing
+    // guide doesn't graft an empty "Notes" section on top of its own.
+    if (!data.notes.trim().startsWith('#')) {
+      lines.push('## Notes');
+      lines.push('');
+    }
     lines.push(data.notes.trim());
   }
   return lines.join('\n') + '\n';
@@ -181,6 +189,140 @@ export function buildMaterialsMarkdown(data, translationStatus) {
   if (translationStatus) lines.push(`translationStatus: ${translationStatus}`);
   lines.push('---');
   return lines.join('\n') + '\n';
+}
+
+// Guide frontmatter is the one nested shape in this app (steps carrying
+// their own link lists), which parseFrontmatter below can't represent. This
+// is a deliberately narrow parser for exactly the YAML that
+// buildGuideMarkdown emits - scalars, lists of scalars, and lists of maps
+// that may themselves contain lists of maps - so that a published guide can
+// be read back into the manager's edit form. Round-tripping through
+// buildGuideMarkdown is what keeps the two honest; see the parser tests.
+
+function yamlScalar(text) {
+  const t = text.trim();
+  if (/^".*"$/.test(t)) return t.slice(1, -1).replace(/\\"/g, '"');
+  if (t === 'true') return true;
+  if (t === 'false') return false;
+  return t;
+}
+
+function indentOf(line) {
+  return line.length - line.replace(/^ */, '').length;
+}
+
+function parseYamlMap(lines, start, indent) {
+  const obj = {};
+  let i = start;
+  while (i < lines.length) {
+    const line = lines[i];
+    if (!line.trim()) {
+      i++;
+      continue;
+    }
+    if (indentOf(line) < indent || line.trim().startsWith('- ')) break;
+    const match = line.trim().match(/^(\w+):\s*(.*)$/);
+    if (!match) {
+      i++;
+      continue;
+    }
+    const [, key, rest] = match;
+    if (rest === '[]') {
+      obj[key] = [];
+      i++;
+    } else if (rest === '>') {
+      const parts = [];
+      i++;
+      while (i < lines.length && (!lines[i].trim() || indentOf(lines[i]) > indent)) {
+        parts.push(lines[i].trim());
+        i++;
+      }
+      obj[key] = parts.join(' ').trim();
+    } else if (rest === '') {
+      const next = lines[i + 1];
+      if (next && next.trim().startsWith('- ')) {
+        const [seq, nextIndex] = parseYamlSeq(lines, i + 1, indentOf(next));
+        obj[key] = seq;
+        i = nextIndex;
+      } else {
+        obj[key] = '';
+        i++;
+      }
+    } else {
+      obj[key] = yamlScalar(rest);
+      i++;
+    }
+  }
+  return [obj, i];
+}
+
+function parseYamlSeq(lines, start, indent) {
+  const arr = [];
+  let i = start;
+  while (i < lines.length) {
+    const line = lines[i];
+    if (!line.trim()) {
+      i++;
+      continue;
+    }
+    if (indentOf(line) < indent || !line.trim().startsWith('- ')) break;
+    const inline = line.trim().slice(2);
+    const kv = inline.match(/^(\w+):\s*(.*)$/);
+    if (!kv) {
+      arr.push(yamlScalar(inline));
+      i++;
+      continue;
+    }
+    // A map item: its first key sits on the dash line, any remaining keys
+    // are indented under it.
+    const item = { [kv[1]]: yamlScalar(kv[2]) };
+    i++;
+    const [rest, nextIndex] = parseYamlMap(lines, i, indent + 2);
+    i = nextIndex;
+    arr.push({ ...item, ...rest });
+  }
+  return [arr, i];
+}
+
+// Returns the guide's frontmatter plus its body notes, shaped the way the
+// manager's edit form wants them (link lists flattened to "Label | URL"
+// lines, tools one per line) so the form can be filled straight from it.
+export function parseGuideMarkdown(raw) {
+  // The Worker reads these off the GitHub API (always LF), but a checkout on
+  // Windows has CRLF - normalize so both paths parse the same.
+  const match = (raw || '').replace(/\r\n/g, '\n').match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+  if (!match) return { data: {}, steps: [] };
+  const [, frontmatter, body] = match;
+  const [parsed] = parseYamlMap(frontmatter.split('\n'), 0, 0);
+
+  const linkLines = (list) =>
+    (Array.isArray(list) ? list : []).map((l) => `${l.label || ''} | ${l.url || ''}`).join('\n');
+
+  const steps = (Array.isArray(parsed.steps) ? parsed.steps : []).map((step) => ({
+    text: step.text || '',
+    image: step.image || '',
+    partLink: Array.isArray(step.partLinks) && step.partLinks[0] ? `${step.partLinks[0].label} | ${step.partLinks[0].url}` : '',
+    videoLink: Array.isArray(step.videoLinks) && step.videoLinks[0] ? `${step.videoLinks[0].label} | ${step.videoLinks[0].url}` : ''
+  }));
+
+  return {
+    data: {
+      title: parsed.title || '',
+      productName: parsed.productName || '',
+      categoryId: parsed.categoryId || '',
+      difficulty: parsed.difficulty || 'beginner',
+      estimatedTime: parsed.estimatedTime || '',
+      tools: (Array.isArray(parsed.tools) ? parsed.tools : []).join('\n'),
+      coverImage: parsed.coverImage || '',
+      featured: parsed.featured === true,
+      authorName: parsed.authorName || '',
+      publishDate: parsed.publishDate || '',
+      partLinks: linkLines(parsed.partLinks),
+      videoLinks: linkLines(parsed.videoLinks),
+      notes: body.trim().replace(/^##\s*Notes\s*\n+/, '').trim()
+    },
+    steps
+  };
 }
 
 // Minimal frontmatter parser - good enough for the flat/shallow schemas

@@ -179,7 +179,7 @@ export function buildGuideMarkdown({ data, steps, localImagePaths, publishDate }
   }
 
   if (localImagePaths.cover) lines.push(`coverImage: ${localImagePaths.cover}`);
-  lines.push(`featured: false`);
+  lines.push(`featured: ${data.featured === true ? 'true' : 'false'}`);
   if (data.authorName?.trim()) lines.push(`authorName: ${yamlString(data.authorName)}`);
   lines.push(`publishDate: ${publishDate}`);
 
@@ -211,8 +211,12 @@ export function buildGuideMarkdown({ data, steps, localImagePaths, publishDate }
   lines.push('---');
   if (data.notes?.trim()) {
     lines.push('');
-    lines.push('## Notes');
-    lines.push('');
+    // Matches worker/lib/content-format.js: notes that already start with
+    // their own heading don't get a "Notes" one grafted on top.
+    if (!data.notes.trim().startsWith('#')) {
+      lines.push('## Notes');
+      lines.push('');
+    }
     lines.push(data.notes.trim());
   }
   return lines.join('\n') + '\n';
