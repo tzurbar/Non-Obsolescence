@@ -27,5 +27,6 @@ summary: >-
 translationStatus: machine
 translationOf: en/solid-brass
 sourceUpdated: '2026-09-15T07:18:52.448Z'
+sourceHash: 67c1d3305e61c578
 ---
 

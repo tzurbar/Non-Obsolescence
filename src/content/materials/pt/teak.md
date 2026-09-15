@@ -28,5 +28,6 @@ summary: >-
 translationStatus: machine
 translationOf: en/teak
 sourceUpdated: '2026-09-15T07:18:52.448Z'
+sourceHash: 8001aa5e42a41b91
 ---
 

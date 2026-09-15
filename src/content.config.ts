@@ -8,7 +8,11 @@ import { glob } from 'astro/loaders';
 const translationFields = {
   translationStatus: z.enum(['original', 'machine', 'reviewed']).default('original'),
   translationOf: z.string().optional(),
-  sourceUpdated: z.coerce.date().optional()
+  sourceUpdated: z.coerce.date().optional(),
+  // Hash of the English source's translatable fields at translation time.
+  // This, not sourceUpdated, is what scripts/translate.mjs compares to decide
+  // a translation is stale - timestamps don't survive a git checkout.
+  sourceHash: z.string().optional()
 };
 
 const link = z.object({

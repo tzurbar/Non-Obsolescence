@@ -26,5 +26,6 @@ summary: >-
 translationStatus: machine
 translationOf: en/mild-steel
 sourceUpdated: '2026-09-15T07:18:52.448Z'
+sourceHash: 66a9600d47266674
 ---
 

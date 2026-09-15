@@ -26,5 +26,6 @@ summary: >-
 translationStatus: machine
 translationOf: en/aluminum
 sourceUpdated: '2026-09-15T07:18:52.448Z'
+sourceHash: bed4fd16dff8bd2e
 ---
 

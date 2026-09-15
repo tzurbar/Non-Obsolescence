@@ -14,5 +14,6 @@ updated: 2026-08-24T00:00:00.000Z
 translationStatus: machine
 translationOf: en/apple-iphone
 sourceUpdated: '2026-08-25T00:04:28.542Z'
+sourceHash: 8ca32e945e58f9cd
 ---
 

@@ -27,5 +27,6 @@ summary: >-
 translationStatus: machine
 translationOf: en/plywood
 sourceUpdated: '2026-09-15T07:18:52.448Z'
+sourceHash: 66f85fa0242ec5b6
 ---
 

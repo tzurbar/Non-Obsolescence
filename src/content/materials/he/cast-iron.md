@@ -26,5 +26,6 @@ summary: >-
 translationStatus: machine
 translationOf: en/cast-iron
 sourceUpdated: '2026-09-15T07:18:52.448Z'
+sourceHash: 8793290e31da4a8d
 ---
 

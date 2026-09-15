@@ -42,6 +42,7 @@ steps:
 translationStatus: machine
 translationOf: en/replace-a-lightbulb
 sourceUpdated: '2026-08-25T00:04:28.542Z'
+sourceHash: 3ff2dec0b2aff49e
 ---
 ## Seguridad primero
 

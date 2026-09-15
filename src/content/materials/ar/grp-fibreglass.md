@@ -26,5 +26,6 @@ summary: >-
 translationStatus: machine
 translationOf: en/grp-fibreglass
 sourceUpdated: '2026-09-15T07:18:52.448Z'
+sourceHash: 0f33e9a987ffd342
 ---
 

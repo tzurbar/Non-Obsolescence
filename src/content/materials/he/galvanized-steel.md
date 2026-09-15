@@ -25,5 +25,6 @@ summary: >-
 translationStatus: machine
 translationOf: en/galvanized-steel
 sourceUpdated: '2026-09-15T07:18:52.448Z'
+sourceHash: 6293dd0c93c18c89
 ---
 

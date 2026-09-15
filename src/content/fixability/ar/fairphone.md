@@ -13,5 +13,6 @@ updated: 2026-08-24T00:00:00.000Z
 translationStatus: machine
 translationOf: en/fairphone
 sourceUpdated: '2026-08-25T00:04:28.542Z'
+sourceHash: 1201bd6df01b6091
 ---
 

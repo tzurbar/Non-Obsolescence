@@ -7,11 +7,12 @@ summary: >
   סטנדרטיים, אבל מארז המסך דורש כלי הסרה מיוחדים להדבקה קניינית, וחלקי חילוף
   למסך אינם נמכרים לצרכנים.
 sources:
-  - "https://example.com/teardown-report"
-updated: 2026-08-22
+  - 'https://example.com/teardown-report'
+updated: 2026-08-22T00:00:00.000Z
 translationStatus: machine
 translationOf: en/example-brand
-sourceUpdated: "2026-08-24T17:53:10.000Z"
+sourceUpdated: '2026-08-24T17:53:10.000Z'
+sourceHash: 43f5778b40c4adc2
 ---
 
 זהו תוכן דוגמה להמחשת מבנה עמוד הנתונים. כשתיעשה מחקר אמיתי, כל רשומה כאן

@@ -26,5 +26,6 @@ summary: >-
 translationStatus: machine
 translationOf: en/aac-block
 sourceUpdated: '2026-09-15T07:18:52.448Z'
+sourceHash: 3541931e6bf471f3
 ---
 

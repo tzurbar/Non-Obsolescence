@@ -27,5 +27,6 @@ summary: >-
 translationStatus: machine
 translationOf: en/nylon
 sourceUpdated: '2026-09-15T07:18:52.448Z'
+sourceHash: bb39182a4062f219
 ---
 

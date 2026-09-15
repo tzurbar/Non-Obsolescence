@@ -26,5 +26,6 @@ summary: >-
 translationStatus: machine
 translationOf: en/concrete-block
 sourceUpdated: '2026-09-15T07:18:52.448Z'
+sourceHash: f416ffdc89df3156
 ---
 

@@ -20,6 +20,7 @@
 
 import { readdir, readFile, writeFile, mkdir, stat } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import path from 'node:path';
 import matter from 'gray-matter';
 
@@ -104,11 +105,26 @@ async function translateEntry(collection, sourceData, sourceBody, targetLocale) 
   data.translationStatus = 'machine';
   data.translationOf = `en/${sourceData.__slug}`;
   data.sourceUpdated = sourceData.__sourceUpdated;
+  data.sourceHash = sourceData.__sourceHash;
   delete data.__slug;
   delete data.__sourceUpdated;
+  delete data.__sourceHash;
 
   const body = await translateText(sourceBody.trim(), targetLocale);
   return { data, body };
+}
+
+// What "the source changed" means: a hash of just the fields that actually
+// get translated, plus the body. Hashing the whole file would re-translate
+// on unrelated edits (flipping `featured`, say), and using the file's mtime -
+// which is what this used to do - re-translates the entire site after any
+// git checkout or rebase, since those rewrite timestamps wholesale.
+function sourceFingerprint(collection, data, body) {
+  const fields = [...(TRANSLATABLE_FIELDS[collection] ?? [])].sort();
+  const relevant = {};
+  for (const field of fields) if (field in data) relevant[field] = data[field];
+  const text = `${JSON.stringify(relevant)}\n${body.trim()}`.replace(/\r\n/g, '\n');
+  return createHash('sha256').update(text).digest('hex').slice(0, 16);
 }
 
 async function processCollection(collection) {
@@ -122,6 +138,7 @@ async function processCollection(collection) {
     const raw = await readFile(sourcePath, 'utf-8');
     const parsed = matter(raw);
     const sourceMtime = (await stat(sourcePath)).mtime;
+    const fingerprint = sourceFingerprint(collection, parsed.data, parsed.content);
 
     for (const locale of TARGET_LOCALES) {
       const targetDir = path.join(CONTENT_DIR, collection, locale);
@@ -129,16 +146,26 @@ async function processCollection(collection) {
 
       if (existsSync(targetPath)) {
         const existing = matter(await readFile(targetPath, 'utf-8'));
-        const existingSourceUpdated = existing.data.sourceUpdated ? new Date(existing.data.sourceUpdated) : null;
-        const upToDate = existingSourceUpdated && existingSourceUpdated >= sourceMtime;
 
         if (existing.data.translationStatus === 'reviewed') {
-          if (!upToDate) {
+          if (existing.data.sourceHash && existing.data.sourceHash !== fingerprint) {
             console.log(`⚠️  ${collection}/${locale}/${file} is reviewed but the English source changed since — re-check by hand, not auto-overwritten.`);
           }
           continue;
         }
-        if (upToDate) {
+
+        // Written before this script recorded hashes (or by the manager tab,
+        // which translates on save and doesn't). It was produced from the
+        // English that's there now, so record the hash and leave the
+        // translation alone rather than paying to redo it.
+        if (!existing.data.sourceHash) {
+          existing.data.sourceHash = fingerprint;
+          await writeFile(targetPath, matter.stringify(existing.content, existing.data));
+          console.log(`=  ${collection}/${locale}/${file} adopted as current`);
+          continue;
+        }
+
+        if (existing.data.sourceHash === fingerprint) {
           console.log(`✓  ${collection}/${locale}/${file} already up to date`);
           continue;
         }
@@ -147,7 +174,7 @@ async function processCollection(collection) {
       await mkdir(targetDir, { recursive: true });
       const { data, body } = await translateEntry(
         collection,
-        { ...parsed.data, __slug: slug, __sourceUpdated: sourceMtime.toISOString() },
+        { ...parsed.data, __slug: slug, __sourceUpdated: sourceMtime.toISOString(), __sourceHash: fingerprint },
         parsed.content,
         locale
       );
@@ -157,11 +184,9 @@ async function processCollection(collection) {
   }
 }
 
-// Optional collection filter: `npm run translate -- materials`. Staleness is
-// judged by the English file's mtime, which git resets on checkout/rebase -
-// so without a filter a run after one of those re-translates the whole tree,
-// spending money to replace existing translations with fresh ones that
-// aren't necessarily better. Naming collections keeps a run to what changed.
+// Optional collection filter: `npm run translate -- materials`. Runs are
+// incremental on their own (see sourceFingerprint); this is for when you want
+// to confine one to a single collection regardless.
 const only = process.argv.slice(2).filter(Boolean);
 const collections = Object.keys(TRANSLATABLE_FIELDS).filter((c) => only.length === 0 || only.includes(c));
 if (only.length > 0) console.log(`Only translating: ${collections.join(', ')}\n`);

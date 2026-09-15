@@ -14,5 +14,6 @@ updated: 2026-08-24T00:00:00.000Z
 translationStatus: machine
 translationOf: en/framework
 sourceUpdated: '2026-08-25T00:04:28.542Z'
+sourceHash: e0c78e29342721a2
 ---
 

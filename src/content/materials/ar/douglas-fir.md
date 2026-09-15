@@ -25,5 +25,6 @@ summary: >-
 translationStatus: machine
 translationOf: en/douglas-fir
 sourceUpdated: '2026-09-15T07:18:52.448Z'
+sourceHash: f3e929f58373afa2
 ---
 

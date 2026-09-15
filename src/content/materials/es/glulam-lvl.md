@@ -26,5 +26,6 @@ summary: >-
 translationStatus: machine
 translationOf: en/glulam-lvl
 sourceUpdated: '2026-09-15T07:18:52.448Z'
+sourceHash: 38e52d046bb27412
 ---
 

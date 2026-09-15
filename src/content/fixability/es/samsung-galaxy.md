@@ -15,5 +15,6 @@ updated: 2026-08-24T00:00:00.000Z
 translationStatus: machine
 translationOf: en/samsung-galaxy
 sourceUpdated: '2026-08-25T00:04:28.542Z'
+sourceHash: 033ede888423dd24
 ---
 

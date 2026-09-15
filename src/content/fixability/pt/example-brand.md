@@ -13,5 +13,6 @@ updated: 2026-08-22T00:00:00.000Z
 translationStatus: machine
 translationOf: en/example-brand
 sourceUpdated: '2026-08-25T00:04:28.542Z'
+sourceHash: 43f5778b40c4adc2
 ---
 Este é um conteúdo de exemplo para demonstrar a estrutura da página de dados. Uma vez que a pesquisa real seja realizada, cada entrada aqui citaria um desmonte, um manual de reparo ou uma verificação de disponibilidade de peças sobressalentes, e a pontuação seguiria uma rubrica documentada (a ser definida) em vez de um palpite.

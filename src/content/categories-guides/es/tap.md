@@ -4,5 +4,6 @@ parentId: kitchen
 translationStatus: machine
 translationOf: en/tap
 sourceUpdated: '2026-08-25T00:04:28.524Z'
+sourceHash: 9f9b63de739dd224
 ---
 

@@ -4,5 +4,6 @@ parentId: kitchen
 translationStatus: machine
 translationOf: en/appliances
 sourceUpdated: '2026-08-25T00:04:28.509Z'
+sourceHash: 140f2758bce8bb93
 ---
 

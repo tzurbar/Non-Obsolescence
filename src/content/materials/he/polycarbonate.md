@@ -26,5 +26,6 @@ summary: >-
 translationStatus: machine
 translationOf: en/polycarbonate
 sourceUpdated: '2026-09-15T07:18:52.448Z'
+sourceHash: ad5003a36e34e176
 ---
 

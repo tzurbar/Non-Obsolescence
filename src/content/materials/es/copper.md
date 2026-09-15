@@ -27,5 +27,6 @@ summary: >-
 translationStatus: machine
 translationOf: en/copper
 sourceUpdated: '2026-09-15T07:18:52.448Z'
+sourceHash: bc1a20f4763d9a73
 ---
 
