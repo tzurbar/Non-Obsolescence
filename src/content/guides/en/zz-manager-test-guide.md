@@ -13,6 +13,9 @@ publishDate: 2026-09-15
 partLinks:
   - label: "Test part"
     url: "https://example.com/part"
+videoLinks:
+  - label: "Demo video"
+    url: "https://example.com/watch?v=abc123"
 steps:
   - text: "First test step, now edited."
   - text: "Second test step."
