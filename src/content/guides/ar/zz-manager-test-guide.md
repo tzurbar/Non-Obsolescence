@@ -1,21 +1,24 @@
 ---
-title: "دليل اختبار مدير ZZ (منقح)"
+title: "دليل اختبار مدير ZZ (معدل)"
 productName: "منتج اختبار"
 categoryId: "home-electrical"
 difficulty: beginner
-estimatedTime: "٧ دقائق"
+estimatedTime: "7 دقائق"
 tools:
   - "أداة الاختبار"
-  - "أداة ثانية"
+  - "الأداة الثانية"
 featured: true
 authorName: "Test"
 publishDate: 2026-09-15
 partLinks:
-  - label: "اختبار الجزء"
+  - label: "جزء الاختبار"
     url: "https://example.com/part"
+videoLinks:
+  - label: "فيديو توضيحي"
+    url: "https://example.com/watch?v=abc123"
 steps:
-  - text: "الخطوة الأولى للاختبار، تم تعديلها الآن."
-  - text: "خطوة الاختبار الثانية."
+  - text: "خطوة الاختبار الأولى، تم تعديلها الآن."
+  - text: "الخطوة الثانية من الاختبار."
 translationStatus: machine
 ---
 
