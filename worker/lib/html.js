@@ -20,6 +20,7 @@ const UTILITY_CSS = `
   .inline-block { display: inline-block; }
   .flex { display: flex; }
   .flex-1 { flex: 1 1 0%; }
+  .flex-wrap { flex-wrap: wrap; }
   .grid { display: grid; }
   .items-center { align-items: center; }
   .justify-between { justify-content: space-between; }
@@ -97,7 +98,7 @@ const ADMIN_CSS = `
   .field-label { display: block; font-size: 0.875rem; font-weight: 600; color: #44403c; margin-bottom: 0.25rem; }
   form.inline-delete { display: inline; }
   button[type="submit"] { cursor: pointer; border: none; }
-  input[type="text"], input[type="number"], input:not([type]), textarea, select {
+  input[type="text"], input[type="number"], input[type="search"], input:not([type]), textarea, select {
     border: 1px solid #d6d3d1; border-radius: 8px; padding: 0.5rem 0.75rem; width: 100%;
   }
 `;

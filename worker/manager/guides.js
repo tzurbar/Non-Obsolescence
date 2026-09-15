@@ -81,9 +81,12 @@ async function listHtml(repo, token) {
   return `<div class="max-w-3xl mx-auto px-4 py-12">
     <h1 class="text-2xl font-bold mb-1">Guides</h1>
     <p class="text-sm text-stone-500 mb-6">${guides.length} published guide${guides.length === 1 ? '' : 's'}. Editing one republishes it and regenerates every translation.</p>
-    <div class="flex gap-2 mb-6">
-      <input id="guide-search" placeholder="Search guides…" class="flex-1" autocomplete="off">
-      <select id="guide-category">
+    <!-- Explicit flex sizing: the admin stylesheet puts width:100% on every
+         select, which otherwise claims the whole row and collapses the
+         search box next to it. type="search" gets the native clear button. -->
+    <div class="flex flex-wrap gap-2 mb-6">
+      <input id="guide-search" type="search" placeholder="Search guides…" autocomplete="off" style="flex:1 1 12rem; min-width:0">
+      <select id="guide-category" style="flex:0 1 auto; width:auto">
         <option value="">All categories</option>
         ${nodes.map((n) => `<option value="${n.slug}">${indent(n.depth)}${escapeHtml(n.label)}</option>`).join('')}
       </select>
