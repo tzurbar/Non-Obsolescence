@@ -1,16 +1,20 @@
 ---
-title: "ZZ Manager Test Guide"
+title: "ZZ Manager Test Guide (edited)"
 productName: "Test Product"
 categoryId: "home-electrical"
 difficulty: beginner
-estimatedTime: "3 minutes"
+estimatedTime: "7 minutes"
 tools:
   - "Test tool"
-featured: false
+  - "Second tool"
+featured: true
 authorName: "Test"
 publishDate: 2026-09-15
+partLinks:
+  - label: "Test part"
+    url: "https://example.com/part"
 steps:
-  - text: "First test step."
+  - text: "First test step, now edited."
   - text: "Second test step."
 ---
 
