@@ -158,6 +158,8 @@ export function buildFixabilityMarkdown(data, translationStatus) {
   lines.push(`brand: ${yamlString(data.brand)}`);
   lines.push(`categoryId: ${yamlString(data.categoryId)}`);
   lines.push(`score: ${Number(data.score)}`);
+  lines.push(`reliability: ${data.reliability}`);
+  lines.push(`priceTier: ${data.priceTier}`);
   lines.push(`summary: >\n  ${data.summary.trim().replace(/\n/g, '\n  ')}`);
   const sources = (data.sources || '').split('\n').map((s) => s.trim()).filter(Boolean);
   if (sources.length > 0) {

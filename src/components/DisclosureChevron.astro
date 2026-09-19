@@ -1,0 +1,35 @@
+---
+// Right-pointing at rest, rotates to point down when its own <details>
+// parent is open. Used at three nested drill-down levels (material family
+// -> sub-family -> individual material in MaterialCard), each of which
+// must use ITS OWN named Tailwind group ("group/family" etc. on the
+// <details>): with a single unnamed `group`, `group-open:` matches any
+// *open* ancestor via descendant combinator, not just the nearest one, so
+// an inner chevron would rotate whenever an outer level happens to be
+// open too. The class strings below are written out in full (not built
+// from `level`) because Tailwind's build-time scanner only generates CSS
+// for literal class strings it can find in source - an interpolated
+// `group-open/${level}:...` would compile to nothing.
+interface Props {
+  level: 'family' | 'sub' | 'material';
+}
+
+const { level } = Astro.props;
+
+const ROTATE_CLASS = {
+  family: 'group-open/family:rotate-90',
+  sub: 'group-open/sub:rotate-90',
+  material: 'group-open/material:rotate-90'
+} as const;
+---
+
+<svg
+  class={`w-4 h-4 text-stone-400 shrink-0 transition-transform ${ROTATE_CLASS[level]}`}
+  viewBox="0 0 20 20"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  aria-hidden="true"
+>
+  <path d="M7 4l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

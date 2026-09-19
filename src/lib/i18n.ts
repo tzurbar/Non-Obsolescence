@@ -35,6 +35,8 @@ export const ui = {
       subtitle:
         'Which products are actually worth fixing, and which materials are worth building with. Placeholder data for now — the scoring rubric and sourcing methodology still need to be written.',
       fixabilityHeading: 'Fixability by Brand',
+      reliabilityHeading: 'Reliability & Price by Brand',
+      reliabilitySubtitle: 'How these brands compare on repair-worthiness, day-to-day reliability, and typical price - at the brand level, not for one specific tool.',
       materialsHeading: 'Materials Reference',
       durability: 'Durability',
       recyclability: 'Recyclability',
@@ -51,7 +53,11 @@ export const ui = {
       goodFor: 'Good for',
       ratingLow: 'Low',
       ratingMedium: 'Medium',
-      ratingHigh: 'High'
+      ratingHigh: 'High',
+      brandColumn: 'Brand',
+      reliabilityColumn: 'Reliability',
+      fixabilityColumn: 'Fixability',
+      priceColumn: 'Price'
     },
     submit: {
       title: 'Submit a Guide',
@@ -131,6 +137,8 @@ export const ui = {
       subtitle:
         'אילו מוצרים באמת שווה לתקן, ומאילו חומרים כדאי לבנות. נתוני דוגמה בינתיים — שיטת הניקוד ומקורות המידע עוד לא נכתבו.',
       fixabilityHeading: 'יכולת תיקון לפי מותג',
+      reliabilityHeading: 'אמינות ומחיר לפי מותג',
+      reliabilitySubtitle: 'כיצד המותגים האלה משתווים בכדאיות התיקון, אמינות יומיומית ומחיר טיפוסי - ברמת המותג, לא עבור כלי ספציפי אחד.',
       materialsHeading: 'מדריך חומרים',
       durability: 'עמידות',
       recyclability: 'מחזוריות',
@@ -147,7 +155,11 @@ export const ui = {
       goodFor: 'מתאים ל',
       ratingLow: 'נמוך',
       ratingMedium: 'בינוני',
-      ratingHigh: 'גבוה'
+      ratingHigh: 'גבוה',
+      brandColumn: 'מותג',
+      reliabilityColumn: 'אמינות',
+      fixabilityColumn: 'יכולת תיקון',
+      priceColumn: 'מחיר'
     },
     submit: {
       title: 'הגישו מדריך',
@@ -227,6 +239,8 @@ export const ui = {
       subtitle:
         'ما المنتجات التي تستحق الإصلاح فعلاً، وما المواد التي تستحق البناء بها. بيانات مؤقتة حالياً — لا تزال منهجية التقييم والمصادر بحاجة إلى كتابة.',
       fixabilityHeading: 'قابلية الإصلاح حسب العلامة التجارية',
+      reliabilityHeading: 'الموثوقية والسعر حسب العلامة التجارية',
+      reliabilitySubtitle: 'كيف تقارن هذه العلامات التجارية من حيث جدارة الإصلاح والموثوقية اليومية والسعر المعتاد - على مستوى العلامة التجارية، وليس لأداة معينة.',
       materialsHeading: 'مرجع المواد',
       durability: 'المتانة',
       recyclability: 'قابلية إعادة التدوير',
@@ -243,7 +257,11 @@ export const ui = {
       goodFor: 'مناسب لـ',
       ratingLow: 'منخفض',
       ratingMedium: 'متوسط',
-      ratingHigh: 'مرتفع'
+      ratingHigh: 'مرتفع',
+      brandColumn: 'العلامة التجارية',
+      reliabilityColumn: 'الموثوقية',
+      fixabilityColumn: 'قابلية الإصلاح',
+      priceColumn: 'السعر'
     },
     submit: {
       title: 'أرسل دليلاً',
@@ -323,6 +341,8 @@ export const ui = {
       subtitle:
         'Qué productos realmente vale la pena reparar, y qué materiales vale la pena usar para construir. Datos de ejemplo por ahora — todavía falta escribir la rúbrica de puntuación y la metodología de las fuentes.',
       fixabilityHeading: 'Reparabilidad por marca',
+      reliabilityHeading: 'Fiabilidad y precio por marca',
+      reliabilitySubtitle: 'Cómo se comparan estas marcas en fiabilidad diaria, si vale la pena repararlas y precio habitual - a nivel de marca, no para una herramienta específica.',
       materialsHeading: 'Referencia de materiales',
       durability: 'Durabilidad',
       recyclability: 'Reciclabilidad',
@@ -339,7 +359,11 @@ export const ui = {
       goodFor: 'Bueno para',
       ratingLow: 'Baja',
       ratingMedium: 'Media',
-      ratingHigh: 'Alta'
+      ratingHigh: 'Alta',
+      brandColumn: 'Marca',
+      reliabilityColumn: 'Fiabilidad',
+      fixabilityColumn: 'Reparabilidad',
+      priceColumn: 'Precio'
     },
     submit: {
       title: 'Enviar una guía',
@@ -419,6 +443,8 @@ export const ui = {
       subtitle:
         'Quais produtos realmente valem a pena consertar, e quais materiais valem a pena usar para construir. Dados de exemplo por enquanto — a rubrica de pontuação e a metodologia de fontes ainda precisam ser escritas.',
       fixabilityHeading: 'Reparabilidade por marca',
+      reliabilityHeading: 'Confiabilidade e preço por marca',
+      reliabilitySubtitle: 'Como essas marcas se comparam em confiabilidade no dia a dia, se vale a pena consertar e preço típico - no nível da marca, não para uma ferramenta específica.',
       materialsHeading: 'Referência de materiais',
       durability: 'Durabilidade',
       recyclability: 'Reciclabilidade',
@@ -435,7 +461,11 @@ export const ui = {
       goodFor: 'Bom para',
       ratingLow: 'Baixa',
       ratingMedium: 'Média',
-      ratingHigh: 'Alta'
+      ratingHigh: 'Alta',
+      brandColumn: 'Marca',
+      reliabilityColumn: 'Confiabilidade',
+      fixabilityColumn: 'Reparabilidade',
+      priceColumn: 'Preço'
     },
     submit: {
       title: 'Enviar um guia',

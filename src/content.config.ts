@@ -33,8 +33,19 @@ const step = z.object({
 const category = z.object({
   label: z.string(),
   parentId: z.string().optional(),
+  // Sibling display order (ascending); ties, and nodes without one, fall
+  // back to alphabetical - see flattenIndented. Only worth setting where
+  // the natural alphabetical order doesn't match how people actually think
+  // about the list, e.g. the material families sorted by how often a DIYer
+  // actually reaches for each one rather than A-Z.
+  order: z.number().optional(),
   ...translationFields
 });
+
+// Comparable ratings rather than prose, so entries can be read side by
+// side. Deliberately coarse - "high/medium/low" is honest about how
+// precise a general-purpose reference can be.
+const rating = z.enum(['low', 'medium', 'high']);
 
 const categoriesGuides = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/categories-guides' }),
@@ -76,19 +87,20 @@ const fixability = defineCollection({
   schema: z.object({
     brand: z.string(),
     categoryId: z.string(),
+    // Repairability: parts availability, service network, how serviceable
+    // the design itself is.
     score: z.number().min(0).max(10),
+    // Separate from score - a brand can be easy to get parts for and still
+    // fail more often (or vice versa), so collapsing them into one number
+    // would hide that.
+    reliability: rating,
+    priceTier: rating,
     summary: z.string(),
     sources: z.array(z.string()).default([]),
     updated: z.date(),
     ...translationFields
   })
 });
-
-// Comparable ratings rather than prose, so two materials can be read
-// side by side. Deliberately coarse - "high/medium/low" is honest about
-// how precise a general-purpose reference can be, where a real number
-// would imply a precision that depends on grade, treatment and load case.
-const rating = z.enum(['low', 'medium', 'high']);
 
 const materials = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/materials' }),

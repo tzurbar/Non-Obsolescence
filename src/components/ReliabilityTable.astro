@@ -1,0 +1,50 @@
+---
+// Brand-level comparison, not per-product: reliability and price are
+// genuine low/medium/high ratings (RatingBar), while fixability reuses the
+// same 0-10 score already shown in the Fixability section above, rather
+// than re-banding it into a coarser rating that would say less than the
+// number everyone can already see on this page.
+import { t as uiT } from '../lib/i18n';
+import RatingBar from './RatingBar.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entries: CollectionEntry<'fixability'>[];
+  locale: string;
+}
+
+const { entries, locale } = Astro.props;
+const s = uiT(locale).data;
+const ratingWord = { low: s.ratingLow, medium: s.ratingMedium, high: s.ratingHigh } as const;
+
+const rows = [...entries].sort((a, b) => b.data.score - a.data.score);
+---
+
+{rows.length > 0 && (
+  <div class="overflow-x-auto border border-stone-200 rounded-lg">
+    <table class="w-full text-sm border-collapse">
+      <thead>
+        <tr class="border-b border-stone-200 bg-stone-50 text-xs uppercase tracking-wide text-stone-500">
+          <th class="py-2 px-4 font-semibold">{s.brandColumn}</th>
+          <th class="py-2 px-4 font-semibold">{s.reliabilityColumn}</th>
+          <th class="py-2 px-4 font-semibold">{s.fixabilityColumn}</th>
+          <th class="py-2 px-4 font-semibold">{s.priceColumn}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((entry) => (
+          <tr class="border-b border-stone-100 last:border-0">
+            <td class="py-3 px-4 font-semibold text-stone-900">{entry.data.brand}</td>
+            <td class="py-3 px-4">
+              <RatingBar value={entry.data.reliability} label={`${s.reliabilityColumn}: ${ratingWord[entry.data.reliability]}`} />
+            </td>
+            <td class="py-3 px-4 font-medium text-emerald-700">{entry.data.score.toFixed(1)}/10</td>
+            <td class="py-3 px-4">
+              <RatingBar value={entry.data.priceTier} label={`${s.priceColumn}: ${ratingWord[entry.data.priceTier]}`} />
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+)}

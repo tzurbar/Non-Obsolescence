@@ -1,8 +1,0 @@
----
-label: Teléfonos inteligentes
-translationStatus: machine
-translationOf: en/smartphones
-sourceUpdated: '2026-08-25T00:04:28.509Z'
-sourceHash: 4d9f9f9306e966c5
----
-

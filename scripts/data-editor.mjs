@@ -165,6 +165,10 @@ function fixabilityFormHtml(data = {}, slug = '') {
         ${field('Category ID', 'categoryId', data.categoryId || '', { placeholder: 'slug from a categories-fixability/en file, or use the web manager’s picker instead' })}
       </div>
       ${field('Score (0-10)', 'score', data.score ?? '', { type: 'number', step: '0.1' })}
+      <div class="grid gap-4 sm:grid-cols-2">
+        ${selectField('Reliability', 'reliability', data.reliability || 'medium', ['low', 'medium', 'high'])}
+        ${selectField('Price tier', 'priceTier', data.priceTier || 'medium', ['low', 'medium', 'high'])}
+      </div>
       ${textareaField('Summary', 'summary', data.summary || '', { placeholder: 'What makes this brand/category repairable or not - screws vs adhesive, spare parts, parts pairing, etc.' })}
       ${textareaField('Sources', 'sources', (data.sources || []).join('\n'), { placeholder: 'One URL per line', rows: 2 })}
       <button type="submit" class="bg-emerald-700 text-white font-semibold px-6 py-3 rounded-lg hover:bg-emerald-800 transition">Save</button>
@@ -202,6 +206,8 @@ function buildFixabilityMarkdown(data, existing) {
   lines.push(`brand: ${yamlString(data.brand)}`);
   lines.push(`categoryId: ${yamlString(data.categoryId)}`);
   lines.push(`score: ${Number(data.score)}`);
+  lines.push(`reliability: ${data.reliability}`);
+  lines.push(`priceTier: ${data.priceTier}`);
   lines.push(`summary: >\n  ${data.summary.trim().replace(/\n/g, '\n  ')}`);
   const sources = data.sources.split('\n').map((s) => s.trim()).filter(Boolean);
   if (sources.length > 0) {
@@ -305,6 +311,8 @@ async function main() {
               brand: form.get('brand') || '',
               categoryId: await resolveLocalCategoryId('fixability', { categoryId: form.get('categoryId') }),
               score: form.get('score') || '0',
+              reliability: form.get('reliability') || 'medium',
+              priceTier: form.get('priceTier') || 'medium',
               summary: form.get('summary') || '',
               sources: form.get('sources') || ''
             };

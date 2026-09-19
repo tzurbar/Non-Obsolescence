@@ -50,6 +50,7 @@ const { nodes, scopeId, allLabel, searchPlaceholder } = Astro.props;
     function apply() {
       const cat = select.value;
       const q = search.value.trim().toLowerCase();
+      const filtering = !!cat || !!q;
       let visibleCount = 0;
       items.forEach((item) => {
         const ancestors = (item.dataset.ancestors || '').split(',');
@@ -57,6 +58,11 @@ const { nodes, scopeId, allLabel, searchPlaceholder } = Astro.props;
         const matchesSearch = !q || (item.dataset.search || '').includes(q);
         const show = matchesCategory && matchesSearch;
         item.style.display = show ? '' : 'none';
+        // Content living inside a collapsed <details> (the materials
+        // drill-down) needs to actually open to be visible - and close
+        // again once the filter that surfaced it is cleared, back to the
+        // deliberately uncluttered default.
+        if (item.tagName === 'DETAILS') item.open = filtering && show;
         if (show) visibleCount++;
       });
       // Each group looks at the items beneath it, whose visibility is already
@@ -64,6 +70,7 @@ const { nodes, scopeId, allLabel, searchPlaceholder } = Astro.props;
       groups.forEach((group) => {
         const hasVisible = Array.from(group.querySelectorAll('[data-search]')).some((el) => el.style.display !== 'none');
         group.style.display = hasVisible ? '' : 'none';
+        if (group.tagName === 'DETAILS') group.open = filtering && hasVisible;
       });
       if (emptyState) emptyState.style.display = visibleCount === 0 ? '' : 'none';
     }

@@ -14,7 +14,15 @@ export function flattenIndented(entries) {
     if (!byParent.has(key)) byParent.set(key, []);
     byParent.get(key).push(e);
   }
-  for (const list of byParent.values()) list.sort((a, b) => a.data.label.localeCompare(b.data.label));
+  // Mirrors src/lib/categories.ts's flattenIndented ordering - see that
+  // file for why.
+  for (const list of byParent.values()) {
+    list.sort((a, b) => {
+      const oa = a.data.order ?? Infinity;
+      const ob = b.data.order ?? Infinity;
+      return oa !== ob ? oa - ob : a.data.label.localeCompare(b.data.label);
+    });
+  }
 
   const result = [];
   const seen = new Set();

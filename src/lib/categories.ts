@@ -14,7 +14,7 @@ import { slugOf } from './content';
 
 interface CategoryLike {
   id: string;
-  data: { label: string; parentId?: string };
+  data: { label: string; parentId?: string; order?: number };
 }
 
 export interface CategoryNode {
@@ -33,7 +33,16 @@ export function flattenIndented(entries: CategoryLike[]): CategoryNode[] {
     if (!byParent.has(key)) byParent.set(key, []);
     byParent.get(key)!.push(e);
   }
-  for (const list of byParent.values()) list.sort((a, b) => a.data.label.localeCompare(b.data.label));
+  // Explicit order wins; entries without one sort after those that have
+  // one, then alphabetically among themselves - so setting an order on
+  // just the nodes that need it doesn't disturb the rest.
+  for (const list of byParent.values()) {
+    list.sort((a, b) => {
+      const oa = a.data.order ?? Infinity;
+      const ob = b.data.order ?? Infinity;
+      return oa !== ob ? oa - ob : a.data.label.localeCompare(b.data.label);
+    });
+  }
 
   const result: CategoryNode[] = [];
   const seen = new Set<string>();

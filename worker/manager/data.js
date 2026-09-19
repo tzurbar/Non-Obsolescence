@@ -94,6 +94,10 @@ function fixabilityFormHtml(data = {}, slug = '', categoryNodes = []) {
       ${field('Brand', 'brand', data.brand || '')}
       ${categoryPickerFields(categoryNodes, data.categoryId || '')}
       ${field('Score (0-10)', 'score', data.score ?? '', { type: 'number', step: '0.1' })}
+      <div class="grid gap-4 sm:grid-cols-2">
+        ${selectField('Reliability', 'reliability', data.reliability || 'medium', ['low', 'medium', 'high'])}
+        ${selectField('Price tier', 'priceTier', data.priceTier || 'medium', ['low', 'medium', 'high'])}
+      </div>
       ${textareaField('Summary', 'summary', data.summary || '', { placeholder: 'What makes this brand/category repairable or not.' })}
       ${textareaField('Sources', 'sources', (data.sources || []).join('\n'), { placeholder: 'One URL per line', rows: 2 })}
       <button type="submit" class="bg-emerald-700 text-white font-semibold px-6 py-3 rounded-lg hover:bg-emerald-800 transition">Save</button>
@@ -176,6 +180,8 @@ export const routes = {
         brand: form.get('brand') || '',
         categoryId,
         score: form.get('score') || '0',
+        reliability: form.get('reliability') || 'medium',
+        priceTier: form.get('priceTier') || 'medium',
         summary: form.get('summary') || '',
         sources: form.get('sources') || ''
       };

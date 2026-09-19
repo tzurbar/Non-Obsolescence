@@ -1,0 +1,23 @@
+---
+// Shared low/medium/high visual: a three-step bar rather than the word
+// itself, so ratings compare at a glance and sidestep adjective agreement,
+// which differs by gender in Hebrew, Spanish and Portuguese depending on
+// what the word follows. Used by MaterialCard and the brand comparison
+// table - anywhere one of these ratings needs to render.
+
+interface Props {
+  value: 'low' | 'medium' | 'high';
+  label: string; // full accessible text, e.g. "Pull strength: High"
+}
+
+const { value, label } = Astro.props;
+const LEVELS = { low: 1, medium: 2, high: 3 } as const;
+const level = LEVELS[value];
+---
+
+<span class="inline-flex gap-0.5 shrink-0 align-middle" title={label}>
+  {[1, 2, 3].map((step) => (
+    <span class={`block w-4 h-1.5 rounded-sm ${step <= level ? 'bg-emerald-600' : 'bg-stone-200'}`}></span>
+  ))}
+  <span class="sr-only">{label}</span>
+</span>
